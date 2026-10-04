@@ -4,6 +4,8 @@ A local prompt-driven toolchain for **[@movieidiots5542](https://www.youtube.com
 
 **Resuming elsewhere? Read [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md)** for decisions, user feedback, completed work, setup/MCP reconnection, reproducible inputs and the continuation plan. Source repository: [movie_idiots](https://github.com/dattaprasad-r-ekavade/movie_idiots). Generated media and machine-specific configuration are not included in Git.
 
+For additional options and documented creator workflows, see [Claude/ChatGPT video-tool research](docs/tools-and-workflows.md): design and preview loops, local Hindi voices, caption alignment, footage catalogs, 3D/generated shots, editor alternatives and ChatGPT MCP connection paths. These are recommendations for evaluation, not installed features.
+
 **Prompt → film research + web-image collection → spoken Hinglish + shot plan → Hindi voice → image/evidence/kinetic animation → shot previews → FFmpeg MP4 + upload package.**
 
 ## Start now

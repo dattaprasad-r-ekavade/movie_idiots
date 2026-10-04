@@ -2,7 +2,9 @@
 
 Research checked 4–5 October 2026. The implementation follows creator-owned examples and official technical documentation. Channel observations are in `config/channel-research.md`.
 
-**Current handoff:** `../PROJECT_HANDOFF.md` consolidates decisions, the rejected first video, the delivered cinematic remake, reproducible setup and the updated continuation plan. The initial roadmap below is preserved with completed upgrades identified.
+**Expanded research, 5 October 2026:** [Claude/ChatGPT video tools and workflows](tools-and-workflows.md) adds creator examples, a tool comparison, current ChatGPT connection options and a prioritized adoption plan. Candidates are clearly distinguished from our tested implementation. Start with visual review and narration-driven edit events before adding more generation providers.
+
+**Current handoff:** [PROJECT_HANDOFF.md](../PROJECT_HANDOFF.md) consolidates decisions, the rejected first video, the delivered cinematic remake, reproducible setup and the updated continuation plan. The initial roadmap below is preserved with completed upgrades identified.
 
 ## What people have built with Claude
 

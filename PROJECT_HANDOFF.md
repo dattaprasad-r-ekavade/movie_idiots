@@ -10,6 +10,8 @@ Original workspace: `D:\Projects\video-editor`.
 
 Build a reusable prompt-to-video toolchain for animated movie reviews, full movie revisits and Shorts for Movie Idiots. Include FFmpeg and an MCP server so Codex or Claude can research, author and produce videos through tools. The user requested research into how creators use Claude for these pipelines; sources and the initial architecture are in `docs/research-and-plan.md`.
 
+The user subsequently requested more Claude/ChatGPT video-tool research and a repository update. [docs/tools-and-workflows.md](docs/tools-and-workflows.md) records the expanded 5 October research: creator workflows, tools, local Hindi voice/alignment candidates, footage catalogs, animation/generation options, current ChatGPT MCP connection paths and an adoption/evaluation plan. These are researched candidates, not newly installed integrations.
+
 - Narration: **Hindi/Hinglish, conversational movie critic**. Use everyday spoken sentences, not literal translations of English essays or formal Hindi.
 - Services: **local tools by default, optional paid AI**. Host Codex/Claude can write the script without a separate LLM API key. The default studio template is only a scaffold.
 - Visuals: procure relevant images from the web, inspect them, record provenance, and edit multiple purposeful shots. Animation must involve the imagery and story elements, rather than a slideshow with a moving background.
@@ -130,6 +132,8 @@ These are proposed next steps, rather than claims that the user approved every f
 5. **Extend the scene/editor library.** Relationship diagrams, timelines, shot-analysis annotations, illustrated sets/characters, vertical layouts, and practical shot controls in the studio. Optional ComfyUI/image/video adapters should follow a concrete visual need and explicit provider/cost choice.
 6. **Make long productions resilient.** Persistent jobs, cancellation, cross-process project locks, resumable/cached scene renders and disk management.
 7. **Publishing integration later.** Add YouTube upload only after the production style and review workflow are settled and uploading is requested.
+
+The expanded research recommends the next implementation sprint focus on contact sheets/motion samples, shot-intent checks and word-triggered visual events, then a short Hindi voice comparison and recording alignment. PySceneDetect, local AI4Bharat voices, WhisperX, Remotion WebMCP, ComfyUI/Blender and editor/orchestration references are candidates with documented tradeoffs in `docs/tools-and-workflows.md`. Evaluate a 30–45 second sequence before committing to a larger integration. Do not assume any candidate is installed or that provider costs are authorized.
 
 ## Known limits and checks for the next agent
 
