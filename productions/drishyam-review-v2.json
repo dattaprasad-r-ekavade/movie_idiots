@@ -1,0 +1,88 @@
+{
+  "version":1,"id":"drishyam-review-v2","style":"cinematic",
+  "title":"Drishyam 3: फिर वही खेल… या कुछ नया? | Hindi Review",
+  "movie":"Drishyam: The Conclusion (2026)","format":"review","language":"Hindi/Hinglish",
+  "prompt":"Rebuild the rejected first video as a visually edited movie essay: natural spoken Hinglish, web-procured film/cast images, multiple short shots per narration segment, animated evidence-board storytelling, split-screen confrontations and kinetic words. No persistent channel branding, bullets, chapter slides or scene counters. Keep the research basis clear, avoid final twists, label historical franchise images and actor portraits. Use the user-authorized free online Hindi voice.",
+  "sources":[
+    {"url":"https://www.ndtv.com/entertainment/drishyam-3-review-come-for-ajay-devgn-stay-for-jaideep-ahlawat-3-stars-12129369","note":"Saibal Chatterjee, 2 October 2026. Performance/confrontation observations, paraphrased."},
+    {"url":"https://indianexpress.com/article/entertainment/movie-review/drishyam-3-movie-review-terrific-ajay-devgn-tabu-give-drishyam-the-conclusion-it-deserved-10903384/","note":"Shubhra Gupta, 2 October 2026. Tabu and score reservations, paraphrased."},
+    {"url":"https://www.livemint.com/mint-lounge/art-and-culture/drishyam-the-conclusion-film-review-ajay-devgn-jaideep-ahlawat-tabu-11791007724277.html","note":"Udita Jhunjhunwala, 3 October 2026. Plotting/pacing reservations, paraphrased."}
+  ],
+  "description":"Drishyam 3 में अजय देवगन और जयदीप अहलावत की टक्कर सबसे दिलचस्प चीज़ लग रही है। लेकिन क्या हर बार नया twist डाल देना काफी है?\n\nSpoiler-light Hindi/Hinglish analysis based on published reviews, not a first-hand screening review. No ending revealed. The video labels older Drishyam franchise images and actor portraits; those are not presented as new-film footage. Sources and web-image credits below. Free online synthetic Hindi narration; speech-service word timings used for captions.\n\n#Drishyam3 #HindiReview #MovieIdiots",
+  "tags":["Drishyam 3","Hindi review","Ajay Devgn","Jaideep Ahlawat","Tabu","Movie Idiots"],
+  "scenes":[
+    {
+      "id":"hook","kind":"hook","title":"फिर वही खेल?","duration":16,"bullets":[],
+      "narration":"दृश्यम की हर नई फिल्म में पुलिस बदल जाती है। विजय नहीं बदलता। इस बार सामने जयदीप अहलावत हैं। और हमारा सवाल फिर वही है... भाई, अब कौन सा जुगाड़ निकालेगा? लेकिन तीसरी बार ये खेल उतना मज़ेदार रहेगा?",
+      "shots":[
+        {"layout":"kinetic","asset":"@conclusion-jaideep","seconds":2.5,"headline":"फिर वही खेल?","motion":"impact","label":"Drishyam 3"},
+        {"layout":"full","asset":"@conclusion-ajay","seconds":3,"motion":"push","focal":{"x":50,"y":40}},
+        {"layout":"split","asset":"@conclusion-ajay","secondary":"@jaideep","seconds":4,"focal":{"x":42,"y":40},"label":"Film publicity × actor portrait","transition":"flash"},
+        {"layout":"evidence","asset":"@doorway","secondary":"@jaideep","seconds":4,"headline":"अब कौन सा जुगाड़?","label":"Franchise image + actor portrait"},
+        {"layout":"kinetic","asset":"@conclusion-jaideep","seconds":3,"headline":"तीसरी बार भी?","motion":"pull","transition":"wipe"}
+      ]
+    },
+    {
+      "id":"basis","kind":"analysis","title":"पहले साफ कर दें","duration":8,"bullets":[],
+      "narration":"पहले साफ कर दूँ, मैंने फिल्म नहीं देखी है। ये बात अभी आए रीव्यूज़ पढ़कर कर रहा हूँ। और हाँ, एंडिंग नहीं खोलेंगे।",
+      "shots":[
+        {"layout":"full","asset":"@conclusion-ajay","seconds":3,"motion":"pan-left","label":"Published reviews पर analysis"},
+        {"layout":"kinetic","asset":"@family","seconds":3,"headline":"Ending सुरक्षित","motion":"push"}
+      ]
+    },
+    {
+      "id":"the-game","kind":"analysis","title":"कैसे बचेगा?","duration":17,"bullets":[],
+      "narration":"दृश्यम का मज़ा सिर्फ़ इस बात में नहीं है कि विजय बचेगा या नहीं। मज़ा ये देखने में है कि वो बचेगा कैसे। पुलिस को लगता है, बस अब पकड़ लिया। और हमें इंतज़ार रहता है... अच्छा, अब इसके पास क्या है?",
+      "shots":[
+        {"layout":"full","asset":"@family","seconds":3,"motion":"pull","focal":{"x":45,"y":42},"label":"Earlier film • Drishyam (2015)"},
+        {"layout":"kinetic","asset":"@doorway","seconds":3,"headline":"कैसे बचेगा?","motion":"impact"},
+        {"layout":"evidence","asset":"@family","secondary":"@tabu","seconds":4,"headline":"बस अब पकड़ लिया?","label":"Earlier Drishyam franchise images"},
+        {"layout":"full","asset":"@doorway","seconds":3,"motion":"pan-right","focal":{"x":32,"y":30},"label":"Earlier franchise still"},
+        {"layout":"collage","asset":"@family","secondary":"@jaideep","seconds":4,"headline":"अगली चाल","label":"Franchise still × actor portrait","transition":"flash"}
+      ]
+    },
+    {
+      "id":"face-off","kind":"analysis","title":"अजय × जयदीप","duration":17,"bullets":[],
+      "narration":"अभी रीव्यूज़ में अजय और जयदीप की टक्कर की काफी तारीफ़ है। अजय के चेहरे से कुछ पढ़ना मुश्किल, और सामने ऐसा आदमी जो आसानी से छोड़ेगा नहीं। मेरे लिए यही सबसे दिलचस्प बात है। बड़े डायलॉग से ज़्यादा, दो लोगों के बीच वो चुप्पी वाला टेंशन।",
+      "shots":[
+        {"layout":"split","asset":"@conclusion-ajay","secondary":"@jaideep","seconds":4,"focal":{"x":45,"y":40},"headline":"अजय × जयदीप","label":"NDTV: performances की तारीफ़"},
+        {"layout":"full","asset":"@conclusion-ajay","seconds":3,"motion":"impact","focal":{"x":45,"y":35}},
+        {"layout":"full","asset":"@jaideep","seconds":3,"motion":"push","focal":{"x":50,"y":32},"label":"Jaideep Ahlawat • Actor portrait"},
+        {"layout":"full","asset":"@conclusion-jaideep","seconds":4,"transition":"wipe"},
+        {"layout":"kinetic","asset":"@jaideep","seconds":3,"headline":"चुप्पी वाला tension","motion":"pull"}
+      ]
+    },
+    {
+      "id":"two-families","kind":"analysis","title":"दूसरी तरफ भी परिवार है","duration":14,"bullets":[],
+      "narration":"और बस एक बात मत भूलना। विजय अपना परिवार बचा रहा है, ठीक। लेकिन दूसरी तरफ भी एक परिवार है। तब्बू का किरदार इसलिए ज़रूरी है। हमें विजय के लिए चीयर करना आसान लगता है। सामने वाले का दर्द याद रहे, तो कहानी थोड़ी चुभती भी है।",
+      "shots":[
+        {"layout":"full","asset":"@family","seconds":3,"motion":"pan-left","label":"Earlier film • Drishyam (2015)"},
+        {"layout":"full","asset":"@tabu","seconds":3,"motion":"push","label":"Tabu • Earlier Drishyam image","transition":"flash"},
+        {"layout":"evidence","asset":"@family","secondary":"@tabu","seconds":4,"headline":"दोनों तरफ परिवार","label":"Franchise reference images • Interpretation"},
+        {"layout":"full","asset":"@tabu","seconds":3,"motion":"pull","label":"Indian Express: Tabu का emotional असर"}
+      ]
+    },
+    {
+      "id":"too-many-twists","kind":"analysis","title":"बस ट्विस्ट पे ट्विस्ट?","duration":18,"bullets":[],
+      "narration":"लेकिन बस ट्विस्ट पे ट्विस्ट डाल देने से फिल्म अच्छी नहीं हो जाती। कहानी इतनी घुमा दो कि आखिर में बैठकर समझानी पड़े, तो मज़ा कम हो जाता है। मिंट के रीव्यू में यही शिकायत है। और बैकग्राउंड म्यूज़िक बहुत ज़ोर से बोले, तो वो अलग। सस्पेंस महसूस होना चाहिए, हर बार बताना नहीं पड़ना चाहिए।",
+      "shots":[
+        {"layout":"kinetic","asset":"@doorway","seconds":3,"headline":"Twist पे twist?","motion":"impact","transition":"wipe"},
+        {"layout":"evidence","asset":"@family","secondary":"@tabu","seconds":4,"headline":"इतना घुमाना ज़रूरी?","label":"Mint: plotting पर सवाल • Reference images"},
+        {"layout":"collage","asset":"@jaideep","secondary":"@doorway","seconds":3,"label":"Actor portrait + franchise still"},
+        {"layout":"waveform","asset":"@tabu","seconds":4,"headline":"Volume ≠ suspense","label":"Indian Express: loud background score"},
+        {"layout":"full","asset":"@doorway","seconds":3,"motion":"pull","label":"Earlier Drishyam franchise still"}
+      ]
+    },
+    {
+      "id":"verdict","kind":"outro","title":"तो देखनी चाहिए?","duration":16,"bullets":[],
+      "narration":"तो अभी जो तस्वीर बन रही है, उसमें दृश्यम के फैंस के लिए काफी कुछ है। अजय और जयदीप की टक्कर खासकर। बस हर नया ट्विस्ट एकदम परफेक्ट होगा, ये उम्मीद मत रखो। तुमने फिल्म देख ली? बिना एंडिंग खोले बताओ... इस बार विजय का जुगाड़ चला या नहीं?",
+      "shots":[
+        {"layout":"split","asset":"@conclusion-ajay","secondary":"@jaideep","seconds":4,"headline":"Fans के लिए?","label":"Research-based verdict"},
+        {"layout":"collage","asset":"@doorway","secondary":"@tabu","seconds":3,"label":"Earlier franchise images","transition":"flash"},
+        {"layout":"kinetic","asset":"@family","seconds":3,"headline":"हर twist perfect?","motion":"pull"},
+        {"layout":"full","asset":"@jaideep","seconds":3,"motion":"pan-right","headline":"तुमने देखी?","label":"Jaideep Ahlawat • Actor portrait"},
+        {"layout":"kinetic","seconds":2,"headline":"अब तुम्हारी बारी","label":"Movie Idiots • बिना spoilers के बताओ","transition":"wipe"}
+      ]
+    }
+  ]
+}

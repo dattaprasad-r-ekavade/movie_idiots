@@ -1,0 +1,6 @@
+[mcp_servers.movie-idiots-studio]
+command = "node"
+args = ["D:/Projects/video-editor/node_modules/tsx/dist/cli.mjs", "D:/Projects/video-editor/src/mcp.ts"]
+cwd = "D:/Projects/video-editor"
+startup_timeout_sec = 30
+tool_timeout_sec = 120

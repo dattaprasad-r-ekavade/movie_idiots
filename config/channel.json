@@ -1,0 +1,11 @@
+{
+  "name": "Movie Idiots",
+  "handle": "@movieidiots5542",
+  "url": "https://www.youtube.com/@movieidiots5542",
+  "tagline": "Good films. Bad takes. Honest conversations.",
+  "language": "Hindi/Hinglish",
+  "tone": "Talk like a Hindi/Hinglish movie fan speaking to a friend. Short, direct sentences: देखो, बस, मतलब, भाई, ये, लेकिन. Cinema words such as scene, acting, twist and background music are natural. No translated essay Hindi: avoid मेरी कसौटी, हमारी पढ़त, नैतिक उलझन, संयमित मौजूदगी. Specific criticism, light humour when it fits, no fake screening claims. Use Devanagari for Hindi speech and readable familiar cinema terms.",
+  "colors": {"background": "#111319", "accent": "#f2ba4b", "ink": "#f5f1e7"},
+  "fps": 30,
+  "voice": ""
+}

@@ -1,0 +1,41 @@
+import './env';
+import {McpServer} from '@modelcontextprotocol/sdk/server/mcp.js';
+import {StdioServerTransport} from '@modelcontextprotocol/sdk/server/stdio.js';
+import {z} from 'zod';
+import {channel,listProjects,loadProject,saveProject} from './paths';
+import {brief,createPlan} from './planner';
+import {doctor,exportPackage,inspect,preview,render} from './pipeline';
+import {attachNarration,importAsset,narrate,trimClip} from './media';
+import {enqueue,getJob} from './jobs';
+import {discoverWebImages,downloadImage,searchImages} from './web-assets';
+import {createSoundDesign} from './sound-design';
+
+const server=new McpServer({name:'movie-idiots-studio',version:'0.1.0'});
+const id=z.string().regex(/^[a-z0-9][a-z0-9-]{0,79}$/);
+function tool(name:string,description:string,schema:z.ZodRawShape,fn:(a:any)=>Promise<unknown>) {
+  server.tool(name,description,schema,async a=>{try{return {content:[{type:'text' as const,text:JSON.stringify(await fn(a),null,2)}]};}catch(e){return {isError:true,content:[{type:'text' as const,text:e instanceof Error?e.message:String(e)}]};}});
+}
+tool('doctor','Check FFmpeg, FFprobe, narration voices and configured providers',{},()=>doctor());
+tool('channel_profile','Read the Movie Idiots channel brand, language and voice configuration',{},()=>channel());
+tool('list_projects','List saved movie video projects',{},()=>listProjects());
+tool('get_project','Read a saved storyboard manifest',{id},a=>loadProject(a.id));
+const planning={prompt:z.string().max(20000),movie:z.string().min(1).max(160),format:z.enum(['review','revisit','short']),language:z.string().optional(),minutes:z.number().min(.15).max(60).default(5),notes:z.string().max(40000).default('')};
+tool('planning_brief','Get the script/storyboard instructions. Use your own model to write the manifest, then write_project; no API key needed.',planning,a=>brief(a.prompt,a.movie,a.format,a.language,a.minutes,a.notes));
+tool('create_project','Create a scaffold or call optional Anthropic/Ollama script generation. Template mode produces placeholders, not a factual review.',{...planning,provider:z.enum(['template','anthropic','ollama']).default('template')},a=>createPlan(a));
+tool('write_project','Validate and save a full project manifest. Give an object matching the schema in planning_brief. Update existing projects by using their ID.',{project:z.record(z.unknown())},a=>saveProject(a.project));
+tool('import_asset','Copy a local image, video or audio into a project with a source/credit note',{id,source:z.string(),type:z.enum(['image','video','audio']),credit:z.string()},a=>importAsset(a.id,a.source,a.type,a.credit));
+tool('search_images','Search Wikimedia Commons images with attribution/license metadata. For film stills also use host web image search and discover_web_images.',{query:z.string().min(2).max(200),limit:z.number().int().min(1).max(10).default(6)},a=>searchImages(a.query,a.limit));
+tool('discover_web_images','Find candidate image URLs in a public source page. Verify the actual film/year and inspect each selected image before use.',{sourceUrl:z.string().url()},a=>discoverWebImages(a.sourceUrl));
+tool('download_image','Download an image from a verified public web URL into the project. Saves source, credit, rights status and dimensions. Attribution alone does not grant permission.',{id,imageUrl:z.string().url(),sourceUrl:z.string().url(),credit:z.string().min(1),rights:z.string().min(1),label:z.string().min(1)},a=>downloadImage(a.id,a));
+tool('create_sound_design','Generate original quiet underscore and short transition effects locally; attach to project. No external song/sample is used.',{id},a=>createSoundDesign(a.id));
+tool('trim_clip','Trim an imported clip with FFmpeg; drops source audio and fits 1080p',{id,asset:z.string(),start:z.number().min(0),duration:z.number().positive().max(180)},a=>Promise.resolve(enqueue('Trim clip',()=>trimClip(a.id,a.asset,a.start,a.duration))));
+tool('attach_narration','Attach imported narration to a scene and measure its duration with FFprobe',{id,sceneId:z.string(),asset:z.string()},a=>attachNarration(a.id,a.sceneId,a.asset));
+tool('narrate_project','Generate narration and measure durations. Windows is local; Edge is opt-in free online speech with word-timed captions; ElevenLabs is optional paid cloud. Returns a job ID.',{id,provider:z.enum(['windows','edge','elevenlabs']).default('windows')},a=>Promise.resolve(enqueue('Narration',()=>narrate(a.id,a.provider))));
+tool('preview_project','Render a preview PNG for every scene and a thumbnail; returns a job ID',{id},a=>Promise.resolve(enqueue('Storyboard preview',()=>preview(a.id))));
+tool('render_project','Render MP4, normalize audio, optionally mix/duck imported music, export captions and metadata; returns a job ID',{id,draft:z.boolean().default(false),captions:z.boolean().default(true),music:z.string().optional()},a=>Promise.resolve(enqueue('Render video',progress=>render(a.id,a,progress))));
+tool('job_status','Read a background job in this MCP process. Keep the MCP server alive while a job runs.',{jobId:z.string()},a=>Promise.resolve(getJob(a.jobId)));
+tool('export_package','Export script, estimated SRT/VTT, chapter drafts, YouTube metadata and visual prompts',{id},a=>exportPackage(a.id));
+tool('inspect_render','Check codecs, dimensions, duration and missing narration in a rendered MP4',{id,draft:z.boolean().default(false)},a=>inspect(a.id,a.draft?'draft.mp4':'video.mp4'));
+server.resource('channel','movieidiots://channel',async uri=>({contents:[{uri:uri.href,mimeType:'application/json',text:JSON.stringify(await channel(),null,2)}]}));
+server.prompt('movie_review',{movie:z.string(),direction:z.string().default('Create a spoken Hindi/Hinglish review with an actual visual edit')},async({movie,direction})=>({messages:[{role:'user',content:{type:'text',text:`Use the movie-idiots-studio tools to create a video about ${movie}. ${direction}. Read channel_profile and planning_brief. Research film details and find relevant images with host search, search_images or discover_web_images. Use download_image to collect selected images with source, credit and rights status; inspect the images and verify the actual film/year. Write an original style:cinematic manifest with natural spoken Hinglish and multiple 2–5 second shots per narration segment. Vary images, split screens, collages, animated evidence boards and kinetic words. No persistent branding, scene counters or presentation bullets. State research-based analysis when you have not watched the film. Generate narration with the selected provider: windows is local, edge is free online with word-timed captions and needs user authorization. Optionally create_sound_design for original music/effects. Preview every shot, render a draft, review it, then render the requested final export. Keep the MCP process alive and read job_status until each job completes. Report absolute output paths, source/rights records and the actual caption timing method.`}}]}));
+await server.connect(new StdioServerTransport());

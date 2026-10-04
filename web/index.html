@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Movie Idiots — Studio</title><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/"><span class="brand-icon">mi<span>●</span></span><span>MOVIE<br>IDIOTS <small>STUDIO</small></span></a>
+    <div class="workspace-label">YOUR WORKSPACE</div>
+    <button id="new-project" class="nav-item active"><span>＋</span> New production</button>
+    <div class="workspace-label project-label">PRODUCTIONS <button id="refresh" title="Refresh productions">↻</button></div>
+    <div id="project-list" class="project-list"></div>
+    <div class="sidebar-bottom"><span class="status-dot"></span> LOCAL STUDIO <button id="doctor" title="Check your tools">↗</button><p>Stories worth a second look.</p><a href="https://www.youtube.com/@movieidiots5542" target="_blank" rel="noreferrer">@movieidiots5542 ↗</a></div>
+  </aside>
+  <main>
+    <header><div><span class="eyebrow">THE CUTTING ROOM</span><span class="header-rule"></span><span class="subtle">Prompt → Picture</span></div><span class="pill">LOCAL FIRST <span>●</span></span></header>
+    <section id="create-view">
+      <div class="hero"><div class="eyebrow gold">FOR THE LOVE OF FILM</div><h1>Your next take.<br><span>Made into motion.</span></h1><p>Turn a thought about a film into an animated review,<br>a full revisit, or a sharp little Short.</p><div class="hero-art" aria-hidden="true"><div class="reel"><div></div><div></div><div></div><div></div><div></div><i></i></div><span>FRAME BY FRAME.<br>TAKE BY TAKE.</span></div></div>
+      <form id="create-form" class="create-card">
+        <div class="card-heading"><span class="step">01</span><h2>Start with an idea</h2><span class="subtle">You direct. The tools do the heavy lifting.</span></div>
+        <label>THE FILM<input name="movie" required placeholder="e.g. Andhadhun, The Dark Knight, Gunda…" maxlength="160"></label>
+        <div class="format-options"><label><input type="radio" name="format" value="review" checked><span><b>◉ &nbsp; Movie review</b><small>A fresh take, spoiler-light</small></span></label><label><input type="radio" name="format" value="revisit"><span><b>↺ &nbsp; Full revisit</b><small>The story, the craft, the legacy</small></span></label><label><input type="radio" name="format" value="short"><span><b>▯ &nbsp; YouTube Short</b><small>One idea, under a minute</small></span></label></div>
+        <label>YOUR DIRECTION<textarea name="prompt" required rows="4" placeholder="A Hindi/Hinglish revisit of Andhadhun. Focus on unreliable narration, moral ambiguity, and why the ending still gets people talking. Dry humour, clear analysis, full spoilers."></textarea></label>
+        <div class="form-row"><label>LANGUAGE<select name="language"><option>Hindi/Hinglish</option><option>Hindi</option><option>English</option></select></label><label>TARGET MINUTES<input name="minutes" type="number" min="0.15" max="60" step="0.05" value="5"></label><label>SCRIPT WORKFLOW<select name="provider"><option value="template">Storyboard scaffold · local</option><option value="ollama">Ollama · local AI</option><option value="anthropic">Claude API · optional</option></select></label></div>
+        <details><summary>Research notes & source links</summary><textarea name="notes" rows="4" placeholder="Paste your notes, observations and source URLs. Scripts should use verified details and your own opinions."></textarea></details>
+        <div class="form-footer"><p>Use Codex or Claude with the MCP server<br>to write scripts from your existing chat.</p><button class="primary" type="submit">Build the storyboard <span>→</span></button></div>
+      </form>
+      <div class="starter-strip"><div><span class="step">▶</span><b>See the studio in action</b><span class="subtle">Start with an original motion graphics demo.</span></div><button id="demo" class="text-button">Open demo →</button></div>
+      <div class="workflow"><div><span>01</span><b>Write the take</b><p>Research, script & storyboard</p></div><div><span>02</span><b>Find the voice</b><p>Local Hindi voice or your own recording</p></div><div><span>03</span><b>Make it move</b><p>Animation, captions & scene previews</p></div><div><span>04</span><b>Roll the credits</b><p>MP4, thumbnail & YouTube metadata</p></div></div>
+    </section>
+    <section id="editor-view" hidden>
+      <div class="editor-header"><div><span class="eyebrow gold" id="project-kind"></span><h1 id="project-title"></h1><p id="project-summary"></p></div><button id="save" class="primary">Save storyboard</button></div>
+      <div class="toolbar"><button data-action="narrate">01 &nbsp; Generate voice</button><select id="voice-provider"><option value="windows">Local Windows voice</option><option value="edge">Edge Hindi · free online</option><option value="elevenlabs">ElevenLabs</option></select><button data-action="preview">02 &nbsp; Preview scenes</button><button data-action="draft">03 &nbsp; Render draft</button><button data-action="render">04 &nbsp; Export final ↗</button></div>
+      <p class="subtle">Online voices send narration to the selected speech service. Local Windows voice stays on this machine.</p>
+      <div class="editor-options"><label><input type="checkbox" id="captions" checked> Animated captions</label><label>Music asset <input id="music" placeholder="assets/music.mp3 (optional)"></label><button id="export" class="text-button">Export script & metadata</button></div>
+      <div id="job-panel" class="job-panel" hidden><div><b id="job-label"></b><span id="job-status"></span></div><progress id="job-progress" max="1" value="0"></progress></div>
+      <div id="result" class="result" hidden></div>
+      <div id="scaffold-warning" class="notice" hidden>This is a storyboard scaffold. Replace the placeholder narration with researched analysis, or ask Claude to write this project through MCP.</div>
+      <div class="editor-grid"><div id="scene-list" class="scene-list"></div><div class="scene-editor"><div class="scene-preview" id="scene-preview"><span>Preview this storyboard to see scene frames.</span></div><div id="shot-previews" class="shot-previews"></div><div id="scene-fields"></div></div></div>
+      <details class="panel"><summary>Find and collect web images</summary><p class="subtle">Find images on a source page or search Wikimedia Commons. Check the film/year and rights before using an image.</p><div class="import-row"><input id="web-page" placeholder="Source article URL"><button id="discover-images">Find page images</button><input id="image-query" placeholder="Commons search: actor, place, subject"><button id="search-images">Search Commons</button></div><div id="image-candidates"></div><label>IMAGE URL<input id="web-image-url" placeholder="Direct JPEG, PNG or WebP URL"></label><label>SOURCE PAGE<input id="web-source-url" placeholder="Page that identifies the image"></label><label>IMAGE LABEL<input id="web-image-label" placeholder="Film/year or actor portrait"></label><label>CREDIT<input id="web-image-credit" placeholder="Creator / publication"></label><label>RIGHTS STATUS<input id="web-image-rights" placeholder="Verified license, permission, or accurate unverified status"></label><button id="download-image">Collect image</button><p id="web-image-result" class="subtle"></p></details>
+      <details class="panel"><summary>Import a local image, video, or recorded voice</summary><div class="import-row"><input id="asset-source" placeholder="Absolute path to your local file"><select id="asset-type"><option value="image">Image</option><option value="video">Video</option><option value="audio">Audio</option></select><input id="asset-credit" placeholder="Source / credit / permission note"><button id="import-asset">Import</button></div><p id="import-result" class="subtle"></p></details>
+      <details class="panel"><summary>Full storyboard JSON & sources</summary><p class="subtle">Edit all scenes, source URLs and YouTube metadata. Apply JSON before saving.</p><textarea id="manifest" rows="14" spellcheck="false"></textarea><button id="apply-json">Apply JSON</button></details>
+    </section>
+    <section id="tools-view" hidden><div class="editor-header"><h1>Your tools.</h1><button id="back" class="text-button">← Back to studio</button></div><pre id="tools-output"></pre></section>
+    <footer>AN ORIGINAL TAKE, EVERY TIME. <span>MOVIE IDIOTS STUDIO · v0.1</span></footer>
+  </main><div id="toast" role="status"></div><script type="module" src="/app.js"></script>
+</body></html>

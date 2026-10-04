@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "id": "drishyam-conclusion-review-20261005",
+  "title": "Drishyam 3: आख़िरी चाल कितनी दमदार? | Hindi Review | Movie Idiots",
+  "movie": "Drishyam: The Conclusion (2026)",
+  "format": "review",
+  "language": "Hindi/Hinglish",
+  "prompt": "Create a spoiler-light, research-based Hindi/Hinglish critical review of the recent Hindi film Drishyam: The Conclusion for Movie Idiots. Use original animated graphics and local Hindi narration. Attribute published critical opinions and distinguish our interpretation from first-hand viewing. Do not reveal the ending or use film footage. Export a complete 1080p video with captions, thumbnail and YouTube metadata.",
+  "sources": [
+    {"url": "https://www.ndtv.com/entertainment/drishyam-3-review-come-for-ajay-devgn-stay-for-jaideep-ahlawat-3-stars-12129369", "note": "Saibal Chatterjee, 2 October 2026: credits, narrative structure and performances. Paraphrased with attribution; no ending reproduced."},
+    {"url": "https://indianexpress.com/article/entertainment/movie-review/drishyam-3-movie-review-terrific-ajay-devgn-tabu-give-drishyam-the-conclusion-it-deserved-10903384/", "note": "Shubhra Gupta, 2 October 2026: Tabu, family consequences and loud background score. Paraphrased with attribution."},
+    {"url": "https://www.livemint.com/mint-lounge/art-and-culture/drishyam-the-conclusion-film-review-ajay-devgn-jaideep-ahlawat-tabu-11791007724277.html", "note": "Udita Jhunjhunwala, 3 October 2026: release date, elaborate plotting and pacing reservations. Paraphrased with attribution."},
+    {"url": "https://www.hollywoodreporterindia.com/reviews/theatrical/drishyam-the-conclusion-movie-review-ajay-devgn-led-franchise-leaves-on-a-bollywood-high", "note": "The Hollywood Reporter India, 2 October 2026: independent Hindi treatment and mainstream theatrical appeal. Paraphrased with attribution."}
+  ],
+  "description": "Drishyam: The Conclusion — आख़िरी चाल कितनी दमदार? Movie Idiots का spoiler-light Hindi/Hinglish review: Ajay Devgn और Jaideep Ahlawat की टक्कर, कहानी की नैतिक उलझन और suspense बनाम complicated plotting.\n\nयह published reviews पर आधारित critical analysis है; first-hand screening review नहीं। किसी ending या final twist का खुलासा नहीं। Sources नीचे दिए गए हैं। Narration स्थानीय Hindi text-to-speech से बनी है; visuals मौलिक animated graphics हैं। Captions की timing अनुमानित है।\n\nआपके लिए Drishyam की ताकत क्या है: twist या characters? Comment में बताइए।\n\n#Drishyam3 #HindiReview #MovieIdiots",
+  "tags": ["Drishyam 3", "Drishyam The Conclusion", "Hindi movie review", "Hinglish review", "Ajay Devgn", "Jaideep Ahlawat", "Tabu", "Movie Idiots", "spoiler light review"],
+  "scenes": [
+    {
+      "id": "hook", "kind": "hook", "visual": "chess", "title": "DRISHYAM 3", "subtitle": "आख़िरी चाल कितनी दमदार?", "bullets": ["Spoiler-light Hindi review"], "duration": 12,
+      "narration": "विजय सलगांवकर की आख़िरी बाज़ी। सवाल सिर्फ़ ये नहीं कि वो बचेगा कैसे। सवाल ये है कि तीसरी बार वही खेल हमें बाँध पाएगा या नहीं। चलिए, बिना आख़िरी ट्विस्ट खोले बात करते हैं।",
+      "visualPrompt": "Original gold line-art chess knight on a dark board; gently animated. No film stills."
+    },
+    {
+      "id": "context", "kind": "title", "visual": "reel", "title": "किस आधार पर review?", "subtitle": "2 अक्टूबर 2026 • निर्देशक: अभिषेक पाठक", "bullets": ["Published reviews + हमारी analysis", "Ending सुरक्षित"], "duration": 15,
+      "narration": "दो अक्टूबर को रिलीज़ हुई दृश्यम, द कन्क्लूज़न, अभिषेक पाठक की हिंदी फ़िल्म है। ये analysis प्रकाशित समीक्षाओं पर आधारित है; मैंने पूरी फ़िल्म नहीं देखी है। क्रिटिक्स की राय और हमारी व्याख्या को अलग रखेंगे।",
+      "visualPrompt": "Slow rotating original film reel; clear release and research context."
+    },
+    {
+      "id": "premise", "kind": "chapter", "visual": "evidence", "title": "सबूत बनाम कहानी", "subtitle": "Investigation से courtroom तक", "bullets": ["पुराना राज़, नया दबाव"], "duration": 15,
+      "narration": "एनडीटीवी के मुताबिक़, शुरुआत जाँच की है और बाद में लड़ाई अदालत तक जाती है। मेरा सवाल ये है: दर्शक सबूत के साथ चल रहा है, या विजय की बनाई कहानी के साथ? इसी शक में इस सीरीज़ का आकर्षण है।",
+      "visualPrompt": "Original evidence folder, pages and moving magnifying glass."
+    },
+    {
+      "id": "performances", "kind": "analysis", "visual": "chess", "title": "ख़ामोशी की टक्कर", "subtitle": "अजय देवगन × जयदीप अहलावत", "bullets": ["NDTV: confrontations एक बड़ी ताकत"], "duration": 18,
+      "narration": "एनडीटीवी के सैबल चटर्जी, जयदीप अहलावत को बड़ी ताकत मानते हैं; अजय की संयमित मौजूदगी भी सराहते हैं। इस राय से मेरी उम्मीद एक्टिंग की जुगलबंदी पर बनती है। थ्रिलर में हर बार चिल्लाना ज़रूरी नहीं। सामने वाला कितना समझ चुका है, ये डर ज़्यादा असर कर सकता है।",
+      "visualPrompt": "Chess knight slowly moving over an original board, suggesting a confrontation."
+    },
+    {
+      "id": "moral-question", "kind": "analysis", "visual": "scales", "title": "हीरो किसके लिए?", "subtitle": "परिवार की रक्षा और न्याय का सवाल", "bullets": ["Indian Express: तब्बू का emotional असर"], "duration": 17,
+      "narration": "इंडियन एक्सप्रेस की शुभ्रा गुप्ता, तब्बू के भावनात्मक असर को अहम मानती हैं। यहाँ हमारी पढ़त है: परिवार बचाने की कहानी, दूसरे परिवार के दर्द को मिटा नहीं देती। विजय के लिए तालियाँ बजाते हुए भी ये असुविधा बची रहे, तभी नैतिक उलझन दिलचस्प बनती है।",
+      "visualPrompt": "Animated original scales of justice with a gentle changing balance."
+    },
+    {
+      "id": "hindi-treatment", "kind": "analysis", "visual": "reel", "title": "अपनी राह चुनना", "subtitle": "सिर्फ़ remake वाली बहस से आगे", "bullets": ["THR India: mainstream cinema का आकर्षण"], "duration": 14,
+      "narration": "द हॉलीवुड रिपोर्टर इंडिया, हिंदी फ़िल्म की अपनी राह और मेनस्ट्रीम मनोरंजन को सकारात्मक पढ़ता है। मेरी कसौटी सीधी है: बदलाव सिर्फ़ नया ट्विस्ट जोड़ता है, या किरदारों की लड़ाई को आगे बढ़ाता है? नयापन तभी काम का है जब उसके पीछे वजह हो।",
+      "visualPrompt": "Original gold film reel with restrained rotation."
+    },
+    {
+      "id": "reservations", "kind": "analysis", "visual": "waveform", "title": "ट्विस्ट का बोझ?", "subtitle": "Plotting और background score पर सवाल", "bullets": ["Mint: कहानी कुछ ज़्यादा engineered", "Indian Express: बहुत ऊँचा score"], "duration": 18,
+      "narration": "लेकिन तस्वीर पूरी तरह चमकदार नहीं। मिंट की उदिता झुनझुनवाला को कुछ हिस्सों में प्लॉट ज़रूरत से ज़्यादा गढ़ा हुआ लगता है। इंडियन एक्सप्रेस ऊँचे बैकग्राउंड स्कोर पर सवाल करता है। मेरे लिए चिंता यही है: अगर हर मोड़ समझाने और तनाव सुनाने की कोशिश हो, तो दर्शक को खुद खोजने की जगह कम मिलती है।",
+      "visualPrompt": "Original animated sound waveform; bars pulse gently rather than aggressively."
+    },
+    {
+      "id": "verdict", "kind": "analysis", "visual": "scales", "title": "किसे देखनी चाहिए?", "subtitle": "Franchise fans के लिए मज़बूत संभावना", "bullets": ["Acting और mind games के लिए", "Plot की सुविधा पर उम्मीदें संतुलित"], "duration": 18,
+      "narration": "इन समीक्षाओं को साथ पढ़ें तो फ़्रैंचाइज़ी के चाहने वालों के लिए ये दिलचस्प विकल्प है, खासकर अजय और जयदीप की टक्कर के लिए। बिल्कुल सहज और कसी हुई कहानी चाहने वालों को सावधानी रखनी चाहिए। हमारा रिसर्च वाला निष्कर्ष: एक्टिंग और माइंड गेम्स का आकर्षण है, लेकिन प्लॉट की सुविधा पर सवाल भी हैं।",
+      "visualPrompt": "Original justice scales returning toward a balanced position."
+    },
+    {
+      "id": "outro", "kind": "outro", "visual": "chess", "title": "Twist या characters?", "subtitle": "आपकी राय • @movieidiots5542", "bullets": [], "duration": 10,
+      "narration": "आपके लिए दृश्यम की असली ताकत क्या है? आख़िरी ट्विस्ट, या किरदारों की ये बेचैन करने वाली लड़ाई? कमेंट में बताइए, और ending के spoilers से बचिए। ये था मूवी इडियट्स।",
+      "visualPrompt": "Original chess knight and brand sign-off."
+    }
+  ]
+}
