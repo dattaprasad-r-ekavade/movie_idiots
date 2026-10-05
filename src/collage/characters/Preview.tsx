@@ -37,10 +37,10 @@ export function MascotSheet() {
 }
 
 /** Transparent background for exporting a high-resolution PNG. */
-export function MascotStill() {
+export function MascotStill({pose = 'wave', expression = 'happy'}: {pose?: PoseName; expression?: Expression}) {
   return (
     <AbsoluteFill style={{alignItems: 'center', justifyContent: 'center'}}>
-      <TVHead width={600} pose={POSES.wave} expression="happy" idle={false} />
+      <TVHead width={600} pose={POSES[pose]} expression={expression} idle={false} />
     </AbsoluteFill>
   );
 }

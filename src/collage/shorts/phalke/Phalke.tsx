@@ -10,6 +10,7 @@ import {
   Audience, Beam, Bow, Coin, CookingPot, Crown, DevTray, Feather, FilmStrip, Heroine, LotusMedal, MovieCamera, Necklace, PeaPlant, Pot, Reel, Screen, Ship, Sunburst, Waiter, useFlicker, useSteps,
 } from '../../art';
 import {clock, type Clock, type Timing} from '../../timeline';
+import {Presenter} from '../../characters';
 
 export type ShortProps = {timing: Timing; captions: boolean; music: boolean};
 type BeatProps = {c: Clock; from: number; to: number};
@@ -53,6 +54,22 @@ function Hook({c, from, to, line}: BeatProps & {line: string}) {
           <Stamp text="एक आदमी!" at={man} size={118} />
         </Place>
       </Shake>
+      {line === 'loop' && (
+        <>
+          <Presenter
+            at="bottom-right"
+            width={270}
+            enter={man - 14}
+            talk={false}
+            cues={[
+              {at: man - 14, expression: 'neutral'},
+              {at: man, expression: 'shock', pose: 'think'},
+              {at: man + 20, pose: 'facepalm', expression: 'angry'},
+            ]}
+          />
+          <Sfx at={man - 14} src="pop.wav" volume={0.5} />
+        </>
+      )}
       <Sfx at={4} src="whoosh.wav" volume={0.35} />
       <Sfx at={man - 2} src="pop.wav" volume={0.7} />
       <Sfx at={man} src="stamp.wav" volume={0.9} />
@@ -378,6 +395,18 @@ function Casting({c, from}: BeatProps) {
           </Place>
         ))}
       </Shake>
+      <Presenter
+        at="bottom-left"
+        width={290}
+        enter={ready - 18}
+        talk={false}
+        cues={[
+          {at: ready - 18, expression: 'skeptic'},
+          {at: stamps[1], pose: 'shrug', expression: 'sad'},
+          {at: no + 6, expression: 'angry'},
+        ]}
+      />
+      <Sfx at={ready - 18} src="pop.wav" volume={0.5} />
       <Sfx at={2} src="paper.wav" volume={0.6} />
       {stamps.map((at, i) => (
         <Sfx key={i} at={at} src="stamp.wav" volume={0.8} />

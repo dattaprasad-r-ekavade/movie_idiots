@@ -5,5 +5,5 @@
     "resolveJsonModule": true, "skipLibCheck": true, "noEmit": true,
     "types": ["node"]
   },
-  "include": ["src", "tests", "scripts/short.ts", "scripts/still.ts"]
+  "include": ["src", "tests", "scripts/short.ts", "scripts/still.ts", "scripts/brand.ts"]
 }

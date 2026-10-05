@@ -68,11 +68,38 @@ Alternative: `npm run short -- voice phalke --edge` synthesizes each line with M
 
 ## Mascot: "Movie Idiot" (TV-head presenter)
 
-`src/collage/characters/TVHead.tsx` is a vector rig of the channel avatar's suited TV-head figure, so it renders sharp at any size.
+The suited TV-head figure is the channel's own avatar; the channel owns the character. `src/collage/characters/` turns it into a reusable vector rig that renders sharp at any size.
 
-- **Poses:** idle, wave, point, shrug, present, facepalm, thumbsUp, think. Blend between them with `usePose([{at, pose}, …])` (spring between keyframes).
-- **Screen:** expressions (neutral, happy, shock, skeptic, wink, sad, angry); `mouth` 0..1 for talking (`useMouth(timing)` flaps it per narration word); `screen="static"` for a glitch; any React node to show an icon or prop on the screen.
-- **Idle life:** breathing, sway, antenna wobble, blinking, power LED, CRT scanlines and flicker.
-- **Previews:** `npx tsx scripts/still.ts mascot-sheet out.png` (character sheet), `mascot-still out.png --scale 4` (transparent 2400×4000 PNG), and `mascot-demo` (9 s motion test; render with `npx remotion render src/collage/index.tsx mascot-demo out.mp4`).
+![Character sheet](mascot-sheet.jpg)
 
-v1 was drawn from the avatar's description (suited figure, TV/monitor head); colours and details still need matching against the actual avatar image.
+### Use it in any video
+
+```tsx
+import {Presenter} from '../../characters';
+
+<Presenter
+  at="bottom-left"            // 'bottom-left' | 'bottom-right' | 'center' | {x, y}; bottom anchors sit just above the caption band
+  width={290}
+  enter={ready - 18}          // local frame of the beat when it pops in (exit={…} pops it out)
+  talk={false}                // true + timing={timing} timeOffset={from}: mouth flaps on narration words
+  cues={[
+    {at: ready - 18, expression: 'skeptic'},
+    {at: stamps[1], pose: 'shrug', expression: 'sad'},
+    {at: no + 6, expression: 'angry'},
+    {at: 90, screen: 'static'},  // or any React node shown on the TV screen
+  ]}
+/>
+```
+
+- **Poses:** idle, wave, point, shrug, present, facepalm, thumbsUp, think (spring-blended between cues).
+- **Expressions:** neutral, happy, shock, skeptic, wink, sad, angry. Blinking, breathing, sway, antenna wobble and screen flicker are automatic.
+- **Lower level:** `TVHead` takes explicit `pose`, `expression`, `mouth` and `screen`; `usePose` and `useMouth` drive them.
+- **In the golden sample:** shrugs at the "नहीं" stamps (casting beat), shock then facepalm on the loop reveal.
+
+Use it as a reactor and host, not on every beat: one or two cameos per Short; host segments in long form.
+
+### Brand images
+
+`npm run brand` regenerates transparent 2400×4000 PNGs in `public/brand/` (wave, idle, point, shrug, facepalm, thumbs-up) and `docs/mascot-sheet.jpg`. Use them for thumbnails, channel art and community posts. Other previews: `npx tsx scripts/still.ts mascot-still out.png --scale 4 --props '{"pose":"point","expression":"skeptic"}'`, and the 9 s motion test `mascot-demo` (`npx remotion render src/collage/index.tsx mascot-demo out.mp4`).
+
+v1 was drawn from the avatar's description; match colours and details to the original avatar image when it can be loaded here.
