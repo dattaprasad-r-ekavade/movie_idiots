@@ -1,6 +1,6 @@
 # Movie Idiots — project handoff and continuation plan
 
-Updated 5 October 2026 (creative correction: generated exports are pitfalls, not house style). Start here when resuming in another checkout or agent session.
+Updated 6 October 2026 (creative correction: generated exports are pitfalls, not house style). Start here when resuming in another checkout or agent session.
 
 Repository: https://github.com/dattaprasad-r-ekavade/movie_idiots
 Channel: https://www.youtube.com/@movieidiots5542
@@ -18,7 +18,7 @@ The user subsequently requested more Claude/ChatGPT video-tool research and a re
 - Branding: no repeated channel name, persistent headers, slide bullets or scene counters. One short sign-off is enough.
 - Voice: the user explicitly chose **free online Hindi speech for the remake**. Edge narration is implemented; Windows speech remains the local default. Keep provider choice explicit for subsequent productions.
 - The user requested a recent film for the pilot; the researched example is *Drishyam: The Conclusion*. The script clearly states that it is based on published reviews, without claiming a screening.
-- Uploading to YouTube has **not** been requested/performed as part of the implementation. Produce an export package for review.
+- On 6 October the user requested merging the experimental Short branch, checking its video/content, researching upload tools, and uploading to Movie Idiots. The upload has not completed: Studio is signed into the correct channel, the final MP4 is ready, and the browser extension requires permission to access local file URLs before it can attach that MP4. We asked whether to enable that permission temporarily. Public release is not approved; upload only as Private for review.
 
 ## Quality feedback that must survive this handoff
 
@@ -61,6 +61,10 @@ This is a programmatic motion-graphics and imported-media editor. It does not ye
 - `CLAUDE.md`, `AGENTS.md`: production instructions for future agents.
 
 ## Delivered productions and evidence
+
+The `origin/claude/dreamy-bardeen-pm2udg` branch was merged into `main` at `ab40056`, then pushed with follow-up `f7d8d3b`. The branch adds a Remotion paper-collage Short prototype about *Raja Harishchandra* (1913). Source, voice helper, and upload workflow notes are in Git; test/typecheck passed (17 tests). This is **not creative approval** and does not replace the channel's requested movie reviews/full revisits or footage-led edits. The Short uses original vector art, no web-sourced images or movie footage, and local Microsoft Hemant speech. Its “first feature film” opener needs a qualifier because some film histories cite *Shree Pundalik* (1912) earlier. These limitations are written into `CLAUDE.md`, `README.md` and `docs/collage-shorts.md`.
+
+Rendered local output: `projects/shorts/phalke/video.mp4`, 100.90 s, 1080×1920, 30 fps, H.264/yuv420p + AAC, 69,475,702 bytes. A full FFmpeg decode passed. The 540×960 draft and contact sheets are alongside it. All production output/narration remains git-ignored. YouTube upload metadata is prepared in `projects/shorts/phalke/youtube-metadata.md`; the private upload awaits user approval for the browser extension's temporary local-file permission. Do not publish this experiment publicly without reviewing the cut and revising the opener/narration/style.
 
 The remake source is `productions/drishyam-review-v2.json`; its six web-image requests are in `productions/drishyam-remake-assets.json`. It contains seven narration segments and **31 shots**. Retrieved images were viewed before use. Older franchise stills and an actor portrait are labelled accordingly; they are not represented as footage of the new film.
 
