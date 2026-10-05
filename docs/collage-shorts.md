@@ -1,5 +1,7 @@
 # Collage Shorts: the new production system
 
+For the full system design and roadmap, see [system-outline.md](system-outline.md).
+
 The channel is pivoting from movie reviews to Hindi/Hinglish paper-collage explainers, starting with 9:16 Shorts. Long 7–8 minute videos will reuse the same library later. The old `src/video` stills-essay renderer is left in place but is not the house style.
 
 Golden sample: **`phalke`**, the story of *Raja Harishchandra* (1913): "India's first heroine was a man". All visuals are original vector art and the film is public domain, so there is no Content ID exposure.
