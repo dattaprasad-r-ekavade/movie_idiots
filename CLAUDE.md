@@ -2,6 +2,10 @@
 
 This repository is a local Hindi/Hinglish production toolchain for @movieidiots5542. Read `README.md`, `config/channel.json`, `PROJECT_HANDOFF.md`, and `docs/research-and-plan.md` for context. The project `.mcp.json` registers the `movie-idiots-studio` stdio server. All tool jobs are local to the process that created them.
 
+## Current direction (collage explainers)
+
+The channel is pivoting to Hindi/Hinglish paper-collage explainers, Shorts first and 7–8 minute videos later. New work goes in `src/collage` (timeline, motion primitives, original vector art, per-short edits) and is driven by `npm run short -- stills|render SLUG`. Read `docs/collage-shorts.md` first. The golden sample is `phalke`. Anchor every visual event to a narration word through `clock()`, review contact sheets before rendering, and only use visuals the channel owns or that are public domain or licensed. The movie-review instructions below apply to the older `src/video` pipeline.
+
 Generated stills-essays (`style:cinematic` over posters, Ken Burns, template splits/evidence boards/kinetic type, TTS as the picture) are pitfalls to avoid, not house style. Prefer an actual edit of footage/selects. Graphics support the cut.
 
 When asked to make a video:

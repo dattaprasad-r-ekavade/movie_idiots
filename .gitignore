@@ -6,3 +6,5 @@ public/projects/
 *.log
 .venv/
 models/
+public/sfx/
+public/shorts/*/voice/

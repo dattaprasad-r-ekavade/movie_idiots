@@ -1,5 +1,7 @@
 # Movie Idiots Studio
 
+> **New direction:** paper-collage explainer Shorts. See [docs/collage-shorts.md](docs/collage-shorts.md) and `npm run short -- render phalke --draft`. The rest of this README covers the earlier movie-review pipeline.
+
 A local prompt-driven toolchain for **[@movieidiots5542](https://www.youtube.com/@movieidiots5542)**: animated movie reviews, full revisits, and YouTube Shorts in Hindi/Hinglish. Built in `D:\Projects\video-editor`.
 
 **Resuming elsewhere? Read [PROJECT_HANDOFF.md](PROJECT_HANDOFF.md)** for decisions, user feedback, completed work, setup/MCP reconnection, reproducible inputs and the continuation plan. Source repository: [movie_idiots](https://github.com/dattaprasad-r-ekavade/movie_idiots). Generated media and machine-specific configuration are not included in Git.
