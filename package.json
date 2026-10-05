@@ -12,9 +12,13 @@
     "doctor": "tsx src/cli.ts doctor",
     "demo": "tsx src/cli.ts demo",
     "typecheck": "tsc --noEmit",
-    "test": "tsx --test tests/*.test.ts"
+    "test": "tsx --test tests/*.test.ts",
+    "short": "tsx scripts/short.ts",
+    "studio:shorts": "remotion studio src/collage/index.tsx"
   },
-  "engines": {"node": ">=22"},
+  "engines": {
+    "node": ">=22"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.32.0",
     "@remotion/bundler": "4.0.532",
