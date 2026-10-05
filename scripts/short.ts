@@ -125,7 +125,7 @@ async function render() {
   });
   const final = path.join(outDir(), draft ? 'draft.mp4' : 'video.mp4');
   // Re-encode to limited-range yuv420p (Remotion's JPEG frames come out full-range) and cap peaks.
-  await run(ffmpeg(), ['-y', '-i', raw, '-vf', 'scale=in_range=auto:out_range=tv,format=yuv420p', '-c:v', 'libx264', '-crf', draft ? '24' : '17', '-preset', 'medium', '-color_range', 'tv', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.84:level=false', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', final], 600000);
+  await run(ffmpeg(), ['-y', '-i', raw, '-vf', 'scale=in_range=auto:out_range=tv,format=yuv420p', '-c:v', 'libx264', '-crf', draft ? '24' : '17', '-preset', 'medium', '-color_range', 'tv', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11,alimiter=limit=0.71:level=false', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', final], 600000);
   await rm(raw);
   const sources = timing.lines.reduce<Record<string, number>>((n, l) => ({...n, [l.source]: (n[l.source] || 0) + 1}), {});
   await writeFile(path.join(outDir(), 'script.md'), `# ${short.title}\n\n${short.lines.map((l) => `- **${l.id}** ${l.text}`).join('\n')}\n\n## Sources\n\n${short.sources.map((s) => `- ${s.url}\n  ${s.note}`).join('\n')}\n\nTiming sources: ${JSON.stringify(sources)}\n`);
