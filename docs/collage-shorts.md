@@ -65,3 +65,14 @@ Alternative: `npm run short -- voice phalke --edge` synthesizes each line with M
 - **Photo cut-outs**: `Cutout` already works on transparent PNGs; add a `rembg`/BiRefNet step to cut real public-domain photos (for example Phalke portraits) when the network allows model downloads.
 - **Timeline JSON**: shorts are hand-written TSX for now. Once 2–3 shorts exist, extract the repeated beat patterns into a JSON timeline that an agent can edit.
 - **Long form**: 16:9 compositions, chapter structure and B-roll pacing for 7–8 minute videos, built on the same primitives.
+
+## Mascot: "Movie Idiot" (TV-head presenter)
+
+`src/collage/characters/TVHead.tsx` is a vector rig of the channel avatar's suited TV-head figure, so it renders sharp at any size.
+
+- **Poses:** idle, wave, point, shrug, present, facepalm, thumbsUp, think. Blend between them with `usePose([{at, pose}, …])` (spring between keyframes).
+- **Screen:** expressions (neutral, happy, shock, skeptic, wink, sad, angry); `mouth` 0..1 for talking (`useMouth(timing)` flaps it per narration word); `screen="static"` for a glitch; any React node to show an icon or prop on the screen.
+- **Idle life:** breathing, sway, antenna wobble, blinking, power LED, CRT scanlines and flicker.
+- **Previews:** `npx tsx scripts/still.ts mascot-sheet out.png` (character sheet), `mascot-still out.png --scale 4` (transparent 2400×4000 PNG), and `mascot-demo` (9 s motion test; render with `npx remotion render src/collage/index.tsx mascot-demo out.mp4`).
+
+v1 was drawn from the avatar's description (suited figure, TV/monitor head); colours and details still need matching against the actual avatar image.
