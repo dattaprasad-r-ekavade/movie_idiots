@@ -213,3 +213,29 @@ Shorts ship from M2 onward while later milestones are built. The order is chosen
 3. **Voice:** own recording vs Edge vs local neural TTS (deferred; the system supports all three).
 4. **Cadence:** e.g. 3 Shorts/week + 1 long video every 2 weeks once M6 lands.
 5. **Network access** for this cloud environment: allow Commons/Wikipedia (photos, research), Hugging Face (cut-out and voice models) and the Edge speech host.
+
+## 14. Claude Code plugins, MCP servers and in-repo tooling
+
+Checked October 2026 against the Claude plugin directory and connector registry. Nothing below is installed yet. "Adopt" = recommended now, "Trial" = test on one video first, "Later" = after the milestone that needs it.
+
+| Stage | Tool | Kind | Why | Verdict |
+|---|---|---|---|---|
+| Edit | **Remotion** (official, `remotion-best-practices`, `-captions`, `-maps`, `-render`, `-studio`) | Plugin (skills) | Idiomatic Remotion code; `remotion-maps` fits the `Journey` pattern; captions/render guidance for long form | Adopt |
+| Edit / review | Remotion Studio **WebMCP** | MCP (in Studio) | Agent inspects compositions, seeks frames and reads errors in Studio, which tightens the stills loop | Trial at M3 (needs a compatible browser agent) |
+| Review | **playwright** (Microsoft) | Plugin (MCP) | Screenshot Studio/beat previews and check the HTML layout of text boxes for the lint step | Trial at M3 |
+| Research | **Research integrity** | Plugin (skill) | Labels how each claim is known and records sources that failed to load, which matches the claims ledger | Adopt at M4 |
+| Research / ideas | **TubeAlfred YouTube** or **vidIQ** | Plugin / connector | Keyword ideas, competitor and Shorts outliers, transcript and comment mining for topic picks | Trial: pick one |
+| Package | **Codesign** (IMG.LY) | Plugin (local MCP) | Editable thumbnail templates, brand kit, `judge` critique; runs locally | Trial; our own `Thumbnail` composition is the default |
+| Package | Abracadabrax Thumbnail Maker | Plugin (credits) | Quick thumbnail drafts | Skip: paid credits, less control than our art |
+| Art | **Figma** connector | Connector | Design new characters/props in Figma, pull them into `art/` as SVG/React | Later: only if a human designer joins |
+| Art | Adobe connector | Connector | Pro asset tools and animate-design | Skip for now: duplicates the vector library |
+| Voice | ElevenLabs official MCP (`elevenlabs/elevenlabs-mcp`, local) | MCP | Hindi TTS + word timestamps (paid). The registry's ElevenLabs connector manages voice *agents*, not TTS | Later (voice decision) |
+| Publish / learn | YouTube Data + Analytics MCP (community servers on glama.ai) | MCP (local, OAuth) | Upload, chapters, thumbnails; **retention curves** for the learn loop | Later (M8); prefer read-only analytics first; vet the code before granting OAuth |
+| Art (generated) | ComfyUI / image-generation skill | MCP / skill | Textures and generic objects only, opt-in | Later; never real people |
+
+Build ourselves (higher value than any third-party tool):
+
+1. **`movie-idiots` MCP v2** (§8): spec/patterns/art catalogue, stills, lint, render jobs.
+2. **Project skills** in `.claude/skills/`: `/new-short` (pitch → research → script → beat sheet with the checkpoints), `/review-sheets` (contact-sheet checklist), `/package` (titles, thumbnail, description).
+3. **Hooks:** PostToolUse on `src/collage/**` runs `tsc` + spec resolve; Stop hook reminds to render stills before claiming a beat is done.
+4. **SessionStart hook** for cloud sessions: `npm ci`, Python venv, sound kit, so every session can render immediately.
