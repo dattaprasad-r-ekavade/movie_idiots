@@ -1,10 +1,10 @@
-# Collage Shorts: the new production system
+# Collage Shorts: experimental production path
 
 For the full system design and roadmap, see [system-outline.md](system-outline.md).
 
-The channel is pivoting from movie reviews to Hindi/Hinglish paper-collage explainers, starting with 9:16 Shorts. Long 7–8 minute videos will reuse the same library later. The old `src/video` stills-essay renderer is left in place but is not the house style.
+This document describes an **illustrated Shorts prototype**, not an approved change to the channel's style. The user's stated goal remains movie reviews and full revisits, and the merged Phalke Short has not received creative approval. For those reviews and mashups, make an edit from actual footage/selects and use graphics as support. The Phalke prototype is all original vectors: it does not exercise web-image procurement, use film footage, or establish that any future soundtrack/assets are free of rights claims.
 
-Golden sample: **`phalke`**, the story of *Raja Harishchandra* (1913): "India's first heroine was a man". All visuals are original vector art and the film is public domain, so there is no Content ID exposure.
+Prototype: **`phalke`**, a researched story about *Raja Harishchandra* (1913). Its current hook says “India's first feature film”; that wording needs qualification because some histories cite *Shree Pundalik* (1912) earlier. Do not reuse the existing headline as a public claim without revising the script. Original vector artwork says nothing by itself about audio rights or future assets, and YouTube's automated copyright scan is not legal clearance.
 
 ## How it is built
 
@@ -94,7 +94,7 @@ import {Presenter} from '../../characters';
 - **Poses:** idle, wave, point, shrug, present, facepalm, thumbsUp, think (spring-blended between cues).
 - **Expressions:** neutral, happy, shock, skeptic, wink, sad, angry. Blinking, breathing, sway, antenna wobble and screen flicker are automatic.
 - **Lower level:** `TVHead` takes explicit `pose`, `expression`, `mouth` and `screen`; `usePose` and `useMouth` drive them.
-- **In the golden sample:** shrugs at the "नहीं" stamps (casting beat), shock then facepalm on the loop reveal.
+- **In the prototype:** shrugs at the "नहीं" stamps (casting beat), shock then facepalm on the loop reveal.
 
 Use it as a reactor and host, not on every beat: one or two cameos per Short; host segments in long form.
 

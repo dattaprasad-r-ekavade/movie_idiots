@@ -79,6 +79,26 @@ async function edgeVoice() {
   await measure();
 }
 
+async function windowsVoice() {
+  if (process.platform !== 'win32') throw new Error('Local Windows speech is available on Windows. Record voice files in public/shorts/<slug>/voice on other systems.');
+  const short = entry();
+  await mkdir(voiceDir(), {recursive: true});
+  const powershell = process.env.POWERSHELL_PATH || 'pwsh.exe';
+  for (const line of short.lines) {
+    const output = path.join(voiceDir(), `${line.id}.wav`);
+    if (existsSync(output)) throw new Error(`Refusing to overwrite existing voice recording: ${output}`);
+    const config = path.join(voiceDir(), `${line.id}.windows.json`);
+    await writeFile(config, JSON.stringify({text: line.text, output, language: 'Hindi', voice: option('voice', '') || undefined}));
+    try {
+      await run(powershell, [path.join(ROOT, 'scripts/speak.ps1'), config], 120000);
+    } finally {
+      await rm(config, {force: true});
+    }
+    console.log(`voiced ${line.id} (Windows speech)`);
+  }
+  await measure();
+}
+
 async function prepare(captions = true, music = true) {
   const short = entry();
   await ensureSoundKit();
@@ -136,13 +156,13 @@ async function render() {
 const commands: Record<string, () => Promise<unknown>> = {
   list: async () => console.log(SHORTS.map((s) => `${s.slug}\t${s.title}`).join('\n')),
   timing: measure,
-  voice: edgeVoice,
+  voice: async () => flag('edge') ? edgeVoice() : windowsVoice(),
   stills,
   render,
 };
 const fn = commands[command];
 if (!fn) {
-  console.error('Usage: short.ts list | timing SLUG | voice SLUG --edge | stills SLUG [--every s] | render SLUG [--draft]');
+  console.error('Usage: short.ts list | timing SLUG | voice SLUG [--voice NAME] [--edge] | stills SLUG [--every s] | render SLUG [--draft]');
   process.exit(1);
 }
 fn().catch((e) => {

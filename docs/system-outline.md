@@ -1,10 +1,10 @@
 # Movie Idiots: system outline
 
-Status: proposal, October 2026. Builds on the collage Shorts system (`docs/collage-shorts.md`) and the `phalke` golden sample. Audio and voice decisions are deliberately deferred; the system keeps voice pluggable.
+Status: proposal, October 2026, not an approved channel format. Evaluates whether the experimental collage renderer (`docs/collage-shorts.md`) can be one optional animation path in the broader movie-review/revisit toolchain. The `phalke` example is not an approved style; audio and voice decisions remain pluggable.
 
 ## 1. What we are building
 
-A production system that turns **one researched story** into a **Hindi/Hinglish paper-collage video**: a 45–75 s Short first, a 7–8 minute long-form video next. Claude does research, writing, layout and motion. A human approves the story, the beat sheet and the final cut.
+A possible system that turns user-directed movie reviews, full revisits and Shorts into Hindi/Hinglish video. One optional test track is an illustrated 45–75 second Short, followed by an evaluation of whether that format is useful. Claude can assist with research, writing, layout and motion; a human approves claims and the final cut.
 
 Success is judged by viewers, not by render QC. Starting targets (our own guesses, to recalibrate after the first 10 uploads):
 
@@ -21,7 +21,7 @@ Success is judged by viewers, not by render QC. Starting targets (our own guesse
 
 ## 2. Where we are
 
-| Have (working) | Gap exposed by the golden sample |
+| Have (working) | Gap exposed by the prototype |
 |---|---|
 | Word-anchored timeline (`timeline.ts`, `clock()`) | Only Shorts (9:16); no chapters or 16:9 |
 | ~20 motion primitives, ~25 art pieces | `Phalke.tsx` is 657 hand-written lines for 69 s. Long form at this rate is about 4,000 lines per video, so we need reusable beat patterns |
@@ -77,7 +77,7 @@ The old `src/video` stills-essay renderer and its MCP server stay frozen and get
 
 ## 5. The key move: beat patterns + a video spec
 
-Hand-coding every beat does not scale to 7 minutes. Most beats in the golden sample are instances of a few shapes. Turn those into **patterns**: parameterized components that take a slot list and word anchors.
+Hand-coding every beat does not scale to 7 minutes. Some beats in the prototype repeat a few shapes. If this visual approach is approved, those could become **patterns**: parameterized components that take a slot list and word anchors.
 
 | Pattern | What it does | Seen in `phalke` |
 |---|---|---|
@@ -121,7 +121,7 @@ A **video spec** is JSON the agent writes and edits:
 - Escape hatch: `"pattern": "custom", "component": "./beats/Theatre.tsx"` for hero moments.
 - Patterns ship with preview fixtures so a single beat renders in seconds, which is also the per-beat render cache key.
 
-Migration plan: re-express `phalke` as a spec. The output must match the golden sample's contact sheets. That proves the abstraction before any long-form work.
+Migration plan: re-express `phalke` as a spec only if the user wants to continue the illustration experiment. The spec should make the short editable; matching its contact sheets is not a creative acceptance criterion.
 
 ## 6. Art and asset system
 

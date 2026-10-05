@@ -2,9 +2,9 @@
 
 This repository is a local Hindi/Hinglish production toolchain for @movieidiots5542. Read `README.md`, `config/channel.json`, `PROJECT_HANDOFF.md`, and `docs/research-and-plan.md` for context. The project `.mcp.json` registers the `movie-idiots-studio` stdio server. All tool jobs are local to the process that created them.
 
-## Current direction (collage explainers)
+## Collage Shorts prototype
 
-The channel is pivoting to Hindi/Hinglish paper-collage explainers, Shorts first and 7–8 minute videos later. New work goes in `src/collage` (timeline, motion primitives, original vector art, per-short edits) and is driven by `npm run short -- stills|render SLUG`. Read `docs/collage-shorts.md` first. The golden sample is `phalke`. Anchor every visual event to a narration word through `clock()`, review contact sheets before rendering, and only use visuals the channel owns or that are public domain or licensed. The movie-review instructions below apply to the older `src/video` pipeline.
+The merged branch adds an illustrated paper-collage Short prototype in `src/collage`, driven by `npm run short -- stills|render SLUG`. Read `docs/collage-shorts.md` before continuing that experiment. The `phalke` output has not received creative approval and is not the channel's approved house style. The user's stated channel goal remains movie reviews and full revisits; for reviews and mashups, edit actual footage/selects and use graphics as support. The prototype uses original vectors and no web-sourced film images, so it does not demonstrate the requested image-procurement path. When continuing an explicitly requested collage test, anchor motion to narration words through `clock()` and inspect contact sheets, but judge it against current user feedback. The movie-review instructions below apply to `src/video`.
 
 Generated stills-essays (`style:cinematic` over posters, Ken Burns, template splits/evidence boards/kinetic type, TTS as the picture) are pitfalls to avoid, not house style. Prefer an actual edit of footage/selects. Graphics support the cut.
 

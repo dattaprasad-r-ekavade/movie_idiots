@@ -1,6 +1,6 @@
 # Movie Idiots Studio
 
-> **New direction:** paper-collage explainer Shorts. See [docs/collage-shorts.md](docs/collage-shorts.md) and `npm run short -- render phalke --draft`. The rest of this README covers the earlier movie-review pipeline.
+> **Experimental path:** an illustrated paper-collage Shorts prototype lives in [docs/collage-shorts.md](docs/collage-shorts.md). Its `phalke` example is not an approved channel style. The main production goal remains Hindi/Hinglish movie reviews and full revisits; see the workflow below.
 
 A local prompt-driven toolchain for **[@movieidiots5542](https://www.youtube.com/@movieidiots5542)**: animated movie reviews, full revisits, and YouTube Shorts in Hindi/Hinglish. Built in `D:\Projects\video-editor`.
 

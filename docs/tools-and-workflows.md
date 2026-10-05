@@ -76,6 +76,16 @@ Our current server is **local stdio** and is already driven by Codex/Claude Code
 
 An inline player is a further UI layer, not something automatically created by either transport. The mcp-use example demonstrates that layer. Account/workspace availability needs checking during setup. Keep local Codex/Claude as the default until there is a concrete need to produce videos inside a ChatGPT chat.
 
+## YouTube upload and publishing
+
+For the first uploads, use the channel's **YouTube Studio** upload flow. It keeps the channel's own title, description, audience, thumbnail, caption, visibility and scheduling controls in one place, and exposes YouTube's automated copyright checks before publishing. A copyright scan is a useful warning step, not proof that footage, music, or images are cleared. Upload as **Private** while reviewing the finished cut and checks; change visibility only after an explicit release decision. See [Upload videos in YouTube Studio](https://support.google.com/youtube/answer/57407?hl=en) and [Schedule video publishing](https://support.google.com/youtube/answer/1270709?hl=en).
+
+For repeatable automation, prefer the official **YouTube Data API v3** `videos.insert` endpoint with resumable upload and the narrow `youtube.upload` OAuth scope. It can upload metadata and set privacy; new unverified API projects are restricted to private viewing until they pass Google's audit. See [videos.insert](https://developers.google.com/youtube/v3/docs/videos/insert), [upload guide](https://developers.google.com/youtube/v3/guides/uploading_a_video) and [resumable upload protocol](https://developers.google.com/youtube/v3/guides/using_resumable_upload_protocol).
+
+Candidate MCP implementations include [youtube-uploader-mcp](https://github.com/anwerj/youtube-uploader-mcp) and [mcp-youtube](https://github.com/brentwpeterson/mcp-youtube). Their repositories advertise video upload, metadata, captions, playlists, thumbnails and scheduling, but those feature lists are maintainer claims, not an endorsement or security review. Before adopting one, inspect its source, release activity, OAuth scopes, token storage and upload defaults. Avoid broad channel-management scopes when upload-only access works, and require a private-by-default draft plus a separate, visible publish step. The first upload needs no additional MCP: Studio is already signed in for Movie Idiots.
+
+**Recommended factory integration:** first create an upload package beside every export (`video.mp4`, thumbnail, SRT/VTT, title, description with asset/source credits, language, audience selection and privacy). Add a reviewed `upload_private` operation using the official API or a vetted MCP, return the video ID/status/checks, and keep publish/schedule as a separate user-confirmed action. Never let prompt-generated metadata silently select Public, Made for Kids, or a publish time. The current branch does not implement YouTube upload.
+
 ## Recommended adoption order for Movie Idiots
 
 These are proposed changes, **not completed implementation or an authorization to spend on services**.
