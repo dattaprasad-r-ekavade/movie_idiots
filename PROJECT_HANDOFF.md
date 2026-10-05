@@ -1,6 +1,6 @@
 # Movie Idiots — project handoff and continuation plan
 
-Updated 5 October 2026. Start here when resuming in another checkout or agent session.
+Updated 5 October 2026 (creative correction: generated exports are pitfalls, not house style). Start here when resuming in another checkout or agent session.
 
 Repository: https://github.com/dattaprasad-r-ekavade/movie_idiots
 Channel: https://www.youtube.com/@movieidiots5542
@@ -14,7 +14,7 @@ The user subsequently requested more Claude/ChatGPT video-tool research and a re
 
 - Narration: **Hindi/Hinglish, conversational movie critic**. Use everyday spoken sentences, not literal translations of English essays or formal Hindi.
 - Services: **local tools by default, optional paid AI**. Host Codex/Claude can write the script without a separate LLM API key. The default studio template is only a scaffold.
-- Visuals: procure relevant images from the web, inspect them, record provenance, and edit multiple purposeful shots. Animation must involve the imagery and story elements, rather than a slideshow with a moving background.
+- Visuals: an actual edit of footage/selects. Generated stills-essays (Ken Burns posters, template splits, evidence boards, kinetic type as the picture) are the look to avoid. Web-image tools are for reference stills and provenance, not the whole video.
 - Branding: no repeated channel name, persistent headers, slide bullets or scene counters. One short sign-off is enough.
 - Voice: the user explicitly chose **free online Hindi speech for the remake**. Edge narration is implemented; Windows speech remains the local default. Keep provider choice explicit for subsequent productions.
 - The user requested a recent film for the pilot; the researched example is *Drishyam: The Conclusion*. The script clearly states that it is based on published reviews, without claiming a screening.
@@ -24,7 +24,11 @@ The user subsequently requested more Claude/ChatGPT video-tool research and a re
 
 The user rated the first video **2/10**: “extremely lazy,” no useful animation, “Fake Hindi,” and repeated branding that made it feel like PowerPoint. Do not treat successful rendering or technical QC as evidence of an entertaining video.
 
-The remake changes the writing, voice, asset acquisition and visual edit. It has been delivered, but **the user has not yet rated or approved its creative quality**. The next editorial iteration should start from their response to the remake, not assume the quality problem is solved.
+**Generated exports are the pitfall library, not the style bible.** This includes the rejected first export *and* the delivered cinematic remake (`drishyam-review-v2`, `style:cinematic`, Ken Burns stills, template splits/evidence/kinetic type, synthetic voice over posters). The user stated that this is exactly the video type to avoid. Do not clone, polish, or industrialize that look. Do not treat a later render of the same grammar as progress.
+
+The remake improved engineering (shot plans, asset ledger, Hinglish instructions, Edge cues). Those are pipeline lessons. They are not creative approval. Factory QC should fail a cut that still reads as a generated stills-essay.
+
+Positive picture reference is the existing channel identity in `config/channel-research.md`: movie edits, parodies and mashups of movie videos. Commentary can sit on top of an actual edit. A motion-infographic review is the thing to stop making.
 
 ## What is implemented
 
@@ -125,15 +129,14 @@ node node_modules/tsx/dist/cli.mjs scripts/produce.ts --render-only drishyam-rev
 
 These are proposed next steps, rather than claims that the user approved every feature:
 
-1. **Review the remake with the user.** Listen for natural Hindi, pronunciation and delivery; watch shot relevance, pacing and animation. Replace weak writing/visuals before making a longer video.
-2. **Improve editorial specificity and visual variety.** Tie each shot to an actual critique, collect a broader set of relevant assets, and avoid repeating the same images simply to fill time. Retain the review basis and accurate film/year labels.
-3. **Make two quality pilots.** After the style is accepted, create a researched approximately five-minute review and a 10–15 minute revisit, with explicit spoiler transitions and original critical commentary.
-4. **Improve local speech and alignment.** Benchmark a local neural Hindi voice and add local Whisper alignment for Windows/imported recordings. Edge already supplies actual cues; do not describe all current captions as estimated.
-5. **Extend the scene/editor library.** Relationship diagrams, timelines, shot-analysis annotations, illustrated sets/characters, vertical layouts, and practical shot controls in the studio. Optional ComfyUI/image/video adapters should follow a concrete visual need and explicit provider/cost choice.
-6. **Make long productions resilient.** Persistent jobs, cancellation, cross-process project locks, resumable/cached scene renders and disk management.
-7. **Publishing integration later.** Add YouTube upload only after the production style and review workflow are settled and uploading is requested.
+1. **Treat generated videos as anti-patterns.** Keep a written pitfall list from the first export and the remake. Factory review fails if the cut matches that grammar. Do not use those files as a lookbook.
+2. **Define the target from real videos.** Use the channel’s edits/parodies/mashups plus any references the user names. Collect a positive lookbook before writing more cinematic layouts.
+3. **Build the factory around an edit bay.** Source footage, selects, assembly, voice, mix, package. Stills, kinetic type and evidence boards are support graphics, and only when the cut needs them.
+4. **Improve speech and alignment** for a critic voice that can sit on an edit, including local neural Hindi and Whisper alignment when chosen.
+5. **Make long productions resilient.** Persistent jobs, cancellation, cross-process project locks, resumable/cached renders and disk management.
+6. **Publishing integration later.** Add YouTube upload only after the production style and review workflow are settled and uploading is requested.
 
-The expanded research recommends the next implementation sprint focus on contact sheets/motion samples, shot-intent checks and word-triggered visual events, then a short Hindi voice comparison and recording alignment. PySceneDetect, local AI4Bharat voices, WhisperX, Remotion WebMCP, ComfyUI/Blender and editor/orchestration references are candidates with documented tradeoffs in `docs/tools-and-workflows.md`. Evaluate a 30–45 second sequence before committing to a larger integration. Do not assume any candidate is installed or that provider costs are authorized.
+PySceneDetect, clip catalogs, local voices, WhisperX, Remotion WebMCP, ComfyUI/Blender and editor/orchestration references remain candidates in `docs/tools-and-workflows.md`. Evaluate a 30–45 second sequence against the pitfall list before a larger integration. Do not assume any candidate is installed or that provider costs are authorized.
 
 ## Known limits and checks for the next agent
 
@@ -146,4 +149,4 @@ The expanded research recommends the next implementation sprint focus on contact
 
 For a new agent session, use this starting instruction:
 
-> Read PROJECT_HANDOFF.md, AGENTS.md and CLAUDE.md. Continue the Movie Idiots cinematic Hindi/Hinglish production toolchain. The first video was rejected; do not assume the delivered Drishyam remake is creatively approved. Check the current user feedback and local setup, then continue the next concrete production or implementation request with source-backed research, inspected web assets, natural narration and a reviewed draft.
+> Read PROJECT_HANDOFF.md, AGENTS.md and CLAUDE.md. Continue the Movie Idiots production toolchain. Generated stills-essays (first export and the cinematic remake) are pitfalls to avoid, not a style to copy. Check current user feedback and local setup, then continue the next concrete production or implementation request toward an actual edit, with source-backed research and a reviewed draft.
