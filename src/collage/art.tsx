@@ -429,3 +429,201 @@ export function useSteps(from: number, to: number, steps: number) {
   const p = interpolate(frame, [from, to], [0, 1], clamp);
   return Math.floor(p * steps) / steps;
 }
+
+// ---------------------------------------------------------------- campus kit (college Short)
+
+/** Generic student: shirt colour, optional glasses/book. Same face construction as the other figures. */
+export function Student({width = 380, shirt = C.teal, glasses = false, book = false, hair = 'short'}: {width?: number; shirt?: string; glasses?: boolean; book?: boolean; hair?: 'short' | 'puff'}) {
+  return (
+    <svg viewBox="0 0 420 820" width={width} style={{overflow: 'visible'}}>
+      <path d="M150,560 L200,560 L196,800 L156,800Z" fill="#2c3550" />
+      <path d="M220,560 L270,560 L264,800 L224,800Z" fill="#2c3550" />
+      <ellipse cx={170} cy={806} rx={34} ry={14} fill="#1d1a17" />
+      <ellipse cx={250} cy={806} rx={34} ry={14} fill="#1d1a17" />
+      <path d="M128,300 Q210,272 292,300 L300,570 L120,570Z" fill={shirt} />
+      <path d="M190,292 L210,330 L230,292" fill="none" stroke={C.white} strokeWidth={8} strokeLinejoin="round" />
+      <path d="M132,302 Q104,372 116,460 L142,462 Q144,390 160,322Z" fill={shirt} />
+      <circle cx={130} cy={472} r={18} fill={C.skin} />
+      {book ? (
+        <g>
+          <path d="M288,302 Q330,340 300,420 L276,412 Q296,360 270,322Z" fill={shirt} />
+          <rect x={232} y={392} width={110} height={78} rx={6} fill={C.red} transform="rotate(-12 287 431)" />
+          <rect x={240} y={400} width={94} height={8} fill={C.white} transform="rotate(-12 287 431)" />
+          <circle cx={292} cy={424} r={17} fill={C.skin} />
+        </g>
+      ) : (
+        <>
+          <path d="M288,302 Q316,372 304,460 L278,462 Q276,390 260,322Z" fill={shirt} />
+          <circle cx={290} cy={472} r={18} fill={C.skin} />
+        </>
+      )}
+      <Face />
+      {hair === 'puff' ? (
+        <path d="M134,170 Q120,70 210,66 Q300,70 286,170 Q280,110 210,108 Q140,110 134,170Z" fill={HAIR} />
+      ) : (
+        <path d="M138,170 Q132,92 210,88 Q288,92 282,170 Q272,126 210,124 Q148,126 138,170Z" fill={HAIR} />
+      )}
+      {glasses && (
+        <g fill="none" stroke={C.ink} strokeWidth={6}>
+          <circle cx={184} cy={186} r={22} />
+          <circle cx={236} cy={186} r={22} />
+          <line x1={206} y1={186} x2={214} y2={186} />
+        </g>
+      )}
+    </svg>
+  );
+}
+
+export function CollegeBuilding({width = 820, name = 'COLLEGE'}: {width?: number; name?: string}) {
+  return (
+    <svg viewBox="0 0 820 620" width={width} style={{overflow: 'visible'}}>
+      <path d="M60,200 L410,40 L760,200Z" fill="#b5523b" />
+      <path d="M90,196 L410,62 L730,196Z" fill="#c9634a" />
+      <circle cx={410} cy={140} r={46} fill={C.cream} stroke={C.ink} strokeWidth={6} />
+      <path d="M410,140 L410,108 M410,140 L432,150" stroke={C.ink} strokeWidth={6} strokeLinecap="round" />
+      <rect x={60} y={200} width={700} height={44} fill={C.cream} />
+      <text x={410} y={234} textAnchor="middle" fontFamily="Special Elite" fontSize={34} letterSpacing={8} fill={C.ink}>{name}</text>
+      <rect x={80} y={244} width={660} height={330} fill="#e9d8b4" />
+      {[120, 230, 340, 480, 590, 700].map((x) => (
+        <rect key={x} x={x - 22} y={250} width={44} height={324} fill={C.white} />
+      ))}
+      {[175, 285, 535, 645].map((x) => (
+        <g key={x}>
+          <rect x={x - 26} y={300} width={52} height={70} rx={26} fill={C.indigo} />
+          <rect x={x - 26} y={430} width={52} height={70} rx={4} fill={C.indigo} />
+        </g>
+      ))}
+      <path d="M370,574 L370,440 Q410,396 450,440 L450,574Z" fill="#6b3b26" />
+      <rect x={40} y={574} width={740} height={40} fill="#a99a80" />
+    </svg>
+  );
+}
+
+export function Guitar({width = 220, rotate = -30}: {width?: number; rotate?: number}) {
+  return (
+    <svg viewBox="0 0 220 520" width={width} style={{overflow: 'visible'}}>
+      <g transform={`rotate(${rotate} 110 330)`}>
+        <rect x={98} y={20} width={24} height={250} fill="#5a3a1a" />
+        <rect x={88} y={0} width={44} height={46} rx={8} fill="#3d2812" />
+        <path d="M110,240 C40,240 30,330 70,350 C20,380 40,500 110,500 C180,500 200,380 150,350 C190,330 180,240 110,240Z" fill={C.red} />
+        <circle cx={110} cy={340} r={26} fill="#3d1410" />
+        <rect x={84} y={420} width={52} height={12} fill="#3d2812" />
+        {[102, 108, 114, 120].map((x) => (
+          <line key={x} x1={x} y1={10} x2={x} y2={426} stroke="#e8d9b8" strokeWidth={1.5} />
+        ))}
+      </g>
+    </svg>
+  );
+}
+
+export function MusicNote({width = 90, color = C.ink}: {width?: number; color?: string}) {
+  return (
+    <svg viewBox="0 0 90 120" width={width}>
+      <ellipse cx={28} cy={96} rx={24} ry={18} fill={color} transform="rotate(-20 28 96)" />
+      <rect x={46} y={10} width={8} height={88} fill={color} />
+      <path d="M54,10 Q84,24 80,58 Q72,36 54,34Z" fill={color} />
+    </svg>
+  );
+}
+
+export function MicStand({width = 160}: {width?: number}) {
+  return (
+    <svg viewBox="0 0 160 520" width={width}>
+      <line x1={80} y1={120} x2={80} y2={480} stroke="#2a2a2e" strokeWidth={10} />
+      <path d="M20,500 L80,470 L140,500" stroke="#2a2a2e" strokeWidth={10} fill="none" strokeLinecap="round" />
+      <rect x={56} y={30} width={48} height={96} rx={24} fill="#3a3a40" />
+      <rect x={60} y={34} width={40} height={50} rx={20} fill="#8d8d96" />
+    </svg>
+  );
+}
+
+export function Book({width = 220, color = C.indigo, label = ''}: {width?: number; color?: string; label?: string}) {
+  return (
+    <svg viewBox="0 0 220 280" width={width}>
+      <rect x={20} y={10} width={180} height={250} rx={8} fill={color} />
+      <rect x={20} y={10} width={22} height={250} fill="rgba(0,0,0,.25)" />
+      <rect x={196} y={20} width={10} height={232} fill={C.cream} />
+      <rect x={66} y={70} width={100} height={46} fill={C.cream} />
+      {label && (
+        <text x={116} y={102} textAnchor="middle" fontFamily="Mukta" fontWeight={800} fontSize={26} fill={C.ink}>{label}</text>
+      )}
+    </svg>
+  );
+}
+
+export function BoxingGlove({width = 220}: {width?: number}) {
+  return (
+    <svg viewBox="0 0 220 240" width={width}>
+      <path d="M40,120 C30,50 90,20 140,30 C200,40 210,110 190,150 C175,180 140,190 100,186 L60,186 C40,170 42,150 40,120Z" fill={C.red} />
+      <path d="M50,110 C40,80 60,70 80,82" stroke="#a62820" strokeWidth={8} fill="none" />
+      <rect x={52} y={180} width={110} height={50} rx={10} fill={C.white} />
+      <rect x={52} y={196} width={110} height={10} fill={C.red} />
+    </svg>
+  );
+}
+
+export function Bicycle({width = 360, color = C.red, spin = 0}: {width?: number; color?: string; spin?: number}) {
+  const wheel = (cx: number) => (
+    <g transform={`rotate(${spin} ${cx} 150)`}>
+      <circle cx={cx} cy={150} r={62} fill="none" stroke={C.ink} strokeWidth={10} />
+      {[0, 45, 90, 135].map((a) => (
+        <line key={a} x1={cx} y1={92} x2={cx} y2={208} stroke={C.inkSoft} strokeWidth={3} transform={`rotate(${a} ${cx} 150)`} />
+      ))}
+    </g>
+  );
+  return (
+    <svg viewBox="0 0 360 230" width={width} style={{overflow: 'visible'}}>
+      {wheel(80)}
+      {wheel(280)}
+      <path d="M80,150 L160,150 L240,72 L130,72 L80,150 M160,150 L120,40 M240,72 L280,150 M228,40 L240,72" fill="none" stroke={color} strokeWidth={12} strokeLinejoin="round" strokeLinecap="round" />
+      <rect x={96} y={28} width={54} height={14} rx={7} fill={C.ink} />
+      <path d="M216,40 L250,34" stroke={C.ink} strokeWidth={10} strokeLinecap="round" />
+    </svg>
+  );
+}
+
+export function Basketball({width = 160, spin = 0}: {width?: number; spin?: number}) {
+  return (
+    <svg viewBox="0 0 160 160" width={width}>
+      <g transform={`rotate(${spin} 80 80)`}>
+        <circle cx={80} cy={80} r={74} fill="#e2762c" stroke="#5a2c10" strokeWidth={5} />
+        <path d="M6,80 L154,80 M80,6 L80,154 M28,28 Q80,80 28,132 M132,28 Q80,80 132,132" stroke="#5a2c10" strokeWidth={5} fill="none" />
+      </g>
+    </svg>
+  );
+}
+
+export function Hoop({width = 340}: {width?: number}) {
+  return (
+    <svg viewBox="0 0 340 420" width={width}>
+      <rect x={160} y={200} width={20} height={220} fill="#5d6470" />
+      <rect x={30} y={10} width={280} height={190} rx={8} fill={C.white} stroke={C.ink} strokeWidth={8} />
+      <rect x={120} y={80} width={100} height={76} fill="none" stroke={C.red} strokeWidth={8} />
+      <ellipse cx={170} cy={186} rx={66} ry={12} fill="none" stroke="#e2762c" strokeWidth={9} />
+      <path d="M108,188 L126,260 L150,190 L170,262 L190,190 L214,260 L232,188" stroke={C.white} strokeWidth={4} fill="none" />
+    </svg>
+  );
+}
+
+export function Heart({width = 140, color = C.red}: {width?: number; color?: string}) {
+  return (
+    <svg viewBox="0 0 140 126" width={width}>
+      <path d="M70,120 C10,80 0,50 10,28 C24,0 60,4 70,30 C80,4 116,0 130,28 C140,50 130,80 70,120Z" fill={color} />
+      <ellipse cx={40} cy={34} rx={12} ry={8} fill="#fff" opacity={0.35} transform="rotate(-30 40 34)" />
+    </svg>
+  );
+}
+
+export function Chai({width = 150}: {width?: number}) {
+  const frame = useCurrentFrame();
+  return (
+    <svg viewBox="0 0 150 200" width={width} style={{overflow: 'visible'}}>
+      {[0, 1].map((i) => {
+        const p = (frame / 40 + i / 2) % 1;
+        return <path key={i} d={`M${58 + i * 34},${70 - p * 60} q-12,-16 0,-30 q12,-16 0,-30`} stroke="#b9b0a2" strokeWidth={6} fill="none" strokeLinecap="round" opacity={(1 - p) * 0.8} />;
+      })}
+      <path d="M30,80 L120,80 L108,190 L42,190Z" fill="rgba(255,255,255,.75)" stroke="#9c9486" strokeWidth={4} />
+      <path d="M36,110 L114,110 L108,186 L42,186Z" fill="#b8763c" />
+    </svg>
+  );
+}

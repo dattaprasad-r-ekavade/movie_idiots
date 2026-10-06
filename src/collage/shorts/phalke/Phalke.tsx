@@ -1,22 +1,16 @@
 // Golden sample: "India's first heroine was a man" — a 9:16 paper-collage Short.
 // Every event is anchored to a narration word through the clock, never to a hard-coded second.
 import React from 'react';
-import {AbsoluteFill, Audio, Easing, Sequence, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
+import {AbsoluteFill, Easing, interpolate, spring, useCurrentFrame, useVideoConfig} from 'remotion';
 import {C, FONT} from '../../theme';
 import {
-  Camera, Captions, Counter, Cutout, Draw, Enter, Float, Grain, InkDefs, Jitter, Layer, Marker, Paper, Place, SPRING, Sfx, Shake, Stamp, TornLabel, TornWipe, WordDrop, clamp,
+  Camera, Counter, Cutout, Draw, Enter, Float, Jitter, Layer, Marker, Paper, Place, SPRING, Sfx, Shake, Stamp, TornLabel, WordDrop, clamp,
 } from '../../primitives';
 import {
   Audience, Beam, Bow, Coin, CookingPot, Crown, DevTray, Feather, FilmStrip, Heroine, LotusMedal, MovieCamera, Necklace, PeaPlant, Pot, Reel, Screen, Ship, Sunburst, Waiter, useFlicker, useSteps,
 } from '../../art';
-import {clock, type Clock, type Timing} from '../../timeline';
+import {ShortShell, local, type BeatProps, type ShortProps} from '../../shell';
 import {Presenter} from '../../characters';
-
-export type ShortProps = {timing: Timing; captions: boolean; music: boolean};
-type BeatProps = {c: Clock; from: number; to: number};
-
-// Converts absolute frames into frames local to the beat's Sequence.
-const local = (from: number) => (absolute: number) => absolute - from;
 
 function useWig(at: number) {
   const frame = useCurrentFrame();
@@ -631,56 +625,23 @@ function Award({c, from, to}: BeatProps) {
 
 // ------------------------------------------------------------------ assembly
 
-export function PhalkeShort({timing, captions, music}: ShortProps) {
-  const {fps} = useVideoConfig();
-  const c = clock(timing, fps);
-  const lead = 4; // cut a few frames before each beat's first word
-  const beats: {first: string; render: (p: BeatProps) => React.ReactNode; wipe?: boolean}[] = [
-    {first: 'hook1', render: (p) => <Hook {...p} line="hook1" />},
-    {first: 'hook2', render: (p) => <Jewels {...p} />},
-    {first: 'theatre', render: (p) => <Theatre {...p} />, wipe: true},
-    {first: 'pea1', render: (p) => <PeaPlantBeat {...p} />},
-    {first: 'london', render: (p) => <London {...p} />},
-    {first: 'nowomen', render: (p) => <Casting {...p} />, wipe: true},
-    {first: 'salunke', render: (p) => <Salunke {...p} />},
-    {first: 'saraswati', render: (p) => <Saraswati {...p} />},
-    {first: 'release', render: (p) => <Release {...p} />, wipe: true},
-    {first: 'award', render: (p) => <Award {...p} />},
-    {first: 'loop', render: (p) => <Hook {...p} line="loop" />},
-  ];
-  const starts = beats.map((b, i) => (i === 0 ? 0 : c.line(b.first) - lead));
-  const voiced = new Set(timing.lines.filter((l) => l.audio).map((l) => l.id));
-  const speaking = (f: number) => timing.lines.some((l) => f >= c.line(l.id) && f < c.end(l.id));
+export function PhalkeShort(props: ShortProps) {
   return (
-    <AbsoluteFill style={{background: C.cream}}>
-      <InkDefs />
-      {beats.map((b, i) => {
-        const from = starts[i];
-        const to = i + 1 < beats.length ? starts[i + 1] : c.total;
-        return (
-          <Sequence key={b.first} from={from} durationInFrames={to - from} name={b.first}>
-            {b.render({c, from, to})}
-          </Sequence>
-        );
-      })}
-      {beats.map((b, i) =>
-        b.wipe ? (
-          <Sequence key={`wipe-${b.first}`} from={starts[i] - 7} durationInFrames={16} name={`wipe ${b.first}`}>
-            <TornWipe at={0} duration={14} color={i % 2 ? C.red : C.ink} />
-            <Sfx at={0} src="whoosh.wav" volume={0.5} />
-          </Sequence>
-        ) : null,
-      )}
-      <Grain />
-      {captions && <Captions timing={timing} />}
-      {timing.lines.map((l) =>
-        l.audio && voiced.has(l.id) ? (
-          <Sequence key={`vo-${l.id}`} from={c.line(l.id)} name={`voice ${l.id}`} layout="none">
-            <Audio src={staticFile(l.audio)} />
-          </Sequence>
-        ) : null,
-      )}
-      {music && <Audio src={staticFile('sfx/bed.wav')} volume={(f) => (voiced.size && speaking(f) ? 0.1 : 0.22) * interpolate(f, [c.total - 40, c.total], [1, 0], clamp)} />}
-    </AbsoluteFill>
+    <ShortShell
+      {...props}
+      beats={[
+        {first: 'hook1', render: (p) => <Hook {...p} line="hook1" />},
+        {first: 'hook2', render: (p) => <Jewels {...p} />},
+        {first: 'theatre', render: (p) => <Theatre {...p} />, wipe: true},
+        {first: 'pea1', render: (p) => <PeaPlantBeat {...p} />},
+        {first: 'london', render: (p) => <London {...p} />},
+        {first: 'nowomen', render: (p) => <Casting {...p} />, wipe: true},
+        {first: 'salunke', render: (p) => <Salunke {...p} />},
+        {first: 'saraswati', render: (p) => <Saraswati {...p} />},
+        {first: 'release', render: (p) => <Release {...p} />, wipe: true},
+        {first: 'award', render: (p) => <Award {...p} />},
+        {first: 'loop', render: (p) => <Hook {...p} line="loop" />},
+      ]}
+    />
   );
 }

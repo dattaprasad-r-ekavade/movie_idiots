@@ -4,6 +4,7 @@
 //   tsx scripts/short.ts voice SLUG --edge        opt-in online Hindi voice (sends the script to Microsoft)
 //   tsx scripts/short.ts stills SLUG [--every 0.5] contact sheets for review
 //   tsx scripts/short.ts render SLUG [--draft] [--no-music] [--no-captions]
+//   tsx scripts/short.ts package SLUG             youtube.txt (title, description, tags) for upload
 import path from 'node:path';
 import {existsSync} from 'node:fs';
 import {mkdir, readFile, readdir, rm, writeFile} from 'node:fs/promises';
@@ -129,8 +130,23 @@ async function render() {
   await rm(raw);
   const sources = timing.lines.reduce<Record<string, number>>((n, l) => ({...n, [l.source]: (n[l.source] || 0) + 1}), {});
   await writeFile(path.join(outDir(), 'script.md'), `# ${short.title}\n\n${short.lines.map((l) => `- **${l.id}** ${l.text}`).join('\n')}\n\n## Sources\n\n${short.sources.map((s) => `- ${s.url}\n  ${s.note}`).join('\n')}\n\nTiming sources: ${JSON.stringify(sources)}\n`);
+  if (short.youtube) await youtubePackage();
   const meta = await probe(final);
   console.log(`Wrote ${final} (${Number(meta.format.duration).toFixed(2)} s, timing ${JSON.stringify(sources)})`);
+}
+
+async function youtubePackage() {
+  const short = entry();
+  if (!short.youtube) throw new Error(`Short "${slug}" has no youtube metadata in its script.ts`);
+  const y = short.youtube;
+  const tags = y.tags.join(', ');
+  if (tags.length > 500) throw new Error(`Tags are ${tags.length} characters; YouTube allows 500`);
+  if (y.title.length > 100) throw new Error(`Title is ${y.title.length} characters; YouTube allows 100`);
+  await mkdir(outDir(), {recursive: true});
+  const file = path.join(outDir(), 'youtube.txt');
+  const settings = Object.entries(y.settings ?? {}).map(([k, v]) => `${k}: ${v}`).join('\n');
+  await writeFile(file, `TITLE\n${y.title}\n\nALTERNATIVE TITLES\n${(y.altTitles ?? []).join('\n')}\n\nDESCRIPTION\n${y.description}\n\nTAGS (${tags.length}/500 chars)\n${tags}\n\nSETTINGS\n${settings}\n`);
+  console.log(`Wrote ${file}`);
 }
 
 const commands: Record<string, () => Promise<unknown>> = {
@@ -139,10 +155,11 @@ const commands: Record<string, () => Promise<unknown>> = {
   voice: edgeVoice,
   stills,
   render,
+  package: youtubePackage,
 };
 const fn = commands[command];
 if (!fn) {
-  console.error('Usage: short.ts list | timing SLUG | voice SLUG --edge | stills SLUG [--every s] | render SLUG [--draft]');
+  console.error('Usage: short.ts list | timing SLUG | voice SLUG --edge | stills SLUG [--every s] | render SLUG [--draft] | package SLUG');
   process.exit(1);
 }
 fn().catch((e) => {
