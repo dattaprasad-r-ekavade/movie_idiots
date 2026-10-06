@@ -1,6 +1,6 @@
 # Collage Shorts: the new production system
 
-For the full system design and roadmap, see [system-outline.md](system-outline.md).
+For the full system design and roadmap, see [system-outline.md](system-outline.md). Current renders and upload packages are in [samples/](../samples/README.md) (`npm run samples` refreshes them).
 
 The channel is pivoting from movie reviews to Hindi/Hinglish paper-collage explainers, starting with 9:16 Shorts. Long 7–8 minute videos will reuse the same library later. The old `src/video` stills-essay renderer is left in place but is not the house style.
 
