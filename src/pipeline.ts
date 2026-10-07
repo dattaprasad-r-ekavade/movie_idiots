@@ -28,7 +28,7 @@ export async function doctor() {
   for(const [name,command] of [['ffmpeg',ffmpeg()],['ffprobe',ffprobe()]]) {
     try{checks[name]=(await run(command,['-version'],15000)).split('\n')[0];}catch(e){checks[name]={error:String(e)};}
   }
-  checks.providers={anthropic:!!process.env.ANTHROPIC_API_KEY,elevenlabs:!!process.env.ELEVENLABS_API_KEY&&!!process.env.ELEVENLABS_VOICE_ID,windowsSpeech:process.platform==='win32'};
+  checks.providers={anthropic:!!process.env.ANTHROPIC_API_KEY,elevenlabs:!!process.env.ELEVENLABS_API_KEY?.trim(),windowsSpeech:process.platform==='win32'};
   if(process.platform==='win32') try{checks.voices=JSON.parse(await run(process.env.POWERSHELL_PATH||'pwsh.exe',['-NoProfile','-NonInteractive','-Command',"Add-Type -AssemblyName System.Speech; $speaker = New-Object System.Speech.Synthesis.SpeechSynthesizer; @($speaker.GetInstalledVoices() | ForEach-Object { @{name=$_.VoiceInfo.Name; culture=$_.VoiceInfo.Culture.Name; enabled=$_.Enabled} }) | ConvertTo-Json -Compress; $speaker.Dispose()"],20000));}catch(e){checks.voices={error:String(e)};}
   return checks;
 }

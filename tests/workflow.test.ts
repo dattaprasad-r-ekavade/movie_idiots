@@ -13,6 +13,7 @@ import {createApp} from '../src/server';
 import {enqueue,getJob} from '../src/jobs';
 import {publicUrl} from '../src/web-assets';
 import {shotFrames,groupWordCues} from '../src/video/timing';
+import {wordsFromAlignment} from '../src/elevenlabs';
 
 const id=`test-${randomUUID().slice(0,8)}`;
 const input={id,title:'Test film essay',movie:'Original demo',format:'review',scenes:[{id:'s01',kind:'hook',title:'Hello',narration:'एक फिल्म एक कहानी कुछ सवाल और एक जवाब',duration:2.019},{id:'s02',kind:'analysis',title:'The next idea',narration:'One idea deserves another careful look',duration:2.019}]};
@@ -48,6 +49,16 @@ test('shot boundaries preserve the measured audio timeline and never create empt
   const scene=ProjectSchema.parse({...input,scenes:[{...input.scenes[0],duration:2,shots:Array.from({length:60},(_,i)=>({seconds:i===0?15:.5}))}]}).scenes[0];
   const lengths=shotFrames(scene,30);assert.equal(lengths.reduce((a,b)=>a+b,0),60);assert.ok(lengths.every(n=>n===1));
   const longer={...scene,duration:20.67};assert.equal(shotFrames(longer,30).reduce((a,b)=>a+b,0),620);
+});
+
+test('ElevenLabs character alignment groups into caption words',()=>{
+  const words=wordsFromAlignment({
+    characters:['य','े',' ','फ','ि','ल','्','म',' ','ह','ै','।'],
+    character_start_times_seconds:[0,0.08,0.16,0.18,0.26,0.34,0.4,0.48,0.55,0.58,0.7,0.82],
+    character_end_times_seconds:[0.08,0.16,0.18,0.26,0.34,0.4,0.48,0.55,0.58,0.7,0.82,0.95]
+  });
+  assert.deepEqual(words,[{start:0,end:0.16,text:'ये'},{start:0.18,end:0.55,text:'फिल्म'},{start:0.58,end:0.95,text:'है।'}]);
+  assert.equal(groupWordCues(words).length,1);
 });
 
 test('speech word boundaries survive grouping and subtitle export, including leading silence',()=>{

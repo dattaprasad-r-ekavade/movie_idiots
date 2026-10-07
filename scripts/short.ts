@@ -1,7 +1,8 @@
 // Collage Shorts CLI.
 //   tsx scripts/short.ts list
 //   tsx scripts/short.ts timing SLUG              measure recordings in public/shorts/SLUG/voice/
-//   tsx scripts/short.ts voice SLUG --edge        opt-in online Hindi voice (sends the script to Microsoft)
+//   tsx scripts/short.ts voice SLUG --edge          opt-in online Hindi voice (sends the script to Microsoft)
+//   tsx scripts/short.ts voice SLUG --elevenlabs    paid ElevenLabs voice (needs ELEVENLABS_API_KEY)
 //   tsx scripts/short.ts stills SLUG [--every 0.5] contact sheets for review
 //   tsx scripts/short.ts render SLUG [--draft] [--no-music] [--no-captions]
 //   tsx scripts/short.ts package SLUG             youtube.txt (title, description, tags) for upload
@@ -12,6 +13,7 @@ import {bundle} from '@remotion/bundler';
 import {renderFrames, renderMedia, selectComposition} from '@remotion/renderer';
 import {ROOT, PUBLIC} from '../src/paths';
 import {ffmpeg, probe, run} from '../src/process';
+import {speakElevenLabs} from '../src/elevenlabs';
 import {SHORTS} from '../src/collage/shorts';
 import {buildTiming, type MeasuredLine, type Timing, type Word} from '../src/collage/timeline';
 
@@ -76,6 +78,20 @@ async function edgeVoice() {
     await run(python, [path.join(ROOT, 'scripts/edge_speech.py'), config], 120000);
     await rm(config);
     console.log(`voiced ${line.id}`);
+  }
+  await measure();
+}
+
+async function elevenlabsVoice() {
+  if (!flag('elevenlabs')) throw new Error('Pass --elevenlabs to confirm sending the script to ElevenLabs.');
+  const short = entry();
+  await mkdir(voiceDir(), {recursive: true});
+  for (const [index, line] of short.lines.entries()) {
+    const previous = short.lines[index - 1]?.text;
+    const next = short.lines[index + 1]?.text;
+    const words = await speakElevenLabs({text: line.text, output: path.join(voiceDir(), `${line.id}.mp3`), previousText: previous, nextText: next});
+    await writeFile(path.join(voiceDir(), `${line.id}.words.json`), JSON.stringify(words, null, 2));
+    console.log(`voiced ${line.id} (ElevenLabs)`);
   }
   await measure();
 }
@@ -172,14 +188,19 @@ async function youtubePackage() {
 const commands: Record<string, () => Promise<unknown>> = {
   list: async () => console.log(SHORTS.map((s) => `${s.slug}\t${s.title}`).join('\n')),
   timing: measure,
-  voice: async () => flag('edge') ? edgeVoice() : windowsVoice(),
+  voice: async () => {
+    if (flag('elevenlabs') && flag('edge')) throw new Error('Choose one voice flag: --edge or --elevenlabs');
+    if (flag('elevenlabs')) return elevenlabsVoice();
+    if (flag('edge')) return edgeVoice();
+    return windowsVoice();
+  },
   stills,
   render,
   package: youtubePackage,
 };
 const fn = commands[command];
 if (!fn) {
-  console.error('Usage: short.ts list | timing SLUG | voice SLUG [--voice NAME] [--edge] | stills SLUG [--every s] | render SLUG [--draft] | package SLUG');
+  console.error('Usage: short.ts list | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | package SLUG');
   process.exit(1);
 }
 fn().catch((e) => {

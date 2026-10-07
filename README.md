@@ -103,7 +103,7 @@ The studio runs only on localhost. Render jobs are serialized within each server
 | `video.mp4` / `draft.mp4` | Final or half-resolution draft |
 | `thumbnail.png`, `<scene-id>.png` | Thumbnail and storyboard frames, from Preview |
 | `script.md` | Narration and visual directions |
-| `captions.srt`, `captions.vtt` | Edge word-boundary cues, otherwise estimated timing; check against audio |
+| `captions.srt`, `captions.vtt` | Edge/ElevenLabs word-boundary cues, otherwise estimated timing; check against audio |
 | `youtube.txt` | Title, description, chapter drafts, tags and source links |
 | `visual-prompts.json` | Scene prompts for external illustration/video generation |
 | `input-props.json` | Props to paste/load in Remotion Studio |
@@ -119,7 +119,7 @@ Edit the existing `.env` to add only the services you want, preserving its execu
 
 - **Ollama:** run a local Ollama server on `127.0.0.1:11434`, pull a model, and set `OLLAMA_MODEL` to its name. Select Ollama in the studio. It is not installed by this project. Script quality and generation time depend on your model/hardware.
 - **Claude API:** set `ANTHROPIC_API_KEY` and `ANTHROPIC_MODEL` to a model available to your account, then select Claude API. This is separate API billing from a Claude session. The sample model follows the [current migration guide](https://platform.claude.com/docs/en/models/sonnet-5-5/migration-guide).
-- **ElevenLabs:** set `ELEVENLABS_API_KEY` and `ELEVENLABS_VOICE_ID`, then select ElevenLabs for narration. The default multilingual model is configurable.
+- **ElevenLabs:** set `ELEVENLABS_API_KEY`, then select ElevenLabs in the studio, `narrate_project` with `provider: "elevenlabs"`, `npm run video -- narrate PROJECT-ID elevenlabs`, or `scripts/produce.ts … --elevenlabs`. Optional `ELEVENLABS_VOICE_ID` or `ELEVENLABS_VOICE_NAME` pin a voice; otherwise a Hindi/Indian-labelled voice from the account is used. Captions use ElevenLabs character timings grouped into words. The default multilingual model is configurable. This is a paid API call.
 
 Only selected providers receive the prompt/narration. Keys remain server-side. No paid provider was called during setup or validation.
 
@@ -130,6 +130,7 @@ npm.cmd run video -- list
 npm.cmd run video -- plan "Andhadhun" "Hindi/Hinglish review about unreliable narration"
 npm.cmd run video -- write path/to/manifest.json
 npm.cmd run video -- narrate PROJECT-ID
+npm.cmd run video -- narrate PROJECT-ID elevenlabs
 npm.cmd run video -- preview PROJECT-ID
 npm.cmd run video -- render PROJECT-ID --draft
 npm.cmd run video -- render PROJECT-ID

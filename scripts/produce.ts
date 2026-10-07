@@ -45,7 +45,7 @@ try {
     const id=process.argv[3];if(!id)throw new Error('Supply a project ID after --render-only');
     const final=await job('render_project',{id,draft:false,captions:true});console.log(JSON.stringify({final},null,2));
   } else {
-    const manifest=process.argv[2];if(!manifest)throw new Error('Usage: tsx scripts/produce.ts manifest.json [--draft-only] or --check');
+    const manifest=process.argv[2];if(!manifest)throw new Error('Usage: tsx scripts/produce.ts manifest.json [--edge|--elevenlabs] [--sound] [--draft-only] or --check');
     const p=JSON.parse(await readFile(path.resolve(manifest),'utf8'));
     await call('channel_profile');
     await call('planning_brief',{prompt:p.prompt,movie:p.movie,format:p.format,language:p.language,minutes:p.scenes.reduce((n:number,s:{duration:number})=>n+s.duration,0)/60,notes:p.sources.map((s:{url:string;note:string})=>`${s.url}: ${s.note}`).join('\n')});
@@ -64,7 +64,9 @@ try {
     }
     if(process.argv.includes('--procure-only')){console.log('Image procurement complete; inspect assets before narrating/rendering.');await client.close();process.exit(0);}
     if(process.argv.includes('--sound'))await call('create_sound_design',{id:p.id});
-    await job('narrate_project',{id:p.id,provider:process.argv.includes('--edge')?'edge':'windows'});
+    const eleven=process.argv.includes('--elevenlabs'),edge=process.argv.includes('--edge');
+    if(eleven&&edge)throw new Error('Choose one voice flag: --edge or --elevenlabs');
+    await job('narrate_project',{id:p.id,provider:eleven?'elevenlabs':edge?'edge':'windows'});
     const preview=await job('preview_project',{id:p.id});console.log(JSON.stringify({preview}));
     const draft=await job('render_project',{id:p.id,draft:true,captions:true});console.log(JSON.stringify({draft},null,2));
     if(!process.argv.includes('--draft-only')) {

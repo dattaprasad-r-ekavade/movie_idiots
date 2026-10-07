@@ -3,6 +3,7 @@ import {copyFile, mkdir, readFile, writeFile, stat} from 'node:fs/promises';
 import {channel, loadProject, localAsset, PUBLIC, projectDir, saveProject, ROOT} from './paths';
 import {ffmpeg, probe, run} from './process';
 import {groupWordCues} from './video/timing';
+import {speakElevenLabs} from './elevenlabs';
 
 export async function importAsset(id:string,source:string,type:'image'|'video'|'audio',credit:string) {
   await loadProject(id);
@@ -35,26 +36,31 @@ export async function attachNarration(id:string,sceneId:string,asset:string) {
 }
 export async function narrate(id:string,provider:'windows'|'elevenlabs'|'edge'='windows') {
   const p=await loadProject(id), c=await channel();
-  if(provider==='windows'&&process.platform!=='win32') throw new Error('Windows narration requires Windows. Import recorded audio or use ElevenLabs.');
-  if(provider==='elevenlabs'&&(!process.env.ELEVENLABS_API_KEY||!process.env.ELEVENLABS_VOICE_ID)) throw new Error('Set ELEVENLABS_API_KEY and ELEVENLABS_VOICE_ID');
-  for(const scene of p.scenes) {
+  if(provider==='windows'&&process.platform!=='win32') throw new Error('Windows narration requires Windows. Import recorded audio or use Edge or ElevenLabs.');
+  if(provider==='elevenlabs'&&!process.env.ELEVENLABS_API_KEY?.trim()) throw new Error('Set ELEVENLABS_API_KEY in .env to use ElevenLabs narration.');
+  for(const [index,scene] of p.scenes.entries()) {
     if(!scene.narration.trim()) continue;
     const name=`narration/${scene.id}.${provider==='windows'?'wav':'mp3'}`;
     const dest=path.join(PUBLIC,'projects',id,name);await mkdir(path.dirname(dest),{recursive:true});
     scene.cues=[];
+    const text=scene.speechText||scene.narration;
     if(provider==='edge') {
       const input=path.join(projectDir(id),'tts-input.json'),timing=path.join(projectDir(id),`${scene.id}-word-timing.json`);
-      await writeFile(input,JSON.stringify({text:scene.speechText||scene.narration,output:dest,timing,voice:process.env.EDGE_VOICE||'hi-IN-MadhurNeural',rate:process.env.EDGE_RATE||'+8%'}));
+      await writeFile(input,JSON.stringify({text,output:dest,timing,voice:process.env.EDGE_VOICE||'hi-IN-MadhurNeural',rate:process.env.EDGE_RATE||'+8%'}));
       await run(process.env.VOICE_PYTHON||path.join(ROOT,'.venv',process.platform==='win32'?'Scripts/python.exe':'bin/python'),[path.join(ROOT,'scripts/edge_speech.py'),input],120000);
       scene.cues=groupWordCues(JSON.parse(await readFile(timing,'utf8')));
     } else if(provider==='windows') {
       const input=path.join(projectDir(id),'tts-input.json');
-      await writeFile(input,JSON.stringify({text:scene.speechText||scene.narration,output:dest,voice:c.voice,language:p.language}));
+      await writeFile(input,JSON.stringify({text,output:dest,voice:c.voice,language:p.language}));
       await run(process.env.POWERSHELL_PATH||'pwsh.exe',['-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',path.join(ROOT,'scripts/speak.ps1'),'-InputFile',input],120000);
     } else {
-      const response=await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${encodeURIComponent(process.env.ELEVENLABS_VOICE_ID!)}`,{method:'POST',headers:{'content-type':'application/json','xi-api-key':process.env.ELEVENLABS_API_KEY!},body:JSON.stringify({text:scene.narration,model_id:process.env.ELEVENLABS_MODEL_ID||'eleven_multilingual_v2',voice_settings:{stability:0.45,similarity_boost:0.75}}),signal:AbortSignal.timeout(120000)});
-      if(!response.ok) throw new Error(`ElevenLabs returned ${response.status}`);
-      await writeFile(dest,Buffer.from(await response.arrayBuffer()));
+      const spoken=(s:typeof scene)=>s.speechText||s.narration;
+      const previous=p.scenes.slice(0,index).map(spoken).filter(value=>value.trim()).at(-1);
+      const next=p.scenes.slice(index+1).map(spoken).find(value=>value.trim());
+      const timing=path.join(projectDir(id),`${scene.id}-word-timing.json`);
+      const words=await speakElevenLabs({text,output:dest,previousText:previous,nextText:next});
+      await writeFile(timing,JSON.stringify(words,null,2));
+      scene.cues=groupWordCues(words);
     }
     const metadata=await probe(dest);scene.audio=name;scene.duration=Math.max(2,Number(metadata.format.duration)+0.6);
     await saveProject(p);

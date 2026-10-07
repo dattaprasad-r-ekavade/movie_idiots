@@ -13,7 +13,7 @@ try {
     case 'list':result=await listProjects();break;
     case 'plan':result=await createPlan({movie:id,prompt:rest.join(' ')||`Create an original Hindi/Hinglish review of ${id}`,format:'review'});break;
     case 'write':result=await saveProject(JSON.parse(await readFile(id,'utf8')));break;
-    case 'narrate':result=await narrate(id,rest[0]==='elevenlabs'?'elevenlabs':rest[0]==='edge'?'edge':'windows');break;
+    case 'narrate':result=await narrate(id,rest.includes('elevenlabs')||rest.includes('--elevenlabs')?'elevenlabs':rest.includes('edge')||rest.includes('--edge')?'edge':'windows');break;
     case 'preview':result=await preview(id);break;
     case 'render':result=await render(id,{draft:rest.includes('--draft'),captions:!rest.includes('--no-captions')},n=>process.stderr.write(`\rRendering ${Math.round(n*100)}% `));break;
     case 'export':result=await exportPackage(id);break;
@@ -22,7 +22,7 @@ try {
       const p=await createDemo();
       await narrate(p.id);await preview(p.id);result=await render(p.id,{draft:[id,...rest].includes('--draft')},n=>process.stderr.write(`\rDemo render ${Math.round(n*100)}% `));break;
     }
-    default:console.log('Commands: doctor | list | plan "Movie" "Direction" | write manifest.json | narrate ID [elevenlabs] | preview ID | render ID [--draft] [--no-captions] | export ID | inspect ID [--draft] | demo');process.exit(0);
+    default:console.log('Commands: doctor | list | plan "Movie" "Direction" | write manifest.json | narrate ID [windows|edge|elevenlabs] | preview ID | render ID [--draft] [--no-captions] | export ID | inspect ID [--draft] | demo');process.exit(0);
   }
   console.log('\n'+JSON.stringify(result,null,2));
 } catch(e) {console.error(e instanceof Error?e.message:String(e));process.exitCode=1;}

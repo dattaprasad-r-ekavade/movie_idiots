@@ -31,40 +31,47 @@ export const sources = [
 ];
 
 export const youtube = {
-  title: '90s की फिल्मों वाला College: सब कुछ होता था… बस पढ़ाई नहीं! 😂 #shorts',
+  title: '90s की फिल्मों वाला College: सब कुछ होता था… बस पढ़ाई नहीं #shorts',
   altTitles: [
-    'Bollywood ने College के बारे में झूठ बोला? 😂 80s-90s Movies #shorts',
-    'QSQT से KKHH तक: Filmy College में पढ़ाई कहाँ थी? #shorts',
+    'Filmy college में canteen, गाने, प्यार… पढ़ाई कहाँ थी? #shorts',
+    'QSQT से KKHH तक: Bollywood का college syllabus #shorts',
   ],
-  description: `80s और 90s की हिंदी फिल्मों में college मतलब canteen, गाने, prank, cycle race और प्यार... बस पढ़ाई नहीं! 😂
+  description: `80s और 90s की फिल्मों में college मतलब canteen, गाने, लड़ाई और प्यार। Classroom? शायद ही।
 
-इस Short में:
-🎸 क़यामत से क़यामत तक (1988): college farewell पर "पापा कहते हैं"
-🥊 दिल (1990): Raja vs Madhu, prank war
-🚲 जो जीता वही सिकंदर (1992): Model School vs Rajput College, cycle race
-📝 कभी हाँ कभी ना (1994): Sunil exam में fail, band में hit
-🏀 कुछ कुछ होता है (1998): basketball, दोस्ती, Principal Malhotra और Ms. Braganza
-🤓 और twist: चश्मे बद्दूर (1981), जहाँ लड़की उसी को मिली जो पढ़ाई करता था
+ये एक original paper-collage Short है, film footage नहीं। Published film facts पर commentary; jokes हमारी राय हैं।
 
-आपकी favourite college वाली फिल्म कौन सी है? Comment में बताओ 👇
+1988 Qayamat Se Qayamat Tak — farewell पर “Papa Kehte Hain”
+1990 Dil — Raja और Madhu, पढ़ाई कम, prank ज़्यादा
+1992 Jo Jeeta Wohi Sikandar — असली exam cycle race
+1994 Kabhi Haan Kabhi Naa — exam fail, band hit
+1998 Kuch Kuch Hota Hai — basketball, Miss Braganza, Principal भी पीछे
+1981 Chashme Buddoor — twist: लड़की उसी को मिली जो पढ़ता था
 
-Movie Idiots: फिल्मों के किस्से, trivia और कहानियाँ, paper-collage style में। Subscribe करो!
+Favourite college वाली फिल्म कौन सी है? बिना spoiler के comment करो।
+Movie Idiots.
 
-सभी illustrations इस channel के लिए बनाए गए original artwork हैं। फिल्मों के नाम सिर्फ commentary के लिए लिए गए हैं; कोई film footage या still इस्तेमाल नहीं हुआ।
+Original illustrations; film titles are commentary only. No movie clips or publicity stills.
 
-Sources (film facts):
-- Qayamat Se Qayamat Tak: https://en.wikipedia.org/wiki/Qayamat_Se_Qayamat_Tak
-- Dil (1990): https://wiki.indiancine.ma/wiki/Dil
-- Jo Jeeta Wohi Sikandar: https://en.wikipedia.org/wiki/Jo_Jeeta_Wohi_Sikandar
-- Kabhi Haan Kabhi Naa: https://en.wikipedia.org/wiki/Kabhi_Haan_Kabhi_Naa
-- Kuch Kuch Hota Hai: https://en.wikipedia.org/wiki/Kuch_Kuch_Hota_Hai
-- Chashme Buddoor (1981): https://en.wikipedia.org/wiki/Chashme_Buddoor_(1981_film)
+Sources:
+Qayamat Se Qayamat Tak — https://en.wikipedia.org/wiki/Qayamat_Se_Qayamat_Tak
+Dil (1990) — https://wiki.indiancine.ma/wiki/Dil
+Jo Jeeta Wohi Sikandar — https://en.wikipedia.org/wiki/Jo_Jeeta_Wohi_Sikandar
+Kabhi Haan Kabhi Naa — https://en.wikipedia.org/wiki/Kabhi_Haan_Kabhi_Naa
+Kuch Kuch Hota Hai — https://en.wikipedia.org/wiki/Kuch_Kuch_Hota_Hai
+Chashme Buddoor (1981) — https://en.wikipedia.org/wiki/Chashme_Buddoor_(1981_film)
 
-#Bollywood #90sBollywood #CollegeLife`,
+#Bollywood #90sBollywood #HindiShorts #MovieIdiots`,
   tags: [
-    '90s bollywood', '80s bollywood', 'bollywood college movies', 'college life', 'filmy college', 'bollywood nostalgia', '90s nostalgia',
-    'kuch kuch hota hai', 'qayamat se qayamat tak', 'papa kehte hain', 'jo jeeta wohi sikandar', 'kabhi haan kabhi naa', 'dil 1990', 'chashme buddoor',
-    'aamir khan', 'shah rukh khan', 'bollywood trivia', 'hindi movies', 'hindi shorts', 'movie idiots',
+    '90s bollywood', '80s bollywood', 'bollywood college movies', 'filmy college', 'bollywood nostalgia',
+    'kuch kuch hota hai', 'qayamat se qayamat tak', 'jo jeeta wohi sikandar', 'kabhi haan kabhi naa', 'dil 1990', 'chashme buddoor',
+    'aamir khan', 'shah rukh khan', 'hindi shorts', 'movie idiots', 'paper collage',
   ],
-  settings: {category: 'Film & Animation', language: 'Hindi', madeForKids: false, alteredContent: 'No (stylised animation, not realistic)'},
+  settings: {
+    category: 'Film & Animation',
+    language: 'Hindi',
+    madeForKids: false,
+    visibility: 'Private',
+    alteredContent: 'No (stylised original animation, not realistic)',
+    audience: 'Not made for kids',
+  },
 };
