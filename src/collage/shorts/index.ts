@@ -6,6 +6,7 @@ import * as phalke from './phalke/script';
 import {CollegeShort} from './college/College';
 import * as college from './college/script';
 import * as funFactsTemplate from './fun-facts-template/script';
+import * as cultFlops from './cult-flops/script';
 
 export type ShortEntry = {
   slug: string;
@@ -26,4 +27,5 @@ export const SHORTS: ShortEntry[] = [
   {...phalke, component: PhalkeShort},
   {...college, component: CollegeShort},
   funFactsTemplate,
+  cultFlops,
 ];

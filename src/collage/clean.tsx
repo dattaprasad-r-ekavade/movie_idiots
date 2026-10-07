@@ -161,7 +161,8 @@ export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?
   const groups: (typeof line.words)[] = [];
   for (const w of line.words) {
     const last = groups[groups.length - 1];
-    if (!last || last.length >= 3 || /[.?!।,…]$/.test(last[last.length - 1].text)) groups.push([w]);
+    const long = w.text.replace(/[^\p{L}\p{N}]/gu, '').length >= 12;
+    if (!last || last.length >= 3 || long || /[.?!।,…]$/.test(last[last.length - 1].text)) groups.push([w]);
     else last.push(w);
   }
   const index = Math.max(0, groups.findIndex((g) => t < g[g.length - 1].end + 0.04));
@@ -170,7 +171,7 @@ export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?
   const enter = interpolate(since, [0, 5], [0, 1], {...clamp, easing: EASE});
   return (
     <div style={{position: 'absolute', left: 0, width, top: y, display: 'flex', justifyContent: 'center', zIndex: 40}}>
-      <div style={{display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '0 16px', maxWidth: width * 0.8, padding: '10px 28px 14px', borderRadius: 22, background: 'rgba(12,12,18,.72)', fontFamily: FONT.body, fontWeight: 800, fontSize: size, lineHeight: 1.35, transform: `translateY(${(1 - enter) * 14}px)`, opacity: 0.4 + enter * 0.6}}>
+      <div style={{display: 'flex', flexWrap: 'nowrap', justifyContent: 'center', gap: '0 16px', maxWidth: width * 0.92, padding: '10px 28px 14px', borderRadius: 22, background: 'rgba(12,12,18,.72)', fontFamily: FONT.body, fontWeight: 800, fontSize: size, lineHeight: 1.2, whiteSpace: 'nowrap', transform: `translateY(${(1 - enter) * 14}px)`, opacity: 0.4 + enter * 0.6}}>
         {group.map((w, i) => {
           const active = t >= w.start && t < w.end + 0.04;
           return (

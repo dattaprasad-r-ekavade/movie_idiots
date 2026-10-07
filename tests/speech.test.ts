@@ -27,6 +27,7 @@ test('audio directions: role defaults, overrides and provider mapping', () => {
   assert.deepEqual(edgeProsody(hook, '+6%'), {rate: '+11%', pitch: '+8Hz', volume: '+5%'});
   assert.equal(elevenDelivery(hook, 'eleven_multilingual_v2').tag, undefined);
   assert.equal(elevenDelivery(hook, 'eleven_v3').tag, 'excited');
+  assert.equal(elevenDelivery(hook, 'eleven_multilingual_v2').voiceSettings.speed, 1.05);
   assert.equal(windowsRate(hook), 1);
   // Pauses become silence on the timeline before the line.
   const plain = buildTiming([{id: 'a', text: 'एक दो'}, {id: 'b', text: 'तीन चार'}]);

@@ -1,7 +1,7 @@
 // Data-driven "Did you know?" Short. A plan maps script lines to beats; the edit is built
 // from clean primitives, film stills and word anchors. Layout (1080×1920):
 //   y≈170  kicker / fact badge     y≈260  headline (≤ 2 lines)
-//   y≈700  still or callout        y≈1400 captions (Shorts UI starts ≈1540)
+//   y≈700  still                   y≈1080 word-stamp (exits)    y≈1400 captions (Shorts UI ≈1540)
 import React from 'react';
 import {AbsoluteFill, interpolate, useCurrentFrame} from 'remotion';
 import {C} from '../theme';
@@ -56,10 +56,11 @@ function Stage({children, top = 700}: {children: React.ReactNode; top?: number})
 function PopAt({pop, c, from, fallbackLine, top}: {pop?: Pop; c: BeatProps['c']; from: number; fallbackLine: string; top: number}) {
   if (!pop) return null;
   const at = local(from)(c.word(pop.line ?? fallbackLine, pop.word));
+  // Stamp on the lower third of the still, then leave so it does not sit on later captions or the reveal.
   return (
     <>
-      <div style={{position: 'absolute', left: 0, right: 0, top, display: 'flex', justifyContent: 'center'}}>
-        <Callout text={pop.text} at={at} size={pop.text.length > 8 ? 90 : 140} bg={C.marigold} color={C.ink} />
+      <div style={{position: 'absolute', left: 0, right: 0, top, display: 'flex', justifyContent: 'center', zIndex: 25}}>
+        <Callout text={pop.text} at={at} exit={at + 20} size={pop.text.length > 8 ? 90 : 140} bg={C.marigold} color={C.ink} />
       </div>
       <Sfx at={at} src="pop.wav" volume={0.5} />
     </>
@@ -80,7 +81,7 @@ function HookFrame({plan, c, from, still, settle = false}: BeatProps & {plan: Fu
       <Stage>
         {still ? <FilmStill {...still} at={settle ? at : 2} blur={blur} tilt={-1.5} credit={undefined} film={undefined} year={undefined} /> : null}
       </Stage>
-      <PopAt pop={hook.pop} c={c} from={from} fallbackLine={hook.lines[0]} top={1210} />
+      <PopAt pop={hook.pop} c={c} from={from} fallbackLine={hook.lines[0]} top={1080} />
       {plan.mascot && !settle && <Presenter at="bottom-right" width={230} enter={L(c.end(hook.lines[0], -0.3))} talk={false} cues={[{at: 0, pose: 'shrug', expression: 'shock'}]} />}
       {!settle && <Sfx at={0} src="riser.wav" volume={0.35} />}
       {!settle && still && <Sfx at={6} src="shutter.wav" volume={0.4} />}
@@ -96,7 +97,7 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
     <AbsoluteFill>
       <Top>{numbered ? <FactBadge n={index + 1} of={count} at={0} /> : <Kicker text={DEFAULT_KICKER} at={0} />}</Top>
       <Title>
-        <Headline text={fact.headline} accent={fact.accent} at={3} exit={swap} />
+        <Headline text={fact.headline} accent={fact.accent} at={0} exit={swap} />
       </Title>
       {fact.reveal && (
         <Title>
@@ -104,11 +105,11 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
         </Title>
       )}
       <Stage>
-        <FilmStill {...fact.still} at={9} tilt={index % 2 ? 2 : -2} duration={length} />
+        <FilmStill {...fact.still} at={2} tilt={index % 2 ? 2 : -2} duration={length} />
       </Stage>
-      <PopAt pop={fact.pop} c={c} from={from} fallbackLine={fact.lines[0]} top={1210} />
+      <PopAt pop={fact.pop} c={c} from={from} fallbackLine={fact.lines[0]} top={1080} />
       <Sfx at={0} src="whoosh.wav" volume={0.35} />
-      <Sfx at={9} src="shutter.wav" volume={0.35} />
+      <Sfx at={2} src="shutter.wav" volume={0.35} />
       {swap !== undefined && <Sfx at={swap + 8} src="pop.wav" volume={0.4} />}
     </AbsoluteFill>
   );
@@ -124,10 +125,10 @@ function Payoff({plan, c, from, to}: BeatProps & {plan: FunFactsPlan}) {
   return (
     <AbsoluteFill>
       <Top><Kicker text="Answer" at={0} /></Top>
-      <Title><Headline text={payoff.headline} accent={payoff.accent} at={3} /></Title>
+      <Title><Headline text={payoff.headline} accent={payoff.accent} at={0} /></Title>
       <Stage>{still && <FilmStill {...still} at={-20} blur={focus} tilt={-1.5} duration={to - from} />}</Stage>
-      <PopAt pop={payoff.pop} c={c} from={from} fallbackLine={payoff.lines[0]} top={1210} />
-      {plan.mascot && <Presenter at="bottom-left" width={230} enter={L(c.line(payoff.lines[0])) + 10} talk={false} cues={[{at: 0, pose: 'point', expression: 'happy'}]} />}
+      <PopAt pop={payoff.pop} c={c} from={from} fallbackLine={payoff.lines[0]} top={1080} />
+      {plan.mascot && <Presenter at={{x: 980, y: 1475}} width={140} enter={L(c.line(payoff.lines[0])) + 10} talk={false} cues={[{at: 0, pose: 'point', expression: 'happy'}]} />}
       <Sfx at={6} src="whoosh.wav" volume={0.35} />
     </AbsoluteFill>
   );

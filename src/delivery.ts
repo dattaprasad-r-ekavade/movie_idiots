@@ -68,8 +68,11 @@ export function edgeProsody(d: ReturnType<typeof resolveDelivery>, baseRate = '+
 
 /** ElevenLabs voice settings, plus an audio tag that only eleven_v3 understands. */
 export function elevenDelivery(d: ReturnType<typeof resolveDelivery>, model: string) {
+  const pct = d.preset.rate + (d.rate ?? 0);
+  // TTS speed is 0.7–1.2; map delivery.rate the same way Edge uses percent.
+  const speed = Math.max(0.7, Math.min(1.2, Math.round((1 + pct / 100) * 100) / 100));
   return {
-    voiceSettings: {stability: d.preset.stability, similarity_boost: 0.75, style: d.preset.style, use_speaker_boost: true},
+    voiceSettings: {stability: d.preset.stability, similarity_boost: 0.75, style: d.preset.style, use_speaker_boost: true, speed},
     tag: model.startsWith('eleven_v3') ? d.preset.tag : undefined,
   };
 }
