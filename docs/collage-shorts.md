@@ -1,6 +1,6 @@
 # Collage Shorts: experimental production path
 
-For the full system design and roadmap, see [system-outline.md](system-outline.md).
+For the full system design and roadmap, see [system-outline.md](system-outline.md). Current renders and upload packages are in [samples/](../samples/README.md) (`npm run samples` refreshes them).
 
 This document describes an **illustrated Shorts prototype**, not an approved change to the channel's style. The user's stated goal remains movie reviews and full revisits, and the merged Phalke Short has not received creative approval. For those reviews and mashups, make an edit from actual footage/selects and use graphics as support. The Phalke prototype is all original vectors: it does not exercise web-image procurement, use film footage, or establish that any future soundtrack/assets are free of rights claims.
 
@@ -16,7 +16,7 @@ Prototype: **`phalke`**, a researched story about *Raja Harishchandra* (1913). I
 | Theme | `src/collage/theme.ts` | Palette and self-hosted fonts (`public/fonts`, SIL OFL): Rozha One display, Mukta body/captions/stamps, Kalam handwriting, Special Elite typewriter. |
 | A short | `src/collage/shorts/<slug>/` | `script.ts` (lines, title, sources) and the edit component. Register it in `src/collage/shorts/index.ts`. |
 | Sound | `scripts/sfx_kit.py` | Original synthesized kit: whoosh, pop, stamp, shutter, coin, riser, paper, projector flicker, tanpura + Bhupali bed. Generated into `public/sfx` (git-ignored) on first render. |
-| CLI | `scripts/short.ts` | `npm run short -- list | timing | voice | stills | render`. |
+| CLI | `scripts/short.ts` | `npm run short -- list | timing | voice | stills | render | package`. |
 
 Every frame value comes from `useCurrentFrame()`, `spring`, `interpolate` or Remotion's seeded `random()`, so renders are deterministic.
 

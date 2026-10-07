@@ -1,6 +1,6 @@
 # Movie Idiots Studio
 
-> **Experimental path:** an illustrated paper-collage Shorts prototype lives in [docs/collage-shorts.md](docs/collage-shorts.md). Its `phalke` example is not an approved channel style. The main production goal remains Hindi/Hinglish movie reviews and full revisits; see the workflow below.
+> **Experimental path:** an illustrated paper-collage Shorts prototype lives in [docs/collage-shorts.md](docs/collage-shorts.md). Its `phalke` example is not an approved channel style. Current collage renders are in [samples/](samples/README.md). The main production goal remains Hindi/Hinglish movie reviews and full revisits; see the workflow below.
 
 A local prompt-driven toolchain for **[@movieidiots5542](https://www.youtube.com/@movieidiots5542)**: animated movie reviews, full revisits, and YouTube Shorts in Hindi/Hinglish. Built in `D:\Projects\video-editor`.
 

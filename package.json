@@ -15,7 +15,8 @@
     "test": "tsx --test tests/*.test.ts",
     "short": "tsx scripts/short.ts",
     "studio:shorts": "remotion studio src/collage/index.tsx",
-    "brand": "tsx scripts/brand.ts"
+    "brand": "tsx scripts/brand.ts",
+    "samples": "bash scripts/samples.sh"
   },
   "engines": {
     "node": ">=22"
