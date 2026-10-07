@@ -1,6 +1,6 @@
 # Movie Idiots — project handoff and continuation plan
 
-Updated 6 October 2026 (creative correction: generated exports are pitfalls, not house style). Start here when resuming in another checkout or agent session.
+Updated 7 October 2026 (pulled `main` to `585bbfb`; Shorts idea backlog in `docs/shorts-ideas.md`). Start here when resuming in another checkout or agent session.
 
 Repository: https://github.com/dattaprasad-r-ekavade/movie_idiots
 Channel: https://www.youtube.com/@movieidiots5542
@@ -139,6 +139,7 @@ These are proposed next steps, rather than claims that the user approved every f
 4. **Improve speech and alignment** for a critic voice that can sit on an edit, including local neural Hindi and Whisper alignment when chosen.
 5. **Make long productions resilient.** Persistent jobs, cancellation, cross-process project locks, resumable/cached renders and disk management.
 6. **Publishing integration later.** Add YouTube upload only after the production style and review workflow are settled and uploading is requested.
+7. **Shorts backlog.** Ten researched pitches live in [docs/shorts-ideas.md](docs/shorts-ideas.md). Hinglish scripts and labelled stills are in `src/collage/shorts/<slug>/` and `public/shorts/<slug>/stills/`. Suggested first three to narrate: `sholay-gabbar`, `coolie-accident`, `secret-remakes`. Existing produced shorts: `phalke`, `college`, `cult-flops`.
 
 PySceneDetect, clip catalogs, local voices, WhisperX, Remotion WebMCP, ComfyUI/Blender and editor/orchestration references remain candidates in `docs/tools-and-workflows.md`. Evaluate a 30–45 second sequence against the pitfall list before a larger integration. Do not assume any candidate is installed or that provider costs are authorized.
 

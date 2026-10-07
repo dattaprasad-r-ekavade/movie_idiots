@@ -7,6 +7,16 @@ import {CollegeShort} from './college/College';
 import * as college from './college/script';
 import * as funFactsTemplate from './fun-facts-template/script';
 import * as cultFlops from './cult-flops/script';
+import * as sholayGabbar from './sholay-gabbar/script';
+import * as coolieAccident from './coolie-accident/script';
+import * as secretRemakes from './secret-remakes/script';
+import * as lunchboxOscar from './lunchbox-oscar/script';
+import * as wasseypurSplit from './wasseypur-split/script';
+import * as intervalIndia from './interval-india/script';
+import * as alamAra from './alam-ara/script';
+import * as fearlessNadia from './fearless-nadia/script';
+import * as guideTwins from './guide-twins/script';
+import * as mughalColour from './mughal-colour/script';
 
 export type ShortEntry = {
   slug: string;
@@ -28,4 +38,14 @@ export const SHORTS: ShortEntry[] = [
   {...college, component: CollegeShort},
   funFactsTemplate,
   cultFlops,
+  sholayGabbar,
+  coolieAccident,
+  secretRemakes,
+  lunchboxOscar,
+  wasseypurSplit,
+  intervalIndia,
+  alamAra,
+  fearlessNadia,
+  guideTwins,
+  mughalColour,
 ];

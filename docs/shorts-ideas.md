@@ -1,0 +1,339 @@
+# YouTube Shorts idea backlog
+
+Drafted 7 October 2026 after pulling `main` to `585bbfb`. **Scripts and labelled stills are in the repo.** Hinglish lines, sources, lexicon, fun-facts plan and YouTube package live in `src/collage/shorts/<slug>/script.ts`; stills with `stills.json` provenance live in `public/shorts/<slug>/stills/`. Re-check claims against the URLs in each `sources` array before voice/render. Human picks the next slug to narrate.
+
+Channel: [@movieidiots5542](https://www.youtube.com/@movieidiots5542). Spoken Hinglish. Picture is commentary over stills or original art, never a Ken Burns stills-essay. Fun-facts Shorts use `src/collage/shorts/fun-facts-template/` + `npm run short -- lint|say|still|stills|render`. List/history Shorts follow `college` / `phalke`.
+
+Already made (do not repeat):
+
+| Slug | Hook |
+|---|---|
+| `phalke` | भारत की पहली हीरोइन… एक आदमी था (*Raja Harishchandra*, 1913). Opener still needs the *Shree Pundalik* qualifier. |
+| `college` | 80s–90s filmy college: सब कुछ, बस पढ़ाई नहीं. |
+| `cult-flops` | Theatre flop → cult: AAA, JBDY, *No Smoking*, *Kaagaz Ke Phool*. Commit `585bbfb` (“vid 3 done”). |
+
+House rules for every pitch:
+
+- Hook ≤ 10 words, lands in ~3 s, withholds one detail. Loop echoes that word.
+- 3–5 sourced facts, escalate, strongest last. Target 30–45 s.
+- Hinglish as spoken: film words in English. Lint flags textbook Hindi.
+- Stills: brief, labelled film/year/credit. Commentary is the content. Two downloads were rejected after inspection (`sholay-gabbar/poster.jpg` is *Shole* 1961; `guide-twins/english.jpg` is an unrelated later film). No 1965 English *Guide* poster was found.
+- No greeting, no channel header, no scene counters. One short sign-off is enough.
+- Voice: record if possible; else Edge with Devanagari via `toSpoken()`. Run `npm run short -- say SLUG` first.
+- Claims from published sources only. No fake screenings, invented quotes, or unsourced box-office.
+
+## Scripts on disk
+
+| Slug | File |
+|---|---|
+| `sholay-gabbar` | `src/collage/shorts/sholay-gabbar/script.ts` |
+| `coolie-accident` | `src/collage/shorts/coolie-accident/script.ts` |
+| `secret-remakes` | `src/collage/shorts/secret-remakes/script.ts` |
+| `lunchbox-oscar` | `src/collage/shorts/lunchbox-oscar/script.ts` |
+| `wasseypur-split` | `src/collage/shorts/wasseypur-split/script.ts` |
+| `interval-india` | `src/collage/shorts/interval-india/script.ts` |
+| `alam-ara` | `src/collage/shorts/alam-ara/script.ts` |
+| `fearless-nadia` | `src/collage/shorts/fearless-nadia/script.ts` |
+| `guide-twins` | `src/collage/shorts/guide-twins/script.ts` |
+| `mughal-colour` | `src/collage/shorts/mughal-colour/script.ts` |
+
+`npm run short -- lint SLUG` and `npm run short -- say SLUG` work on each. `npm run short -- list` shows them next to `phalke`, `college`, `cult-flops`.
+
+## Production order
+
+Asset **one** at a time. Suggested first three, then the rest:
+
+1. **`sholay-gabbar`** — everyone knows Gabbar; fun-facts format already exists.
+2. **`coolie-accident`** — freeze-frame in the film is a ready visual beat.
+3. **`secret-remakes`** — matches the channel’s Hindi × Hollywood mashup identity.
+
+Then 4–6 as a fun-facts batch (`lunchbox-oscar`, `wasseypur-split`, `interval-india`). History collages (`alam-ara`, `fearless-nadia`) need more original art, so they wait until a fun-facts cut is approved.
+
+---
+
+## 1. `sholay-gabbar` — Gabbar किसी और का था
+
+**Format:** fun-facts. **Length:** ~35 s. **Why first:** strongest name recognition; twist is one sentence.
+
+**Hook:** `Sholay का Gabbar… originally किसी और का था।`
+
+**Withheld payoff:** Danny Denzongpa was signed; he was in Afghanistan on Feroz Khan’s *Dharmatma*, so Amjad Khan got the part. Ramesh Sippy has said this on camera.
+
+**Beats (escalate):**
+
+| Role | Line sketch | On-screen |
+|---|---|---|
+| hook | Gabbar originally किसी और का था | Blurred *Sholay* still, headline `असली Gabbar?` |
+| promise | और Sanjeev Kumar खुद ये role चाहता था | |
+| fact 1 | Danny signed था; *Dharmatma* Afghanistan shoot, wait नहीं हो सकती | Stamp `AFGHANISTAN` |
+| fact 2 | Sanjeev Kumar and Amitabh both interested in Gabbar; Sanjeev played Thakur | Split: Thakur vs daku |
+| fact 3 | Javed was unsure of Amjad’s voice; Amjad came from theatre; UP accent clicked | Pop `THEATRE` |
+| payoff | वो “कोई और”: Danny Denzongpa | Sharp still, name stamp |
+| loop | Gabbar किसी और का था? | Hook frame returns |
+
+**Picture:** four labelled stills (Sholay poster / Gabbar, Danny, Amjad, *Dharmatma* or Sippy). Mascot shrug on the payoff.
+
+**Starter sources (re-check before locking):**
+
+- [Scroll, 2015: what *Sholay* could have been](https://scroll.in/article/745687/shatrughan-sinha-as-jai-pran-as-thakur-and-danny-as-gabbar-what-sholay-could-have-been) — Danny first choice; Sanjeev wanted Gabbar after hearing the dialogue.
+- [Bollywood Bubble, 2024: Sippy on Danny in Afghanistan](https://www.bollywoodbubble.com/exclusive-news/ramesh-sippy-first-approached-danny-denzongpa-for-gabbar-singh-and-not-amjad-khan-sholay-director-reveals/)
+- Wikipedia *Sholay* / *Dharmatma* for dates. Prefer Sippy’s own interview over roundup blogs.
+
+**Risks:** Gabbar stills are the most claimed images on YouTube. Keep them short, labelled, commentary-led. Do not play film audio.
+
+---
+
+## 2. `coolie-accident` — वो punch जिसने climax बदल दिया
+
+**Format:** fun-facts. **Length:** ~40 s.
+
+**Hook:** `Coolie का climax बदल गया… एक punch की वजह से।`
+
+**Withheld payoff:** Original script had Iqbal die. After 26 July 1982, Desai rewrote it so he lives. The fight is frozen on screen with a caption.
+
+**Beats:**
+
+| Role | Line sketch | On-screen |
+|---|---|---|
+| hook | Climax बदला, एक punch से | Freeze-frame still, headline `CLIMAX बदला` |
+| fact 1 | 26 July 1982, Bangalore University, fight with Puneet Issar, table edge, spleen/intestine | Date stamp `26 JUL 1982` |
+| fact 2 | 2 August: clinically dead minutes; Bachchan calls it his second birthday | `2 AUG` / `SECOND BIRTHDAY` |
+| fact 3 | Puneet later said he went years without work; Bachchan walked him to the hospital gate | Mascot facepalm |
+| payoff | Original ending: Iqbal मरता है। New ending: वो बचता है। Film में वो shot freeze है। | `IQBAL LIVES` |
+| loop | Climax एक punch से बदला? | |
+
+**Starter sources:**
+
+- [Wikipedia: Coolie filming accident](https://en.wikipedia.org/wiki/Coolie_filming_accident)
+- [Wikipedia: *Coolie* (1983) — ending rewrite](https://en.wikipedia.org/wiki/Coolie_(1983_Hindi_film))
+- [Indian Express, 2023: Desai changed the climax](https://indianexpress.com/article/entertainment/bollywood/manmohan-desai-changed-coolie-climax-after-amitabh-bachchan-accident-redefined-stardom-8852622/)
+- Bachchan’s own blog/KBC comments for the “clinically dead” / second-birthday line — quote only if the primary post is retrieved.
+
+**Risks:** Medical details (hepatitis B from transfusion) are real but heavy for a 40 s gag Short; keep them out unless the script goes serious. “Unemployed six years” is Puneet’s later interview — attribute it.
+
+---
+
+## 3. `secret-remakes` — वो Hollywood film जो तुमने Hindi में देखी
+
+**Format:** list-collage like `college` (theme + twist), or fun-facts if we keep it to 4 titles. **Length:** ~45 s. **Why it fits the channel:** existing videos mash Indian × Hollywood (*Vikram Vedha / Dark Knight*, *Pathaan / Winter Soldier*).
+
+**Hook:** `ये hit Hindi film… actually Hollywood की copy है।`
+
+**Withheld payoff:** *Ghajini* (2008) is a remake of Tamil *Ghajini* (2005), which itself is inspired by Nolan’s *Memento*. First Hindi film into the ₹100-crore club. Aamir has said it is a remake of the Tamil film, not a direct *Memento* copy.
+
+**Beats (list):**
+
+1. *Dil Hai Ke Manta Nahin* (1991) ← *It Happened One Night*
+2. *Jo Jeeta Wohi Sikandar* (1992) ← *Breaking Away* (already in the college Short — one line max, or skip)
+3. *Akele Hum Akele Tum* (1995) ← *Kramer vs. Kramer*
+4. Payoff: *Ghajini* ← Tamil *Ghajini* ← *Memento*; ₹100-cr club
+
+**Picture:** poster pairs as mounted prints, arrow stamp `REMAKE` on the Hindi title. Do not play either film’s score.
+
+**Starter sources:**
+
+- Aamir on *Ghajini* being a Tamil remake ([Filmibeat 2008 interview](https://www.filmibeat.com/bollywood/features/2008/aamir-khan-interview-ghajini-181208.html))
+- [Koimoi: Tamil vs Hindi *Ghajini* box office](https://www.koimoi.com/box-office/suriyas-ghajini-vs-aamir-khans-ghajini-at-the-box-office-while-og-was-a-big-success-hindi-remake-went-ahead-by-making-239-more-collection/) — re-check the ₹100-cr claim against Box Office India
+- Wikipedia pages for each pairing; “inspired by” vs official remake must stay honest (*JJWS* is widely described as influenced by *Breaking Away*, not always a licensed remake)
+
+**Risks:** Remake claims are a fight-comment magnet. Script should say “inspired by / remake of” exactly as the source does. Skip *Fanaa* / *Eye of the Needle* unless a strong source is found.
+
+---
+
+## 4. `lunchbox-oscar` — Oscar वाली film India ने भेजी ही नहीं
+
+**Format:** fun-facts. **Length:** ~35 s.
+
+**Hook:** `Cannes hit, Sony Classics… India ने Oscars पे भेजी ही नहीं।`
+
+**Withheld payoff:** FFI sent Gujarati *The Good Road* (2013) instead. It was not nominated. *The Lunchbox* had Cannes Critics’ Week + Sony Pictures Classics.
+
+**Beats:**
+
+1. *The Lunchbox* at Cannes Critics’ Week, standing ovation, Grand Rail d’Or
+2. Sony Pictures Classics takes North America
+3. 20 films in the FFI pile; 16-member jury; Gautam Ghose later said *Lunchbox* was his personal first
+4. Payoff: entry = *The Good Road*; not nominated. Karan Johar / Anurag Kashyap tweeted the snub
+
+**Starter sources:**
+
+- [Variety, 2013: India makes surprise Oscar choice](https://variety.com/2013/film/awards/india-makes-surprise-oscar-choice-1200656684/)
+- [NPR: Lunch gets boxed out](https://www.npr.org/2014/01/18/263106196/lunch-gets-boxed-out-indias-oscar-pick-controversy)
+- [TOI: Ghose — Lunchbox was my personal choice, jury unanimous for Good Road](https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/the-lunchbox-was-my-oscar-choice-ghose/articleshow/23046768.cms)
+- Wikipedia *The Lunchbox*, *The Good Road*
+
+**Tone:** do not dump on *The Good Road*. The joke is the process, not the Gujarati film.
+
+---
+
+## 5. `wasseypur-split` — एक film, पाँच घंटे, theatres ने मना कर दिया
+
+**Format:** fun-facts. **Length:** ~35 s.
+
+**Hook:** `Gangs of Wasseypur एक ही film थी… theatres ने काट दी।`
+
+**Withheld payoff:** Shot as one 319-minute film, screened whole at Cannes Directors’ Fortnight 2012. No Indian theatre would take five hours, so it became two parts. Kashyap later said the first cut was 7.5 hours and Motwane “saved” it from three films.
+
+**Beats:**
+
+1. One shoot, 319 minutes (160 + 159)
+2. Cannes 2012: shown as one film
+3. Indian release split 22 June / 8 August 2012 because of theatres
+4. Payoff: first cut ~7.5 hours; Motwane cut it down
+
+**Starter sources:**
+
+- [Wikipedia *Gangs of Wasseypur*](https://en.wikipedia.org/wiki/Gangs_of_Wasseypur) — 319 min single film, Cannes, split for India
+- [Wikipedia *Gangs of Wasseypur 2*](https://en.wikipedia.org/wiki/Gangs_of_Wasseypur_2)
+- [Indian Express, 2023: Kashyap on 7.5-hour first cut / Motwane](https://indianexpress.com/article/entertainment/bollywood/gangs-of-wasseypur-first-cut-seven-hours-long-tigmanshu-dhulia-improvised-tumse-na-ho-payega-line-reveals-anurag-kashyap-8931783/)
+
+**Overlap:** `cult-flops` already used Kashyap (*No Smoking*). Fine if the hook is the runtime, not “cult flop.”
+
+---
+
+## 6. `interval-india` — Hollywood में interval क्यों नहीं, यहाँ क्यों है
+
+**Format:** fun-facts. **Length:** ~40 s. Evergreen explainers travel on Shorts.
+
+**Hook:** `Hollywood film भारत में आती है… और बीच में interval लग जाता है।`
+
+**Withheld payoff:** Reel-change started it; Parsi theatre + snack money kept it. Writers still write an “interval point.” *Sangam* and *Mera Naam Joker* had two. Digital projection killed the technical need; the snack counter did not.
+
+**Beats:**
+
+1. Early cinema everywhere: change the reel
+2. Parsi theatre interval → Hindi writers plan beginning / interval / climax (Salim–Javed era, as told to historians)
+3. Theatre economics: F&B is the exhibitor’s own money
+4. Payoff: Hollywood films get a *forced* interval in Indian halls, often mid-scene; a few Hindi films dropped it (*Dhobi Ghat*, *Delhi Belly*, *Trapped*)
+
+**Starter sources:**
+
+- [Wikipedia: Intermission — Indian cinema](https://en.wikipedia.org/wiki/Intermission)
+- [The Hindu, 2018: interval as creative + commercial](https://www.thehindu.com/entertainment/movies/who-wants-a-washroom-break/article25203118.ece)
+- [TOI / Gautam Chintamani + Shivendra Singh Dungarpur on Parsi theatre and interval point](https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/hitchcock-to-cameron-hollywood-to-bollywood-how-the-intermission-divides-opinions-not-just-screenings/articleshow/96700431.cms)
+- [News18: *Sangam* had two intervals](https://www.news18.com/entertainment/bollywood/why-sangam-the-raj-kapoor-film-had-two-intervals-7635391.html)
+
+**Picture:** original art of a ticket, samosa, “INTERVAL” card, a torn Hollywood reel. Little need for copyrighted stills.
+
+---
+
+## 7. `alam-ara` — पहली talking film… कोई देख नहीं सकता
+
+**Format:** history collage (phalke-adjacent). **Length:** ~45–60 s. Original art + surviving posters/stills.
+
+**Hook:** `India की पहली talking film… आज कोई print नहीं है।`
+
+**Withheld payoff:** *Alam Ara* (Ardeshir Irani, 14 March 1931, Majestic Cinema). BFI has called it the most important lost Indian film. NFAI never held a print (the 2003 fire story is a myth). Surviving artefact: Irani’s Bell & Howell printer, found in a sari shop.
+
+**Beats:**
+
+1. 14 March 1931, “All living. Breathing. 100 per cent talking.” Police for the crowds
+2. Shot 1–4 a.m. because of train noise
+3. Ruby Myers (Sulochana) dropped — she couldn’t speak Hindustani; Zubeida took the role
+4. Payoff: no print, no gramophone; stills and a printer
+
+**Starter sources:**
+
+- [Wikipedia *Alam Ara* (1931)](https://en.wikipedia.org/wiki/Alam_Ara_(1931_film))
+- [BBC, 2022: search for the lost film / printer](https://www.bbc.co.uk/news/world-asia-india-61404876)
+- P. K. Nair on the fire myth (cited on the Wikipedia page)
+
+**Why later:** needs original art (like phalke). Public-domain-era stills/posters if provenance is clean. Qualifier: “first Indian sound feature” is the usual claim; do not fight other 1931 talkies in 40 seconds.
+
+---
+
+## 8. `fearless-nadia` — 1935 की superhero blonde Australian थी
+
+**Format:** history collage. **Length:** ~45 s.
+
+**Hook:** `1935 की सबसे बड़ी action star… Perth की लड़की थी।`
+
+**Withheld payoff:** Mary Ann Evans, Perth 1908 → Bombay. *Hunterwali* (1935), Wadia Movietone. Distributors refused a blonde whip-wielding heroine; the Wadias released it themselves; it ran houseful. She did her own stunts. 2026: NFSA + Film Heritage Foundation restoring *Hunterwali*, *Miss Frontier Mail*, *Diamond Queen*.
+
+**Beats:**
+
+1. Blonde, cape, whip, “Aaj se main Hunterwali hoon”
+2. Circus → J.B.H. Wadia screen test (“can you lift a man?”)
+3. Distributors said no; Wadias released it; catchphrase “hey-y-y”
+4. Payoff: Mary Ann Evans / Fearless Nadia; films now being restored
+
+**Starter sources:**
+
+- [Wikipedia: Fearless Nadia](https://en.wikipedia.org/wiki/Fearless_Nadia)
+- [BBC, 2024](https://www.bbc.com/news/world-asia-india-68271363)
+- [The Hindu, 2017](https://www.thehindu.com/entertainment/movies/nadia-the-fearless-khilari/article19433969.ece)
+- Restoration: Indian Link / NFSA–FHF Maitri grant (re-check current status at production time)
+
+**Picture:** original vector of a masked whip heroine + a labelled 1935 poster if we can credit Wadia Movietone. Channel mashup energy (Fairbanks × Bombay stunt films).
+
+---
+
+## 9. `guide-twins` — एक कहानी, दो films, एक flop
+
+**Format:** fun-facts. **Length:** ~40 s.
+
+**Hook:** `Guide दो बार बनी… एक hit, एक गायब।`
+
+**Withheld payoff:** Same year, same stars (Dev Anand, Waheeda Rehman), two movies. Hindi *Guide* (Vijay Anand) is the classic. English *The Guide* (Pearl S. Buck script, Tad Danielewski) flopped and vanished for decades; a print resurfaced around 2007 / later online. R.K. Narayan disliked both. They stopped shooting both versions in one setup after a Holi-crowd moment was missed.
+
+**Beats:**
+
+1. Novel first; English version was the original plan
+2. Directors fought; Dev asked Vijay to rewrite Hindi from scratch
+3. Hindi: Rosie leaves after catching her husband; English: closer to the book, more cynical Raju
+4. Payoff: Hindi 183 min hit; English ~120 min, lost for ~40 years
+
+**Starter sources:**
+
+- [Wikipedia *Guide* (film)](https://en.wikipedia.org/wiki/Guide_(film))
+- [Scroll, 2019: English *Guide* back story](https://scroll.in/reel/911745/dev-anands-guide-the-back-story-of-the-english-version-is-far-more-interesting-than-the-movie)
+- [The Hindu, 2015](https://www.thehindu.com/features/friday-review/hindi-movie-guide-was-a-super-hit/article7379477.ece)
+- Dev Anand, *Romancing with Life* — pull the dual-shoot quote from the book if available
+
+---
+
+## 10. `mughal-colour` — Black-and-white film, colour में गाना
+
+**Format:** fun-facts. **Length:** ~40 s.
+
+**Hook:** `पूरी film black-and-white… एक गाना colour में।`
+
+**Withheld payoff:** *Mughal-e-Azam* (5 Aug 1960). Development from 1944, stalled at Partition, recast, released 1960. “Pyar Kiya To Darna Kya” shot in colour in a Sheesh Mahal set that cost in the neighbourhood of a whole ordinary film. Full digital colour version, 2004 — first Indian feature colourized for theatrical re-release.
+
+**Beats:**
+
+1. 1944 start, financier leaves for Pakistan, Chandramohan dies, 1952 restart with Dilip / Madhubala / Prithviraj
+2. Budget ₹1.05–1.5 crore; widest 150-theatre release
+3. Colour song in a B&W feature; Belgian-glass Sheesh Mahal
+4. Payoff: 2004 full colourization; Asif had wanted the whole film in colour in 1960, distributors said no
+
+**Starter sources:**
+
+- [Wikipedia *Mughal-e-Azam*](https://en.wikipedia.org/wiki/Mughal-E-Azam)
+- [Britannica production history](https://www.britannica.com/topic/Mughal-e-Azam)
+- [Wikipedia: Pyar Kiya To Darna Kya](https://en.wikipedia.org/wiki/Pyar_Kiya_To_Darna_Kya)
+- Budget figures disagree (₹10.5 million vs ₹15 million) — script should say “सबसे महंगी Hindi film of its time” rather than a single rupee number unless one ledger is chosen.
+
+**Visual treat:** the still of Anarkali in the hall of mirrors is the Short. Keep it a mounted print, not a full-frame Ken Burns.
+
+---
+
+## How to produce the next one
+
+Copy the template, then:
+
+```powershell
+# from repo root
+npm run short -- lint SLUG
+npm run short -- say SLUG
+npm run short -- still SLUG --url IMAGE --source PAGE --credit "Studio" --label "Film (Year): what it shows" --name f1
+npm run short -- stills SLUG
+npm run short -- render SLUG --draft
+# watch draft.mp4; then voice (record or --edge) and full render
+```
+
+Checklist before render: hook on frame 0, source on every fact, no textbook Hindi, stills labelled, captions above the Shorts UI, loop shares a hook word.
+
+## Parked (not in the ten)
+
+Use later if a slug dies in research: Mother India Oscar near-miss (the “one vote” line is widely repeated and weakly sourced — do not lock it); *Black Friday* court stay (overlaps Kashyap + *wasseypur*); Nawazuddin extra-to-lead (weaker hook); first 100-crore club as its own Short (belongs inside `secret-remakes`).

@@ -45,6 +45,8 @@ Alternative: `npm run short -- voice phalke --edge` synthesizes each line with M
 
 ## Making the next short
 
+Pitch backlog and written scripts: [shorts-ideas.md](shorts-ideas.md). Ten fun-facts scripts live in `src/collage/shorts/<slug>/script.ts` with labelled stills in `public/shorts/<slug>/stills/`. Human picks the slug to narrate next.
+
 1. Pick a story with a twist that can be told in ~45–60 s and whose visuals you can own (illustrate it, use public-domain or licensed images).
 2. Write `script.ts`: one breath per line, spoken Hinglish, a hook that lands in the first 3 seconds, a loop line that echoes the hook. Every claim needs a source in `sources`.
 3. Plan one beat per idea. Each beat changes something visually every 1–2 s: an entrance, a stamp, a camera push, a marker. Anchor events to words, not seconds.

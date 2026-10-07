@@ -10,7 +10,9 @@ export type Spoken = {text: string; map: [number, number][]; unknown: string[]};
 // Prefer how a Hindi speaker says the word, not a letter-by-letter transliteration.
 export const LEXICON: Record<string, string> = {
   // film / channel words
-  bollywood: 'बॉलीवुड', hollywood: 'हॉलीवुड', film: 'फ़िल्म', films: 'फ़िल्में', movie: 'मूवी', movies: 'मूवीज़',
+  bollywood: 'बॉलीवुड', hollywood: 'हॉलीवुड', hindi: 'हिंदी', india: 'इंडिया', indian: 'इंडियन',
+  the: 'द', it: 'इट', to: 'टू', of: 'ऑफ़',
+  film: 'फ़िल्म', films: 'फ़िल्में', movie: 'मूवी', movies: 'मूवीज़',
   hero: 'हीरो', heroine: 'हीरोइन', villain: 'विलेन', director: 'डायरेक्टर', producer: 'प्रोड्यूसर', actor: 'एक्टर', actress: 'एक्ट्रेस',
   script: 'स्क्रिप्ट', scene: 'सीन', scenes: 'सीन्स', shooting: 'शूटिंग', shoot: 'शूट', set: 'सेट', camera: 'कैमरा', song: 'सॉन्ग',
   climax: 'क्लाइमैक्स', release: 'रिलीज़', released: 'रिलीज़', box: 'बॉक्स', office: 'ऑफ़िस', hit: 'हिट', flop: 'फ़्लॉप', blockbuster: 'ब्लॉकबस्टर',
@@ -36,6 +38,7 @@ export const LEXICON: Record<string, string> = {
   edit: 'एडिट', editor: 'एडिटर', cut: 'कट', final: 'फ़ाइनल', shocking: 'शॉकिंग', interesting: 'इंटरेस्टिंग', perfect: 'परफ़ेक्ट', fun: 'फ़न',
   mind: 'माइंड', blowing: 'ब्लोइंग', wait: 'वेट', reason: 'रीज़न', secret: 'सीक्रेट', rumour: 'रूमर', rumor: 'रूमर',
   career: 'करियर', debut: 'डेब्यू', fees: 'फ़ीस', fee: 'फ़ीस', salary: 'सैलरी', contract: 'कॉन्ट्रैक्ट', sign: 'साइन', signed: 'साइन',
+  voice: 'वॉइस', freeze: 'फ़्रीज़', work: 'वर्क', point: 'पॉइंट',
   reject: 'रिजेक्ट', rejected: 'रिजेक्ट', replace: 'रिप्लेस', replaced: 'रिप्लेस', ban: 'बैन', banned: 'बैन', censor: 'सेंसर', board: 'बोर्ड',
   overseas: 'ओवरसीज़', silver: 'सिल्वर', jubilee: 'जुबली', golden: 'गोल्डन', week: 'वीक', weeks: 'वीक्स', minute: 'मिनट', minutes: 'मिनट',
   hours: 'आवर्स', days: 'डेज़', years: 'इयर्स', online: 'ऑनलाइन', internet: 'इंटरनेट', meme: 'मीम', memes: 'मीम्स', viral: 'वायरल',
