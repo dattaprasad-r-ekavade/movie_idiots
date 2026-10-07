@@ -18,6 +18,7 @@ try {
     if (-not $voice) { throw "No installed $languagePrefix voice. Install a compatible Windows voice, import narration, or use ElevenLabs." }
     $speaker.SelectVoice($voice.VoiceInfo.Name)
   }
+  if ($null -ne $ttsInput.rate) { $speaker.Rate = [int]$ttsInput.rate }
   $speaker.SetOutputToWaveFile($ttsInput.output)
   $speaker.Speak($ttsInput.text)
 } finally { $speaker.Dispose() }

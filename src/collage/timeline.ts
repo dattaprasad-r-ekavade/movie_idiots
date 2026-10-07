@@ -1,7 +1,16 @@
 // Narration-driven timing. Every visual event is anchored to a script line or a word,
 // so swapping estimated timing for a real recording re-times the whole edit.
+import {resolveDelivery, type Delivery, type Role} from '../delivery';
 
-export type ScriptLine = {id: string; text: string};
+/** Beat role in a structured script; see `src/collage/formats/fun-facts.ts`. */
+export type LineRole = Role;
+/**
+ * `text` is what captions show and what `clock().word()` anchors match (Hinglish is fine).
+ * `say` overrides the spoken Devanagari; otherwise `toSpoken()` derives it from `text`.
+ * `source` indexes the short's `sources` array for the claim this line makes.
+ * `delivery` is the audio direction (mood, pause, music, sfx); roles supply defaults.
+ */
+export type ScriptLine = {id: string; text: string; say?: string; role?: LineRole; source?: number | number[]; delivery?: Delivery};
 export type Word = {text: string; start: number; end: number};
 export type LineTiming = {
   id: string;
@@ -11,6 +20,10 @@ export type LineTiming = {
   words: Word[];
   audio?: string;
   source: 'estimate' | 'recorded' | 'speech-service';
+  /** Silence before the line (seconds), from its delivery. */
+  pause?: number;
+  music?: Delivery['music'];
+  sfx?: Delivery['sfx'];
 };
 export type Timing = {lines: LineTiming[]; total: number; tail: number};
 
@@ -45,11 +58,14 @@ export function buildTiming(lines: ScriptLine[], measured: Record<string, Measur
   let cursor = 0.4;
   const out = lines.map((line) => {
     const m = measured[line.id];
-    const duration = m?.duration ?? estimateDuration(line.text);
+    const d = resolveDelivery(line);
+    const duration = m?.duration ?? estimateDuration(line.text) * (1 - (d.preset.rate + (d.rate ?? 0)) / 100);
+    // A directed pause is real silence on the timeline, so cuts and music can play into it.
+    cursor += d.pause ?? 0;
     const start = cursor;
     const words = (m?.words?.length ? m.words : estimateWords(line.text, duration)).map((w) => ({...w, start: w.start + start, end: w.end + start}));
-    cursor += duration + LINE_GAP;
-    return {id: line.id, text: line.text, start, duration, words, audio: m?.audio, source: m?.source ?? 'estimate'};
+    cursor += duration + LINE_GAP + (d.hold ?? 0);
+    return {id: line.id, text: line.text, start, duration, words, audio: m?.audio, source: m?.source ?? 'estimate', pause: d.pause, music: d.music, sfx: d.sfx};
   });
   return {lines: out, total: cursor + tail, tail};
 }

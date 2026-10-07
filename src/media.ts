@@ -4,6 +4,7 @@ import {channel, loadProject, localAsset, PUBLIC, projectDir, saveProject, ROOT}
 import {ffmpeg, probe, run} from './process';
 import {groupWordCues} from './video/timing';
 import {speakElevenLabs} from './elevenlabs';
+import {displayCues,toSpoken} from './speech';
 
 export async function importAsset(id:string,source:string,type:'image'|'video'|'audio',credit:string) {
   await loadProject(id);
@@ -43,24 +44,25 @@ export async function narrate(id:string,provider:'windows'|'elevenlabs'|'edge'='
     const name=`narration/${scene.id}.${provider==='windows'?'wav':'mp3'}`;
     const dest=path.join(PUBLIC,'projects',id,name);await mkdir(path.dirname(dest),{recursive:true});
     scene.cues=[];
-    const text=scene.speechText||scene.narration;
+    // Voices get Devanagari (clearer Hindi pronunciation); captions keep the narration's own words.
+    const spoken=toSpoken(scene.narration,scene.speechText),text=spoken.text;
     if(provider==='edge') {
       const input=path.join(projectDir(id),'tts-input.json'),timing=path.join(projectDir(id),`${scene.id}-word-timing.json`);
       await writeFile(input,JSON.stringify({text,output:dest,timing,voice:process.env.EDGE_VOICE||'hi-IN-MadhurNeural',rate:process.env.EDGE_RATE||'+8%'}));
       await run(process.env.VOICE_PYTHON||path.join(ROOT,'.venv',process.platform==='win32'?'Scripts/python.exe':'bin/python'),[path.join(ROOT,'scripts/edge_speech.py'),input],120000);
-      scene.cues=groupWordCues(JSON.parse(await readFile(timing,'utf8')));
+      scene.cues=groupWordCues(displayCues(scene.narration,spoken,JSON.parse(await readFile(timing,'utf8'))));
     } else if(provider==='windows') {
       const input=path.join(projectDir(id),'tts-input.json');
       await writeFile(input,JSON.stringify({text,output:dest,voice:c.voice,language:p.language}));
       await run(process.env.POWERSHELL_PATH||'pwsh.exe',['-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass','-File',path.join(ROOT,'scripts/speak.ps1'),'-InputFile',input],120000);
     } else {
-      const spoken=(s:typeof scene)=>s.speechText||s.narration;
-      const previous=p.scenes.slice(0,index).map(spoken).filter(value=>value.trim()).at(-1);
-      const next=p.scenes.slice(index+1).map(spoken).find(value=>value.trim());
+      const say=(s:typeof scene)=>s.narration.trim()?toSpoken(s.narration,s.speechText).text:'';
+      const previous=p.scenes.slice(0,index).map(say).filter(value=>value.trim()).at(-1);
+      const next=p.scenes.slice(index+1).map(say).find(value=>value.trim());
       const timing=path.join(projectDir(id),`${scene.id}-word-timing.json`);
       const words=await speakElevenLabs({text,output:dest,previousText:previous,nextText:next});
       await writeFile(timing,JSON.stringify(words,null,2));
-      scene.cues=groupWordCues(words);
+      scene.cues=groupWordCues(displayCues(scene.narration,spoken,words));
     }
     const metadata=await probe(dest);scene.audio=name;scene.duration=Math.max(2,Number(metadata.format.duration)+0.6);
     await saveProject(p);

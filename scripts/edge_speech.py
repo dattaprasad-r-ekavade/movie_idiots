@@ -9,7 +9,8 @@ async def main():
         config = json.load(handle)
     words = []
     voice = edge_tts.Communicate(config["text"], config.get("voice", "hi-IN-MadhurNeural"),
-                                 rate=config.get("rate", "+8%"), boundary="WordBoundary")
+                                 rate=config.get("rate", "+8%"), pitch=config.get("pitch", "+0Hz"),
+                                 volume=config.get("volume", "+0%"), boundary="WordBoundary")
     with open(config["output"], "wb") as audio:
         async for chunk in voice.stream():
             if chunk["type"] == "audio":

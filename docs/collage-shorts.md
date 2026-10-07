@@ -59,6 +59,68 @@ Alternative: `npm run short -- voice phalke --edge` synthesizes each line with M
 - On-screen text that only repeats the caption instead of adding a joke, label or number.
 - A claim without a source, or a quote that was never said.
 
+## Fun-facts format ("Did you know?")
+
+Format for the next Shorts. Starter: `src/collage/shorts/fun-facts-template/` (placeholder text, not facts). Copy it, replace lines, sources and plan, register it in `src/collage/shorts/index.ts`.
+
+### Script structure
+
+Every line has a `role`. `npm run short -- lint SLUG` checks the rules below. `render` stops on lint errors unless you pass `--force`.
+
+| Role | Length | Job |
+|---|---|---|
+| `hook` | ≤ 10 words, ~3 s | Most surprising fact as a specific claim or question (name, number, year). Withhold one detail. No greeting, no channel name. On screen from the first frame. |
+| `promise` (optional) | ≤ 5 s | Reason to stay: "और third fact तो fans को भी नहीं पता।" |
+| `fact` ×3–5 | 5–9 s each | One fact per beat, each with `source` (index into `sources`). Escalate; strongest fact last. |
+| `reveal` (optional) | short | Punch line right after its fact; the headline swaps. |
+| `payoff` | short | Closes the hook's loop with the withheld detail. The hook's blurred still comes into focus. |
+| `loop` | short | Repeats the hook's key word. The hook frame returns, so the restart reads as one shot. |
+| `cta` (optional) | very short | Only after the loop. Prefer pinned comment/description. |
+
+Target 30–45 s total. Picture changes every 2–4 s; new beat every 5–9 s. On-screen headlines add a label, name or number; they never repeat the caption.
+
+Basis (marketing-blog heuristics, checked October 2026, not platform data): most Shorts drop-off happens in the first 3 s; open loops and callback endings help replays; YouTube counts loops as views. [OpusClip](https://www.opus.pro/blog/ideal-youtube-shorts-length-format-retention), [virvid looping](https://virvid.ai/blog/looping-structure-shorts-retention-2026). Check them against the channel's own retention graphs after a few uploads.
+
+### Language: Hinglish, not textbook Hindi
+
+Write the way you would tell a friend. English for film words, reactions and anything people say in English (director, villain, box office, "seriously", "Fact one", years). Hindi for the glue. "इस film का villain actually किसी और का था?", not "इस चलचित्र के खलनायक की भूमिका…". Lint flags textbook words (निर्देशक, दर्शक, पुरस्कार, किंतु, वर्ष, तथ्य …) with the everyday word to use.
+
+### Audio directions (`delivery`)
+
+Each line can carry `delivery` on top of its role default (`src/delivery.ts`):
+
+| Field | Effect |
+|---|---|
+| `mood` | neutral, excited, curious, serious, punch, hushed, deadpan, warm. Edge: rate/pitch/volume. ElevenLabs: stability/style, plus an audio tag ([excited], [curious], [whispers], [sarcastic]) only on `eleven_v3` models. Windows: rate only. |
+| `rate`, `pitch` | Extra % / Hz on top of the mood. Keep changes small; big jumps sound robotic. |
+| `pause`, `hold` | Seconds of silence before / after the line, placed on the timeline so cuts and music play into it. |
+| `music` | `duck` (default), `drop` (music out through the pause, voice lands in silence, music returns 1.5 s in), `swell` (music sits up under the line). |
+| `sfx` | `[{word, sound, volume}]`: an effect on a spoken word (`pop.wav`, `stamp.wav`, `whoosh.wav`, `riser.wav`, `shutter.wav`, `coin.wav`, `paper.wav`, `flicker.wav`). |
+
+Role defaults: hook excited; promise curious; reveal punch with a 0.25 s pause; payoff serious with a 0.45 s pause and music drop; loop curious with music swell; cta warm. `npm run short -- say SLUG` prints each line's direction next to its spoken text. Render re-measures timing every time, so direction changes re-time the edit.
+
+### Voice: Devanagari for the speech engine
+
+Hindi voices read Devanagari reliably and guess at Latin-script words ("Madhu" came out wrong in the college draft). `src/speech.ts` converts each line before any voice provider (Windows, Edge, ElevenLabs; also `narrate_project` for long-form):
+
+- Shared `LEXICON` for loanwords and common names (college → कॉलेज, Madhu → मधु), per-short `lexicon` in `script.ts`, or a full-line `say` override.
+- Years and dates are spoken in English, in pairs: 1988 → नाइनटीन एटी एट, 1905 → नाइनटीन ओ फ़ाइव, 2024 → ट्वेंटी ट्वेंटी फ़ोर, "3 मई" / "May 3" → थर्ड मे, 1990s → नाइनटीन नाइंटीज़. Counts and amounts stay Hindi (15 रुपये → पंद्रह रुपये).
+- Captions and `clock().word()` anchors still use the display `text`. Speech-service word cues are mapped back to display words; raw spoken cues stay in `voice/<id>.spoken.json`.
+
+Run `npm run short -- say SLUG` before voicing. Any `[guessing: …]` word needs a lexicon entry or `say`.
+
+### Film stills
+
+Stills from films are copyrighted (producer/photographer), not public domain. Using a few briefly as support for commentary is common practice and generally argued as fair dealing for criticism/review; it is not a licence, and a rights holder can still claim. Video clips and film audio need authorization. Rules:
+
+- Download with `npm run short -- still SLUG --url IMAGE --source PAGE --credit "Studio" --label "Film (Year): what it shows" --name f1`. It saves to `public/shorts/SLUG/stills/` and records source, credit and rights in `stills.json`.
+- Verify film and year on the source page. Show the still only while its line plays, with the film/year tag and credit (`FilmStill` does both). Add the stills ledger to the description.
+- The commentary is the content: never a stills slideshow, never full-frame Ken Burns.
+
+### Clean look (`src/collage/clean.tsx`)
+
+Two weights of one family (Mukta 800/500), smooth springs with no overshoot, text revealed from a baseline, dark backdrop with a slow glow, film stills as mounted prints with a slow push, marigold accent. `ShortShell captionStyle="clean"` uses `CleanCaptions`: 2–3 words on a soft dark pill, active word in marigold, no heavy outline, so Devanagari matras stay crisp. The paper-collage primitives still work inside a fun-facts beat when a joke needs a cut-out or stamp.
+
 ## Known gaps / next steps
 
 - **Voice**: none yet in this environment (no reachable TTS). Record lines as above.

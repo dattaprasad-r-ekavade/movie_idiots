@@ -50,13 +50,18 @@ export async function searchImages(query:string,limit=6) {
   if(result.error)throw new Error(result.error.info);
   return {provider:'Wikimedia Commons',query,candidates:Object.values(result.query?.pages||{}).flatMap((page:any)=>{const i=page.imageinfo?.[0];if(!i)return [];return [{label:page.title,imageUrl:i.thumburl||i.url,sourceUrl:i.descriptionurl,width:i.width,height:i.height,credit:decode(i.extmetadata?.Artist?.value||''),license:decode(i.extmetadata?.LicenseShortName?.value||''),licenseUrl:i.extmetadata?.LicenseUrl?.value||'',attribution:decode(i.extmetadata?.Attribution?.value||'')}];}),hostSearch:'For movie publicity stills, use your host web image search, verify the film/year on the source page, then download_image with the source URL and accurate rights note.'};
 }
+/** Download a public raster image; returns bytes, final URL, extension and a short content hash. */
+export async function fetchImage(imageUrl:string) {
+  const {bytes,url}=await request(imageUrl);
+  const ext=bytes[0]===255&&bytes[1]===216?'.jpg':bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'.png':bytes.toString('ascii',0,4)==='RIFF'&&bytes.toString('ascii',8,12)==='WEBP'?'.webp':null;
+  if(!ext)throw new Error('Source is not a supported raster image (JPEG/PNG/WebP)');
+  return {bytes,url,ext,hash:createHash('sha256').update(bytes).digest('hex').slice(0,16)};
+}
 export async function downloadImage(id:string,opts:{imageUrl:string;sourceUrl:string;credit:string;rights:string;label:string}) {
   await loadProject(id);publicUrl(opts.sourceUrl);
   if(!opts.credit.trim()||!opts.rights.trim())throw new Error('Supply source credit and rights status');
-  const {bytes,url}=await request(opts.imageUrl);
-  const ext=bytes[0]===255&&bytes[1]===216?'.jpg':bytes.subarray(0,8).equals(Buffer.from([137,80,78,71,13,10,26,10]))?'.png':bytes.toString('ascii',0,4)==='RIFF'&&bytes.toString('ascii',8,12)==='WEBP'?'.webp':null;
-  if(!ext)throw new Error('Source is not a supported raster image (JPEG/PNG/WebP)');
-  const asset=`assets/web-${createHash('sha256').update(bytes).digest('hex').slice(0,16)}${ext}`;
+  const {bytes,url,ext,hash}=await fetchImage(opts.imageUrl);
+  const asset=`assets/web-${hash}${ext}`;
   const dest=path.join(PUBLIC,'projects',id,asset);await mkdir(path.dirname(dest),{recursive:true});await writeFile(dest,bytes);
   const metadata=await probe(dest),stream=metadata.streams.find((s:{codec_type:string})=>s.codec_type==='video');
   if(!stream?.width||!stream?.height)throw new Error('Downloaded image could not be decoded');

@@ -5,6 +5,7 @@ import {PhalkeShort} from './phalke/Phalke';
 import * as phalke from './phalke/script';
 import {CollegeShort} from './college/College';
 import * as college from './college/script';
+import * as funFactsTemplate from './fun-facts-template/script';
 
 export type ShortEntry = {
   slug: string;
@@ -12,6 +13,10 @@ export type ShortEntry = {
   lines: ScriptLine[];
   sources: {url: string; note: string}[];
   component: React.FC<ShortProps>;
+  /** Script structure checked by `npm run short -- lint SLUG` and before render. */
+  format?: 'fun-facts';
+  /** Extra Latin → Devanagari pronunciations for this short (names, titles). */
+  lexicon?: Record<string, string>;
   /** Upload package: written to youtube.txt by `npm run short -- package SLUG` and on render. */
   youtube?: {title: string; altTitles?: string[]; description: string; tags: string[]; settings?: Record<string, string | boolean>};
 };
@@ -20,4 +25,5 @@ export type ShortEntry = {
 export const SHORTS: ShortEntry[] = [
   {...phalke, component: PhalkeShort},
   {...college, component: CollegeShort},
+  funFactsTemplate,
 ];

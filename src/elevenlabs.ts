@@ -68,13 +68,14 @@ export async function resolveElevenLabsVoice() {
   return cachedVoiceId=ranked.voice_id;
 }
 
-export async function speakElevenLabs(opts:{text:string;output:string;previousText?:string;nextText?:string}):Promise<WordCue[]> {
+/** `voiceSettings` overrides the defaults per line; `tag` (eleven_v3 only) prefixes an audio tag such as [excited]. */
+export async function speakElevenLabs(opts:{text:string;output:string;previousText?:string;nextText?:string;voiceSettings?:Record<string,number|boolean>;tag?:string}):Promise<WordCue[]> {
   const voiceId=await resolveElevenLabsVoice();
   const model=process.env.ELEVENLABS_MODEL_ID||'eleven_multilingual_v2';
   const body:Record<string,unknown>={
-    text:opts.text,
+    text:opts.tag?`[${opts.tag}] ${opts.text}`:opts.text,
     model_id:model,
-    voice_settings:{stability:0.45,similarity_boost:0.75}
+    voice_settings:opts.voiceSettings??{stability:0.45,similarity_boost:0.75}
   };
   if(opts.previousText) body.previous_text=opts.previousText;
   if(opts.nextText) body.next_text=opts.nextText;
@@ -84,5 +85,6 @@ export async function speakElevenLabs(opts:{text:string;output:string;previousTe
   const data=await response.json() as {audio_base64?:string;alignment?:Alignment;normalized_alignment?:Alignment};
   if(!data.audio_base64) throw new Error('ElevenLabs returned no audio.');
   await writeFile(opts.output,Buffer.from(data.audio_base64,'base64'));
-  return wordsFromAlignment(data.alignment||data.normalized_alignment||{});
+  // Audio tags are directions, not words: keep them out of the caption cues.
+  return wordsFromAlignment(data.alignment||data.normalized_alignment||{}).filter(word=>!/^\[[^\]]*\]$/.test(word.text));
 }
