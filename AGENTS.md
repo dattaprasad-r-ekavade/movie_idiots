@@ -12,4 +12,11 @@ The first export was rejected as a lazy slide deck with unnatural Hindi. The rem
 
 If a running session cannot load newly configured tools, `scripts/produce.ts` is a real MCP client bridge. Its `--check` mode verifies connection; a manifest path produces narration/previews/draft; `--draft-only` stops there; `--render-only PROJECT-ID` renders the final version of an existing narrated project.
 
+**Script and design review (Shorts).** Before voicing or rendering a Short, run the review in `.claude/commands/review-short.md` (Claude Code: `/review-short SLUG`; other agents: follow the file). In brief:
+- `npm run short -- lint SLUG` checks structure, sources, grammar, honorific agreement, the stills ledger and static beats.
+- Read every line aloud. Facts are full spoken sentences with a Hindi verb ("direct की", "training ली"), never telegrams ("खुद directed.").
+- Hindi collocations must make sense ("सूखे से परेशान farmers", not "सूखे farmers").
+- Real people, especially elders and the recently deceased, get plural verbs ("गए थे"). Set `honorific = true` in the script.
+- `npm run short -- stills SLUG`, then open every contact sheet. Prints are large; the picture changes every 2–4 s (`cuts`, `pop`, `reveal`). Year tags match the photo. Nothing overlaps, and tone fits the subject.
+
 For source changes run `npm run typecheck` and `npm test`. Verify renderer changes with representative scene previews and a render. Do not invoke paid providers unless requested/configured for the production. Keep one operation per project at a time.

@@ -1,6 +1,7 @@
 import type React from 'react';
 import type {ScriptLine} from '../timeline';
 import type {ShortProps} from '../shell';
+import type {FunFactsPlan} from '../formats/FunFactsShort';
 import {PhalkeShort} from './phalke/Phalke';
 import * as phalke from './phalke/script';
 import {CollegeShort} from './college/College';
@@ -17,6 +18,7 @@ import * as alamAra from './alam-ara/script';
 import * as fearlessNadia from './fearless-nadia/script';
 import * as guideTwins from './guide-twins/script';
 import * as mughalColour from './mughal-colour/script';
+import * as nanaPatekar from './nana-patekar/script';
 
 export type ShortEntry = {
   slug: string;
@@ -26,6 +28,10 @@ export type ShortEntry = {
   component: React.FC<ShortProps>;
   /** Script structure checked by `npm run short -- lint SLUG` and before render. */
   format?: 'fun-facts';
+  /** Fun-facts beat plan; `lint` checks its stills against the ledger and flags static beats. */
+  plan?: FunFactsPlan;
+  /** About a real person spoken of respectfully: `lint` flags singular verbs (गया/था → गए/थे). */
+  honorific?: boolean;
   /** Extra Latin → Devanagari pronunciations for this short (names, titles). */
   lexicon?: Record<string, string>;
   /** Upload package: written to youtube.txt by `npm run short -- package SLUG` and on render. */
@@ -48,4 +54,5 @@ export const SHORTS: ShortEntry[] = [
   fearlessNadia,
   guideTwins,
   mughalColour,
+  nanaPatekar,
 ];

@@ -11,7 +11,7 @@
 //   tsx scripts/short.ts render SLUG [--draft] [--no-music] [--no-captions]
 //   tsx scripts/short.ts package SLUG             youtube.txt (title, description, tags) for upload
 import path from 'node:path';
-import {existsSync} from 'node:fs';
+import {existsSync, readFileSync} from 'node:fs';
 import {mkdir, readFile, readdir, rm, writeFile} from 'node:fs/promises';
 import {bundle} from '@remotion/bundler';
 import {renderFrames, renderMedia, selectComposition} from '@remotion/renderer';
@@ -20,7 +20,7 @@ import {ffmpeg, probe, run} from '../src/process';
 import {speakElevenLabs} from '../src/elevenlabs';
 import {displayCues, toSpoken, type SpokenWord} from '../src/speech';
 import {fetchImage} from '../src/web-assets';
-import {lintFunFacts} from '../src/collage/formats/fun-facts';
+import {lintFunFacts, lintPlan, type LedgerEntry} from '../src/collage/formats/fun-facts';
 import {describeDelivery, edgeProsody, elevenDelivery, resolveDelivery, windowsRate} from '../src/delivery';
 import {SHORTS} from '../src/collage/shorts';
 import {buildTiming, displayText, type MeasuredLine, type Timing, type Word} from '../src/collage/timeline';
@@ -217,8 +217,10 @@ async function youtubePackage() {
 /** Print issues; returns true when any is an error. */
 function lint() {
   const short = entry();
+  const ledgerFile = path.join(PUBLIC, 'shorts', slug, 'stills', 'stills.json');
+  const ledger: LedgerEntry[] = existsSync(ledgerFile) ? JSON.parse(readFileSync(ledgerFile, 'utf8')) : [];
   const issues = short.format === 'fun-facts'
-    ? lintFunFacts(short.lines, short.sources, short.lexicon)
+    ? [...lintFunFacts(short.lines, short.sources, short.lexicon, {honorific: short.honorific}), ...(short.plan ? lintPlan(short.plan, short.lines, ledger) : [])]
     : short.lines.flatMap((l) => spoken(l).unknown.map((w) => ({level: 'warn' as const, line: l.id, message: `Voice will guess at: ${w}`})));
   for (const i of issues) console.log(`${i.level.toUpperCase()}${i.line ? ` [${i.line}]` : ''} ${i.message}`);
   if (!issues.length) console.log('Script lint: clean');

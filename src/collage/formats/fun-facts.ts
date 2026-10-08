@@ -18,6 +18,7 @@
 import {estimateDuration, type LineRole, type ScriptLine} from '../timeline';
 import {toSpoken} from '../../speech';
 import {SOUNDS} from '../../delivery';
+import type {FunFactsPlan, StillRef} from './FunFactsShort';
 
 // Formal/textbook words that make a Short sound like a news bulletin, with what people say.
 export const PURIST: Record<string, string> = {
@@ -33,8 +34,49 @@ export type Issue ={level: 'error' | 'warn'; line?: string; message: string};
 
 const words = (text: string) => text.split(/\s+/).filter(Boolean);
 const stem = (w: string) => w.replace(/[^\p{L}\p{N}\p{M}]/gu, '').toLowerCase();
+const DEVANAGARI = /[ऀ-ॿ]/;
 
-export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexicon: Record<string, string> = {}): Issue[] {
+// Finite verbs and auxiliaries. A fact line of 3+ Hindi words with none of these anywhere reads like a
+// telegram ("Maratha Light Infantry के साथ तीन साल training.") instead of a spoken sentence.
+const VERBS = new Set(`है हैं था थे थी थीं हो होता होती होते हुआ हुई हुए किया की किए कीं ली लिया लिए दी दिया दिए गया गए गई गयी गईं
+  रहा रहे रही सकता सकते सकी सका पाया पाए मिला मिली मिले बना बनी बने बनाई बनाया आया आई आए आएगा जाता जाती जाते करता करते करती करो
+  लगा लगी लगे कहा बोला बोले पड़ा पड़ी चाहिए निकला निकली निकले पहुँचे पहुँचा पहुँची छोड़ा छोड़ी छोड़े चला चली चले जीता जीती जीते
+  हारा हारी हारे देखा देखी देखे सुना सुनी लौटे लौटा भेजा भेजी उठा उठी गिरा गिरी मरा रखा रखी बदला बदली बिका बिकी चलेगा
+  लिखा लिखी लिखे सकीं सकें सके पता बताया बताई माना मानी गाया गाई खेला खेली दिखा दिखाई दिखाया कमाया कमाए कमाई चुना चुनी बिताए बिताया`.split(/\s+/));
+
+// Singular masculine verb forms. With `honorific`, a real person (an elder, a tribute subject) gets
+// the respectful plural: "Kargil गए थे", not "Kargil गया था".
+const SINGULAR: Record<string, string> = {
+  गया: 'गए', था: 'थे', रहा: 'रहे', करता: 'करते', जाता: 'जाते', आया: 'आए', बोला: 'बोले', चला: 'चले', सकता: 'सकते', सका: 'सके',
+  देता: 'देते', लेता: 'लेते', रहता: 'रहते', लौटा: 'लौटे', पहुँचा: 'पहुँचे', जीता: 'जीते', हारा: 'हारे', निकला: 'निकले',
+};
+
+export type LintOptions = {
+  /** The Short is about a real person who should be spoken of respectfully (plural verbs). */
+  honorific?: boolean;
+};
+
+/** Grammar checks for one line: verbless fact clauses, bare English verbs, and honorific agreement. */
+export function lintGrammar(line: ScriptLine, options: LintOptions = {}): Issue[] {
+  const issues: Issue[] = [];
+  const warn = (message: string) => issues.push({level: 'warn', line: line.id, message});
+  if (line.role === 'fact' || line.role === 'reveal' || line.role === 'promise') {
+    // Line-level: one elliptical clause ("साढ़े तीन करोड़ का budget") is fine after a full sentence.
+    const ws = words(line.text).map(stem);
+    if (ws.filter((w) => DEVANAGARI.test(w)).length >= 3 && !ws.some((w) => VERBS.has(w)))
+      warn(`No Hindi verb anywhere in the line. Say at least one clause as a full sentence ("… training ली", "… शुरू की"), not a telegram`);
+  }
+  // "खुद directed." — an English past tense with no Hindi helper. Hinglish puts the helper on the stem: "direct की".
+  for (const m of line.text.matchAll(/\b([A-Za-z]+ed)\s*(?=[.?!,;]|$)/g))
+    warn(`"${m[1]}" ends the clause as an English past tense; use the stem + Hindi helper ("${m[1].replace(/e?d$/, '')} की / किया")`);
+  if (options.honorific) {
+    const found = words(line.text).map(stem).filter((w) => SINGULAR[w]);
+    if (found.length) warn(`Honorific Short: ${found.map((w) => `${w} → ${SINGULAR[w]}`).join(', ')} (use plural for the person, unless the subject is a thing)`);
+  }
+  return issues;
+}
+
+export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexicon: Record<string, string> = {}, options: LintOptions = {}): Issue[] {
   const issues: Issue[] = [];
   const err = (message: string, line?: string) => issues.push({level: 'error', line, message});
   const warn = (message: string, line?: string) => issues.push({level: 'warn', line, message});
@@ -85,6 +127,7 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     if (l.text.includes('|') || l.say?.includes('|')) err('Use "." as the sentence mark, never "|"', l.id);
     if (l.text.includes('।')) warn('Use "." instead of "।" (shown as is, read as a full stop)', l.id);
     if (!l.en) warn('No English draft (en). Write the line in English first, then translate to Hinglish', l.id);
+    issues.push(...lintGrammar(l, options));
     const formal = words(l.text).map(stem).filter((w) => PURIST[w]);
     if (formal.length) warn(`Sounds like textbook Hindi: ${formal.map((w) => `${w} → ${PURIST[w]}`).join(', ')}`, l.id);
     for (const s of l.delivery?.sfx ?? []) {
@@ -95,5 +138,43 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
   const total = lines.reduce((n, l) => n + estimateDuration(l.text) + 0.28, 0.4);
   if (total > 50) warn(`Estimated ${total.toFixed(0)} s; fun-fact Shorts do best around 30–45 s`);
   if (total < 20) warn(`Estimated ${total.toFixed(0)} s; too thin for 3+ facts`);
+  return issues;
+}
+
+/** One entry of `public/shorts/SLUG/stills/stills.json`, written by `npm run short -- still`. */
+export type LedgerEntry = {file: string; label: string; credit?: string; sourceUrl?: string; rights?: string};
+
+/**
+ * Design and provenance checks for a fun-facts plan: every still is in the ledger, on-screen year tags
+ * agree with the ledger label, and no beat holds one picture with nothing else changing for too long.
+ */
+export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: LedgerEntry[]): Issue[] {
+  const issues: Issue[] = [];
+  const byId = new Map(lines.map((l) => [l.id, l]));
+  const byFile = new Map(ledger.map((e) => [e.file, e]));
+  const check = (still: StillRef | undefined, where: string) => {
+    if (!still?.src) return;
+    const entry = byFile.get(still.src);
+    if (!entry) {
+      issues.push({level: 'error', line: where, message: `${still.src} is not in stills.json; download it with \`npm run short -- still\` so source, credit and rights are recorded`});
+      return;
+    }
+    if (still.year !== undefined) {
+      const years: string[] = entry.label.match(/\b(1[89]\d\d|20\d\d)\b/g) ?? [];
+      if (!years.includes(String(still.year)))
+        issues.push({level: 'warn', line: where, message: `Tag says ${still.year} but the ledger label "${entry.label}" ${years.length ? `says ${years.join('/')}` : 'has no year'}; check the photo's own date (signage, source caption) or drop the year`});
+    }
+  };
+  check(plan.hook.still, plan.hook.lines[0]);
+  check(plan.payoff.still, plan.payoff.lines[0]);
+  for (const fact of plan.facts) {
+    const where = fact.lines[0];
+    check(fact.still, where);
+    for (const cut of fact.cuts ?? []) check(cut, where);
+    const secs = fact.lines.reduce((n, id) => n + estimateDuration(byId.get(id)?.text ?? ''), 0);
+    const changes = (fact.cuts?.length ?? 0) + (fact.pop ? 1 : 0) + (fact.reveal ? 1 : 0);
+    if (secs > 6 && changes === 0)
+      issues.push({level: 'warn', line: where, message: `~${secs.toFixed(0)} s on one still with no cut, pop or reveal; add a \`cuts\` print or a \`pop\` so the picture changes every 2–4 s`});
+  }
   return issues;
 }

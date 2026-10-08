@@ -60,6 +60,8 @@ Pitch backlog and written scripts: [shorts-ideas.md](shorts-ideas.md). Ten fun-f
 - Devanagari conjuncts broken (check stamps and display text; Rozha One lacks some, such as श्च).
 - On-screen text that only repeats the caption instead of adding a joke, label or number.
 - A claim without a source, or a quote that was never said.
+- A line that reads like a telegram, a bare English verb ("directed"), or a real person spoken of in the singular when respect is due (see "Script and design review").
+- A still tag whose film/year does not match the photo itself.
 
 ## Fun-facts format ("Did you know?")
 
@@ -128,6 +130,28 @@ Rules:
 ### Clean look (`src/collage/clean.tsx`)
 
 Two weights of one family (Mukta 800/500), smooth springs with no overshoot, text revealed from a baseline, dark backdrop with a slow glow, film stills as mounted prints with a slow push, marigold accent. `ShortShell captionStyle="clean"` uses `CleanCaptions`: 2–3 words on a soft dark pill, active word in marigold, no heavy outline, so Devanagari matras stay crisp. The paper-collage primitives still work inside a fun-facts beat when a joke needs a cut-out or stamp.
+
+Plan options for a livelier beat (`src/collage/formats/FunFactsShort.tsx`):
+
+| Option | Effect |
+|---|---|
+| `still.width`, `still.aspect`, `still.push` | Print size, crop ratio and slow-push range. Prints of ~860–980 px fill the frame; a small print over empty space looks unfinished. |
+| `hook.blur` | Blur on the hook still (default 16, cleared at the payoff). Use `0` to show a face sharp from the first frame. |
+| `cuts: [{word, line?, src, …, offset?, tilt?, replace?}]` | Another print drops in when `word` is spoken. `replace: true` takes the previous print away; otherwise it stacks. Use it so a 7–9 s beat changes picture every 2–4 s. |
+| `pop: {word, line?, text}` | Short stamp (number, label) on a spoken word. |
+
+Prints hold until the next beat starts, so a directed pause never shows an empty frame.
+
+### Script and design review
+
+`/review-short SLUG` (`.claude/commands/review-short.md`) is the full review. `npm run short -- lint SLUG` automates part of it:
+
+- **Grammar.** A fact, reveal or promise line with 3+ Hindi words and no Hindi verb is flagged as a telegram ("Maratha Light Infantry के साथ तीन साल training."). A bare English past tense ending a clause ("खुद directed.") should become stem + helper ("direct की").
+- **Honorific.** `export const honorific = true` in `script.ts` flags singular verbs (गया, था, रहा, करता …) for a Short about a real person who should be spoken of respectfully.
+- **Stills ledger.** Every plan still must be in `stills.json` (error). A tag year that is missing from the ledger label is flagged, so check the photo's own date.
+- **Static beats.** A beat of more than ~6 s with one still and no `cuts`, `pop` or `reveal` is flagged.
+
+Lint cannot hear the line. Still read every line aloud for collocations ("सूखे farmers" means dry farmers), ambiguity and tone, and open every contact sheet.
 
 ## Known gaps / next steps
 

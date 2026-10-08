@@ -11,9 +11,11 @@ import {Presenter} from '../characters';
 import {ShortShell, local, type BeatProps, type ShortProps} from '../shell';
 
 /** A still from `npm run short -- still`, shown as a mounted print. */
-export type StillRef = {src?: string; film?: string; year?: number | string; credit?: string; focus?: string; aspect?: number; width?: number};
+export type StillRef = {src?: string; film?: string; year?: number | string; credit?: string; focus?: string; aspect?: number; width?: number; push?: [number, number]};
 /** Text that lands on a spoken word: `{line, word, text}` shows `text` when `word` is said. */
 export type Pop = {line?: string; word: string; text: string};
+/** Another print that drops onto the beat when `word` (in `line`, default the beat's first line) is said. `offset` moves it from centre, in px; `replace` takes the previous print away as it lands. */
+export type Cut = StillRef & {line?: string; word: string; offset?: [number, number]; tilt?: number; replace?: boolean};
 
 export type FactBeat = {
   /** Script line IDs in this beat; the first one starts it. */
@@ -23,13 +25,16 @@ export type FactBeat = {
   accent?: string[];
   still?: StillRef;
   pop?: Pop;
+  /** Extra prints stacked on top of `still` on spoken words, so a long beat keeps changing. */
+  cuts?: Cut[];
   /** Second headline for the punch line (`reveal` role); swaps in when that line starts. */
   reveal?: {line: string; headline: string; accent?: string[]};
 };
 
 export type FunFactsPlan = {
   kicker?: string;
-  hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop};
+  /** `blur` hides the hook still until the payoff (default 16); 0 shows it sharp from the first frame. */
+  hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; blur?: number};
   facts: FactBeat[];
   /** Closes the hook's loop. Reuses the hook still, now sharp, unless it brings its own. */
   payoff: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop};
@@ -73,7 +78,7 @@ function HookFrame({plan, c, from, still, settle = false}: BeatProps & {plan: Fu
   // On the loop the frame is already "there": no entrance, so the restart reads as one shot.
   // The hook headline is already on the very first frame (it is what stops the scroll).
   const at = settle ? -30 : -20;
-  const blur = 16;
+  const blur = hook.blur ?? 16;
   // Leave with the hook's last sentence so old text never sits over the next beat. The loop keeps it.
   const out = settle ? undefined : L(c.end(hook.lines[hook.lines.length - 1]));
   return (
@@ -98,6 +103,12 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
   // Each on-screen element leaves when its sentence ends, so the previous text never lingers.
   const end = L(c.end(fact.lines[fact.lines.length - 1]));
   const revealEnd = fact.reveal ? L(c.end(fact.reveal.line)) : undefined;
+  const cutAt = (fact.cuts ?? []).map((cut) => L(c.word(cut.line ?? fact.lines[0], cut.word)));
+  // A print leaves when a later `replace` cut lands (a few frames after, so the cut covers it); otherwise it holds to the beat's end.
+  const exitAfter = (i: number) => {
+    const next = (fact.cuts ?? []).findIndex((cut, j) => j > i && cut.replace);
+    return next < 0 ? length - 6 : cutAt[next] + 4;
+  };
   return (
     <AbsoluteFill>
       <Top>{numbered ? <FactBadge n={index + 1} of={count} at={0} exit={end} /> : <Kicker text={DEFAULT_KICKER} at={0} exit={end} />}</Top>
@@ -110,7 +121,18 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
         </Title>
       )}
       <Stage>
-        <FilmStill {...fact.still} at={2} exit={revealEnd ?? end} tilt={index % 2 ? 2 : -2} duration={length} />
+        {/* Prints hold to the end of the beat, so a pause before the next beat never shows an empty frame. */}
+        <FilmStill {...fact.still} at={2} exit={exitAfter(-1)} tilt={index % 2 ? 2 : -2} duration={length} />
+        {fact.cuts?.map((cut, i) => {
+          const at = cutAt[i];
+          const [x, y] = cut.offset ?? [0, 0];
+          return (
+            <div key={i} style={{position: 'absolute', top: y, left: '50%', transform: `translateX(calc(-50% + ${x}px))`}}>
+              <FilmStill {...cut} at={at} exit={exitAfter(i)} tilt={cut.tilt ?? (i % 2 ? -2.5 : 2.5)} duration={length - at} />
+              <Sfx at={at} src="shutter.wav" volume={0.35} />
+            </div>
+          );
+        })}
       </Stage>
       <PopAt pop={fact.pop} c={c} from={from} fallbackLine={fact.lines[0]} top={1080} />
       <Sfx at={0} src="whoosh.wav" volume={0.35} />

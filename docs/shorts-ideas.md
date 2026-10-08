@@ -15,7 +15,8 @@ Updated 8 October 2026. Voice rule: drafts use Edge, finals use ElevenLabs. Spee
 | `lunchbox-oscar` | done | done | done (15%) | done |
 | `wasseypur-split` | done | done | done (15%) | done |
 | `interval-india` | done | done | done (15%) | done |
-| `secret-remakes` | done | not built | not built | not built. Stills are posters at 220–280 px. Replace before drafting |
+| `secret-remakes` | done | done (54s) | done (v4, 8%) | done. Upload `projects/shorts/secret-remakes/video-fast8.mp4` |
+| `nana-patekar` | done | done (44.9s) | not built | not built. Tribute facts; death in description only |
 | `alam-ara` | done | not built | not built | not built. Needs original art |
 | `fearless-nadia` | done | not built | not built | not built |
 | `guide-twins` | done | not built | not built | not built. Needs a check on runtimes |
@@ -25,11 +26,13 @@ Updated 8 October 2026. Voice rule: drafts use Edge, finals use ElevenLabs. Spee
 | `phalke` | done | not built | not built | not built |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending, in order: `secret-remakes` (after new stills), `fearless-nadia`, `mughal-colour`, `guide-twins`, `alam-ara`. Then re-render `college` and `cult-flops`, and build `phalke`.
+Pending, in order: `nana-patekar` (current; death 8 Oct 2026), then `fearless-nadia`, `mughal-colour`, `guide-twins`, `alam-ara`. Then re-render `college` and `cult-flops`, and build `phalke`.
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.
-- Facts flagged as unverified (search summaries, not re-read): Ghose and Batra quotes (`lunchbox-oscar`), BFI quote (`alam-ara`), "first 100 crore Hindi film" (`secret-remakes`), runtimes (`guide-twins`).
+- Facts flagged as unverified (search summaries, not re-read): Ghose and Batra quotes (`lunchbox-oscar`), BFI quote (`alam-ara`), runtimes (`guide-twins`).
+- `secret-remakes` ₹100-crore line sourced to Box Office India archive (movieid=309). ElevenLabs v4 final 44.8 s; upload speed copy 41.5 s (8%). Uploaded.
+- `nana-patekar`: Vishwanath “Nana” Patekar died 8 Oct 2026, Goa, cardiac arrest. Hook is Kargil, not the death. Do not lock Kargil days/rank in the spoken line (outlets disagree). Unused: `prahaar-poster.jpg` 220px, `prahaar-cm.webp` 300px, `hungama-hf5-3.jpg` (wrong people).
 - Listening check for ElevenLabs finals not done.
 
 Already made (do not repeat):
@@ -64,6 +67,7 @@ House rules for every pitch:
 | `fearless-nadia` | `src/collage/shorts/fearless-nadia/script.ts` |
 | `guide-twins` | `src/collage/shorts/guide-twins/script.ts` |
 | `mughal-colour` | `src/collage/shorts/mughal-colour/script.ts` |
+| `nana-patekar` | `src/collage/shorts/nana-patekar/script.ts` |
 
 `npm run short -- lint SLUG` and `npm run short -- say SLUG` work on each. `npm run short -- list` shows them next to `phalke`, `college`, `cult-flops`.
 

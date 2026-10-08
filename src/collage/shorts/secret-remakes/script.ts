@@ -1,5 +1,4 @@
-// Fun-facts Short. Stills left without `src` on purpose — procure later:
-//   npm run short -- still secret-remakes --url IMAGE --source PAGE --credit "Studio" --label "Film (Year): …" --name f1
+// Fun-facts Short. High-res stills in public/shorts/secret-remakes/stills/.
 import type {ScriptLine} from '../../timeline';
 import {funFacts, type FunFactsPlan} from '../../formats/FunFactsShort';
 
@@ -39,7 +38,7 @@ export const lines: ScriptLine[] = [
   {
     id: 'f3',
     role: 'fact',
-    source: [2, 3],
+    source: [2, 3, 4],
     en: "2008, Ghajini. The first Hindi film to reach 100 crore. It is a remake of the Tamil film.",
     text: "2008, Ghajini. पहली Hindi film जो 100 crore तक पहुँची. ये Tamil Ghajini का remake है.",
     delivery: {sfx: [{word: "crore", sound: 'stamp.wav', volume: 0.45}]},
@@ -81,7 +80,11 @@ export const sources = [
   },
   {
     url: 'https://en.wikipedia.org/wiki/Ghajini_(2008_film)',
-    note: 'Hindi Ghajini (2008) is a remake of the 2005 Tamil film of the same name, itself widely described as inspired by Memento. Hindi version is cited as the first to enter the ₹100 crore club — re-check Box Office India before locking the rupee line.',
+    note: 'Hindi Ghajini (2008) is a remake of the 2005 Tamil film of the same name, itself widely described as inspired by Memento.',
+  },
+  {
+    url: 'https://web.archive.org/web/20181021082345/https://boxofficeindia.com/movie.php?movieid=309',
+    note: 'Box Office India (archived 21 Oct 2018): Ghajini India nett ₹1,14,10,00,000. Note: “First film to cross 100 crore nett.”',
   },
 ];
 
@@ -103,7 +106,7 @@ export const lexicon: Record<string, string> = {
   kramer: 'क्रेमर',
   loosely: 'लूसली',
   based: 'बेस्ड',
-  ghajini: 'ग़ज़नी',
+  ghajini: 'गजिनी',
   tamil: 'तमिल',
   memento: 'मेमेंटो',
 };
@@ -130,11 +133,11 @@ export const plan: FunFactsPlan = {
       headline: 'DHKMN 1991\nCapra वाली',
       accent: ['1991'],
       still: {
-        src: 'shorts/secret-remakes/stills/dhkmn.jpg',
+        src: 'shorts/secret-remakes/stills/dhkmn-hungama.jpg',
         film: 'Dil Hai Ke Manta Nahin',
         year: 1991,
         credit: 'N. N. Sippy Productions',
-        focus: '50% 30%',
+        focus: '50% 28%',
       },
       pop: {word: '1991', text: '1991'},
     },
@@ -143,11 +146,11 @@ export const plan: FunFactsPlan = {
       headline: 'Akele Hum\nKramer vs Kramer',
       accent: ['Kramer'],
       still: {
-        src: 'shorts/secret-remakes/stills/ahat.jpg',
+        src: 'shorts/secret-remakes/stills/ahat-hungama.jpg',
         film: 'Akele Hum Akele Tum',
         year: 1995,
         credit: 'United Seven Combines',
-        focus: '50% 30%',
+        focus: '50% 28%',
       },
     },
     {
@@ -155,11 +158,11 @@ export const plan: FunFactsPlan = {
       headline: 'Ghajini\n₹100 crore',
       accent: ['₹100'],
       still: {
-        src: 'shorts/secret-remakes/stills/ghajini.jpg',
+        src: 'shorts/secret-remakes/stills/ghajini-still.jpg',
         film: 'Ghajini',
         year: 2008,
         credit: 'Geetha Arts',
-        focus: '50% 30%',
+        focus: '50% 35%',
       },
       pop: {word: 'crore', text: '₹100 CR'},
       reveal: {line: 'f3r', headline: 'Tamil ← Memento', accent: ['Memento']},
@@ -169,6 +172,13 @@ export const plan: FunFactsPlan = {
     lines: ['payoff'],
     headline: 'Memento\nTamil होकर',
     accent: ['Memento'],
+    still: {
+      src: 'shorts/secret-remakes/stills/memento-iw.jpg',
+      film: 'Memento',
+      year: 2000,
+      credit: 'Newmarket Films',
+      focus: '50% 28%',
+    },
   },
   loop: {lines: ['loop']},
 };
@@ -187,20 +197,22 @@ Published film pages पर commentary; "copy" नहीं, inspired / loosely 
 
 1991 Dil Hai Ke Manta Nahin — inspired from It Happened One Night (1934)
 1995 Akele Hum Akele Tum — loosely based on Kramer vs. Kramer (1979)
-2008 Ghajini — Aamir: remake of Tamil Ghajini, not of Memento; Tamil film is widely described as inspired by Nolan's Memento. Hindi film cited as first ₹100-crore club entry (re-check Box Office India).
+2008 Ghajini — Aamir: remake of Tamil Ghajini, not of Memento; Tamil film is widely described as inspired by Nolan's Memento. Box Office India: first Hindi film to cross ₹100 crore nett.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
+Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited in this description. Not licensed.
 
 Stills:
-Ghajini — Geetha Arts
-Dil Hai Ke Manta Nahin — N. N. Sippy Productions
-Akele Hum Akele Tum — United Seven Combines
+Ghajini — Geetha Arts / Bollywood Hungama / Indian Express
+Dil Hai Ke Manta Nahin — N. N. Sippy Productions / Bollywood Hungama
+Akele Hum Akele Tum — United Seven Combines / Bollywood Hungama
+Memento — Newmarket Films / IndieWire
 
 Sources:
 Dil Hai Ke Manta Nahin — https://en.wikipedia.org/wiki/Dil_Hai_Ke_Manta_Nahin
 Akele Hum Akele Tum — https://en.wikipedia.org/wiki/Akele_Hum_Akele_Tum
 Aamir on Ghajini — https://www.filmibeat.com/bollywood/features/2008/aamir-khan-interview-ghajini-181208.html
 Ghajini (2008) — https://en.wikipedia.org/wiki/Ghajini_(2008_film)
+Box Office India (archive): first film to cross 100 crore nett — https://web.archive.org/web/20181021082345/https://boxofficeindia.com/movie.php?movieid=309
 
 Movie Idiots.
 
