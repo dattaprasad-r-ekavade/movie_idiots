@@ -11,54 +11,58 @@ export const lines: ScriptLine[] = [
   {
     id: 'hook',
     role: 'hook',
-    text: 'Cannes hit film India ने Oscars पे नहीं भेजी?',
-    delivery: {rate: 16, sfx: [{word: 'Oscars', sound: 'stamp.wav', volume: 0.45}]},
+    en: "A Cannes hit, yet India never sent it to the Oscars?",
+    text: "Cannes hit, फिर भी India ने Oscars पे नहीं भेजी?",
+    delivery: {sfx: [{word: "Oscars", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'promise',
     role: 'promise',
-    text: 'Sony Classics तक ले गई, फिर भी।',
-    delivery: {rate: 16},
+    en: "Here is how the Oscar pick works, and where it went wrong.",
+    text: "Oscar pick कैसे होता है, और गड़बड़ कहाँ हुई, ये देखिए.",
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    text: '2013, The Lunchbox. Cannes Critics Week. Standing ovation।',
-    delivery: {rate: 16, sfx: [{word: 'Cannes', sound: 'pop.wav', volume: 0.5}]},
+    en: "The Lunchbox premiered at Cannes Critics Week in 2013 and got a standing ovation.",
+    text: "2013 में The Lunchbox, Cannes Critics Week में दिखी. Standing ovation मिला.",
+    delivery: {sfx: [{word: "Cannes", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 1,
-    text: 'Sony Pictures Classics ने North America rights ले लिए।',
-    delivery: {rate: 16},
+    en: "Sony Pictures Classics then bought the North America rights.",
+    text: "फिर Sony Pictures Classics ने North America के rights ले लिए.",
   },
   {
     id: 'f3',
     role: 'fact',
     source: [2, 3],
-    text: 'India की jury ने Gujarati film The Good Road चुनी।',
-    delivery: {rate: 16, sfx: [{word: 'Road', sound: 'stamp.wav', volume: 0.45}]},
+    en: "Each country can send only one film to the Oscars. India's committee picked The Good Road, a Gujarati film.",
+    text: "हर देश से सिर्फ़ एक film Oscars में जाती है. India की committee ने Gujarati film The Good Road को चुना.",
+    delivery: {sfx: [{word: "Road", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'f3r',
     role: 'reveal',
-    text: 'Ghose ने कहा, Lunchbox उनकी personal first थी।',
-    delivery: {rate: 16},
+    source: 4,
+    en: "Gautam Ghose said The Lunchbox was his personal first pick. But the committee decided together.",
+    text: "Gautam Ghose ने कहा, The Lunchbox उनकी personal first pick थी. पर फ़ैसला committee ने मिलकर किया.",
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: 2,
-    text: 'The Good Road nominated नहीं हुई। Lunchbox Oscars पे गई ही नहीं।',
-    delivery: {rate: 18},
+    en: "The Good Road was never nominated. The Lunchbox never reached the Oscars at all.",
+    text: "The Good Road को nomination नहीं मिला. The Lunchbox तो Oscars तक पहुँची ही नहीं.",
   },
   {
     id: 'loop',
     role: 'loop',
-    text: 'Oscars पे नहीं भेजी?',
-    delivery: {rate: 16},
+    en: "So India never sent The Lunchbox to the Oscars?",
+    text: "तो India ने The Lunchbox को Oscars पे भेजा ही नहीं?",
   },
 ];
 
@@ -79,6 +83,7 @@ export const sources = [
     url: 'https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/the-lunchbox-was-my-oscar-choice-ghose/articleshow/23046768.cms',
     note: 'TOI (25 Sep 2013): jury chair Goutam Ghose said The Lunchbox was on top of his personal list; a 16-member panel chose The Good Road. Later clarification: collective choice, not a chairman veto.',
   },
+  {url: 'https://www.npr.org/2014/01/18/263106196/lunch-gets-boxed-out-indias-oscar-pick-controversy', note: 'NPR (18 Jan 2014): background on the Oscar pick controversy.'},
 ];
 
 export const lexicon: Record<string, string> = {
@@ -172,45 +177,45 @@ export const plan: FunFactsPlan = {
 export const component = funFacts(plan);
 
 export const youtube = {
-  title: 'Cannes hit film India ने Oscars पे नहीं भेजी #shorts',
+  title: 'Cannes hit film India ने Oscars पे नहीं भेजी? #shorts',
   altTitles: [
     'The Lunchbox Oscars पे क्यों नहीं गई? #shorts',
     'The Good Road vs The Lunchbox: 2013 Oscar entry #shorts',
   ],
-  description: `The Lunchbox Cannes hit थी, Sony Classics तक गई — India ने Oscars पे The Good Road भेजी.
+  description: `The Lunchbox एक Cannes hit थी, और Sony Pictures Classics ने इसके North America rights लिए. फिर भी India ने 2013 में Oscars के लिए The Good Road भेजी.
 
-The Good Road को नीचा नहीं दिखाना. Joke process का है, film का नहीं.
+The Good Road पर कोई joke नहीं है. Joke उस process पर है जिससे entry चुनी गई.
 
-2013 The Lunchbox — Cannes Critics' Week, standing ovation, Grand Rail d'Or
-Sony Pictures Classics — North America rights
-FFI 16-member jury — The Good Road as official entry; Ghose later said Lunchbox was his personal first
-The Good Road was not nominated
+Published reports और interviews पर आधारित commentary. ये screening review नहीं है.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
+2013: The Lunchbox, Cannes Critics Week में दिखी. Standing ovation मिला.
+Sony Pictures Classics ने North America rights लिए.
+हर देश से सिर्फ़ एक film Oscars में जाती है. India की committee ने Gujarati film The Good Road को चुना.
+Gautam Ghose ने कहा, The Lunchbox उनकी personal first pick थी. पर फ़ैसला committee ने मिलकर किया.
+The Good Road को nomination नहीं मिला.
 
-Stills:
-The Lunchbox — Sikhya Entertainment / Indian Express / Filmfare
-The Good Road — NFDC
+Film stills और posters copyrighted publicity images हैं. इन्हें commentary के लिए, credit के साथ इस्तेमाल किया गया है. ये licensed नहीं हैं.
 
 Sources:
-The Lunchbox — https://en.wikipedia.org/wiki/The_Lunchbox_(film)
-Sony Classics, Variety — https://variety.com/2013/film/news/sony-pictures-classics-picks-up-lunchbox-exclusive-1200487504/
-India Oscar choice, Variety — https://variety.com/2013/film/awards/india-makes-surprise-oscar-choice-1200656684/
-Ghose, TOI — https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/the-lunchbox-was-my-oscar-choice-ghose/articleshow/23046768.cms
+The Lunchbox, Wikipedia: https://en.wikipedia.org/wiki/The_Lunchbox_(film)
+Sony Pictures Classics, Variety, 24 May 2013: https://variety.com/2013/film/news/sony-pictures-classics-picks-up-lunchbox-exclusive-1200487504/
+India's Oscar choice, Variety, 21 Sep 2013: https://variety.com/2013/film/awards/india-makes-surprise-oscar-choice-1200656684/
+Gautam Ghose, Times of India, 25 Sep 2013: https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/the-lunchbox-was-my-oscar-choice-ghose/articleshow/23046768.cms
+Background, NPR, 18 Jan 2014: https://www.npr.org/2014/01/18/263106196/lunch-gets-boxed-out-indias-oscar-pick-controversy
 
 Movie Idiots.
 
 #TheLunchbox #Oscars #IrrfanKhan #TheGoodRoad #HindiShorts #MovieIdiots`,
   tags: [
-    'the lunchbox', 'irrfan khan', 'oscars', 'the good road', 'cannes',
-    'ritesh batra', 'hindi shorts', 'movie idiots',
+    'the lunchbox', 'irrfan khan', 'nimrat kaur', 'oscars', 'the good road', 'cannes',
+    'ritesh batra', 'gautam ghose', 'hindi shorts', 'movie idiots', 'indian cinema facts',
   ],
   settings: {
     category: 'Film & Animation',
     language: 'Hindi',
     madeForKids: false,
     visibility: 'Private',
-    alteredContent: 'No (stylised original animation, not realistic)',
+    alteredContent: 'No (real film stills and photos, not altered or synthetic)',
     audience: 'Not made for kids',
   },
 };

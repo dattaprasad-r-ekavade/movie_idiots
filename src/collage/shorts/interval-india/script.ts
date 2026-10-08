@@ -11,48 +11,51 @@ export const lines: ScriptLine[] = [
   {
     id: 'hook',
     role: 'hook',
-    text: 'Hollywood film भारत में बीच में interval लग जाता है?',
-    delivery: {rate: 16, sfx: [{word: 'interval', sound: 'stamp.wav', volume: 0.45}]},
+    en: "Hollywood films come to India, so why is there an interval in the middle?",
+    text: "Hollywood film India में आती है, फिर बीच में interval क्यों?",
+    delivery: {sfx: [{word: "interval", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'promise',
     role: 'promise',
-    text: 'Reel की वजह से शुरू हुआ. Samosa ने बचा के रखा।',
-    delivery: {rate: 16},
+    en: "It began with the reel. Snacks kept it alive.",
+    text: "ये reel की वजह से शुरू हुआ. और snacks ने इसे बचाए रखा.",
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    text: 'पुरानी cinema में reel बदलने के लिए break लगता था. हर जगह।',
-    delivery: {rate: 16, sfx: [{word: 'reel', sound: 'pop.wav', volume: 0.5}]},
+    en: "In early cinema, the projectionist had to change the reel, so there was a break.",
+    text: "पुराने cinema में projection के लिए reel बदलनी पड़ती थी. मतलब हर जगह एक break.",
+    delivery: {sfx: [{word: "reel", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 1,
-    text: 'Hindi writers interval point लिखते हैं. Beginning, interval, climax।',
-    delivery: {rate: 16},
+    en: "Hindi writers still plan an interval point: beginning, interval, climax.",
+    text: "Hindi writers आज भी interval point लिखते हैं. Beginning, interval, climax.",
   },
   {
     id: 'f3',
     role: 'fact',
     source: [0, 2],
-    text: 'Theatre का पैसा popcorn से आता है. Ticket बंट जाता है, snacks नहीं।',
-    delivery: {rate: 16, sfx: [{word: 'popcorn', sound: 'stamp.wav', volume: 0.45}]},
+    en: "The ticket money is shared with the film. The popcorn money stays with the theatre.",
+    text: "Ticket का पैसा film के साथ बंटता है. पर popcorn का पैसा theatre अपने पास रखता है.",
+    delivery: {sfx: [{word: "popcorn", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: [3, 0],
-    text: 'Sangam में दो interval थे. Digital के बाद भी Hollywood पे यहाँ cut लगता है।',
-    delivery: {rate: 18},
+    en: "Sangam had two intervals. Even after digital, Hollywood films still get a cut here.",
+    text: "Sangam में दो interval थे. Digital आने के बाद भी, यहाँ Hollywood films पर भी cut लगता है.",
   },
   {
     id: 'loop',
     role: 'loop',
-    text: 'बीच में interval लग जाता है?',
-    delivery: {rate: 16},
+    en: "So the interval still lands in the middle?",
+    text: "तो बीच में interval अब भी लग जाता है?",
   },
 ];
 
@@ -160,44 +163,41 @@ export const plan: FunFactsPlan = {
 export const component = funFacts(plan);
 
 export const youtube = {
-  title: 'Hollywood film भारत में बीच में interval लग जाता है #shorts',
+  title: 'Hollywood film भारत में बीच में interval क्यों लगता है? #shorts',
   altTitles: [
     'Interval samosa के लिए है? Reel से शुरू हुआ #shorts',
     'Sangam में दो interval थे #shorts',
   ],
-  description: `Hollywood film भारत के hall में आती है और बीच में interval लग जाता है. Reel change से शुरू हुआ, snacks ने रखा.
+  description: `Hollywood film भारत के hall में आती है, और बीच में interval लग जाता है. ये reel बदलने से शुरू हुआ, और snacks ने इसे बचाए रखा.
 
-Published exhibition history पर commentary.
+Published exhibition history पर आधारित commentary. ये screening review नहीं है.
 
-पुरानी cinema — reel बदलने का break, दुनिया भर में
-Hindi writers — beginning / interval / climax (Parsi theatre legacy, as told to historians)
-Theatre economics — F&B is the exhibitor's own money
-Sangam (1964) had two intervals; digital projection killed the technical need; Indian halls still cut Hollywood films
+पुराने cinema में reel बदलने के लिए break होता था.
+Hindi writers आज भी interval point लिखते हैं: beginning, interval, climax.
+Ticket का पैसा film के साथ बंटता है. पॉपकॉर्न का पैसा theatre अपने पास रखता है.
+Sangam (1964) में दो interval थे. Digital projection के बाद technical ज़रूरत खत्म हुई, पर Indian halls अब भी Hollywood films में cut लगाते हैं.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
-
-Stills:
-Sangam — R.K. Films / Bollywood Hungama / Indian Express
+Film stills और posters copyrighted publicity images हैं. इन्हें commentary के लिए, credit के साथ इस्तेमाल किया गया है. ये licensed नहीं हैं.
 
 Sources:
-Intermission, Wikipedia — https://en.wikipedia.org/wiki/Intermission
-TOI / Chintamani / Dungarpur — https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/hitchcock-to-cameron-hollywood-to-bollywood-how-the-intermission-divides-opinions-not-just-screenings/articleshow/96700431.cms
-The Hindu — https://www.thehindu.com/entertainment/movies/who-wants-a-washroom-break/article25203118.ece
-Sangam two intervals — https://www.news18.com/entertainment/bollywood/why-sangam-the-raj-kapoor-film-had-two-intervals-7635391.html
+Intermission, Wikipedia: https://en.wikipedia.org/wiki/Intermission
+Times of India, Chintamani और Dungarpur पर intermission: https://timesofindia.indiatimes.com/entertainment/hindi/bollywood/news/hitchcock-to-cameron-hollywood-to-bollywood-how-the-intermission-divides-opinions-not-just-screenings/articleshow/96700431.cms
+The Hindu, 2018: https://www.thehindu.com/entertainment/movies/who-wants-a-washroom-break/article25203118.ece
+News18, Sangam के दो intervals: https://www.news18.com/entertainment/bollywood/why-sangam-the-raj-kapoor-film-had-two-intervals-7635391.html
 
 Movie Idiots.
 
 #Bollywood #Interval #Hollywood #HindiShorts #MovieIdiots`,
   tags: [
-    'bollywood interval', 'intermission', 'sangam', 'hindi shorts', 'movie idiots',
-    'why interval in indian movies',
+    'bollywood interval', 'intermission', 'sangam', 'hollywood in india', 'hindi shorts',
+    'movie idiots', 'indian cinema facts', 'why interval in indian movies',
   ],
   settings: {
     category: 'Film & Animation',
     language: 'Hindi',
     madeForKids: false,
     visibility: 'Private',
-    alteredContent: 'No (stylised original animation, not realistic)',
+    alteredContent: 'No (real film stills and photos, not altered or synthetic)',
     audience: 'Not made for kids',
   },
 };

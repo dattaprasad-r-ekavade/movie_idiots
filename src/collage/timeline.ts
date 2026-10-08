@@ -10,7 +10,13 @@ export type LineRole = Role;
  * `source` indexes the short's `sources` array for the claim this line makes.
  * `delivery` is the audio direction (mood, pause, music, sfx); roles supply defaults.
  */
-export type ScriptLine = {id: string; text: string; say?: string; role?: LineRole; source?: number | number[]; delivery?: Delivery};
+export type ScriptLine = {id: string; text: string; en?: string; say?: string; role?: LineRole; source?: number | number[]; delivery?: Delivery};
+
+/**
+ * Display text is Hinglish with "." as the only sentence mark. "|" and the Devanagari danda "।"
+ * are never shown: both become ".". Apply before captions, anchors and speech cue mapping.
+ */
+export const displayText = (text: string) => text.replace(/[|।]/g, '.');
 export type Word = {text: string; start: number; end: number};
 export type LineTiming = {
   id: string;
@@ -56,7 +62,8 @@ export type MeasuredLine = {duration: number; audio?: string; words?: Word[]; so
 /** Lay lines end to end. Measured lines keep their real duration and word cues. */
 export function buildTiming(lines: ScriptLine[], measured: Record<string, MeasuredLine> = {}, tail = 2.2): Timing {
   let cursor = 0.4;
-  const out = lines.map((line) => {
+  const out = lines.map((raw) => {
+    const line = {...raw, text: displayText(raw.text)};
     const m = measured[line.id];
     const d = resolveDelivery(line);
     const duration = m?.duration ?? estimateDuration(line.text) * (1 - (d.preset.rate + (d.rate ?? 0)) / 100);

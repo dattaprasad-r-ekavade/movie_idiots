@@ -23,7 +23,7 @@ import {fetchImage} from '../src/web-assets';
 import {lintFunFacts} from '../src/collage/formats/fun-facts';
 import {describeDelivery, edgeProsody, elevenDelivery, resolveDelivery, windowsRate} from '../src/delivery';
 import {SHORTS} from '../src/collage/shorts';
-import {buildTiming, type MeasuredLine, type Timing, type Word} from '../src/collage/timeline';
+import {buildTiming, displayText, type MeasuredLine, type Timing, type Word} from '../src/collage/timeline';
 
 const [command, slug, ...rest] = process.argv.slice(2);
 const flag = (name: string) => rest.includes(`--${name}`);
@@ -47,7 +47,7 @@ const spoken = (line: {text: string; say?: string}) => toSpoken(line.text, line.
 /** Save speech-service cues remapped onto the display words that captions and anchors use. */
 async function saveCues(line: {id: string; text: string; say?: string}, cues: SpokenWord[]) {
   await writeFile(path.join(voiceDir(), `${line.id}.spoken.json`), JSON.stringify(cues, null, 2));
-  await writeFile(path.join(voiceDir(), `${line.id}.words.json`), JSON.stringify(displayCues(line.text, spoken(line), cues), null, 2));
+  await writeFile(path.join(voiceDir(), `${line.id}.words.json`), JSON.stringify(displayCues(displayText(line.text), spoken(line), cues), null, 2));
 }
 
 function browserExecutable() {
@@ -204,7 +204,13 @@ async function youtubePackage() {
   await mkdir(outDir(), {recursive: true});
   const file = path.join(outDir(), 'youtube.txt');
   const settings = Object.entries(y.settings ?? {}).map(([k, v]) => `${k}: ${v}`).join('\n');
-  await writeFile(file, `TITLE\n${y.title}\n\nALTERNATIVE TITLES\n${(y.altTitles ?? []).join('\n')}\n\nDESCRIPTION\n${y.description}\n\nTAGS (${tags.length}/500 chars)\n${tags}\n\nSETTINGS\n${settings}\n`);
+  // Image credits go in the description, built from the stills ledger; they are never drawn on screen.
+  const ledger = path.join(PUBLIC, 'shorts', slug, 'stills', 'stills.json');
+  const credits = existsSync(ledger)
+    ? (JSON.parse(await readFile(ledger, 'utf8')) as {label: string; credit: string; sourceUrl?: string}[]).map((r) => `${r.label} — ${r.credit}${r.sourceUrl ? ` — ${r.sourceUrl}` : ''}`)
+    : [];
+  const description = credits.length ? `${y.description}\n\nImage credits:\n${credits.join('\n')}` : y.description;
+  await writeFile(file, `TITLE\n${y.title}\n\nALTERNATIVE TITLES\n${(y.altTitles ?? []).join('\n')}\n\nDESCRIPTION\n${description}\n\nTAGS (${tags.length}/500 chars)\n${tags}\n\nSETTINGS\n${settings}\n`);
   console.log(`Wrote ${file}`);
 }
 
@@ -222,6 +228,7 @@ function lint() {
 async function say() {
   for (const l of entry().lines) {
     const s = spoken(l);
+    if (l.en) console.log(`  en: ${l.en}`);
     console.log(`${l.id}\t[${describeDelivery(resolveDelivery(l))}]\t${s.text}${s.unknown.length ? `\t[guessing: ${s.unknown.join(', ')}]` : ''}`);
   }
 }
@@ -242,7 +249,7 @@ async function still() {
   const records: {file: string}[] = existsSync(ledger) ? JSON.parse(await readFile(ledger, 'utf8')) : [];
   const record = {
     file: `shorts/${slug}/stills/${name}`, label, credit, sourceUrl: source, imageUrl: fetched, width: stream?.width, height: stream?.height,
-    rights: option('rights', 'Copyrighted film still, not licensed. Used briefly as commentary support (fair dealing for criticism/review); credited on screen and in the description.'),
+    rights: option('rights', 'Copyrighted publicity still, used as transformative commentary (fair dealing for criticism/review); credited in the video description (not on screen).'),
     retrievedAt: new Date().toISOString(),
   };
   await writeFile(ledger, JSON.stringify([...records.filter((r) => r.file !== record.file), record], null, 2));

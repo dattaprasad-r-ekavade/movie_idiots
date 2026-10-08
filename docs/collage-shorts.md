@@ -113,10 +113,16 @@ Run `npm run short -- say SLUG` before voicing. Any `[guessing: …]` word needs
 
 ### Film stills
 
-Stills from films are copyrighted (producer/photographer), not public domain. Using a few briefly as support for commentary is common practice and generally argued as fair dealing for criticism/review; it is not a licence, and a rights holder can still claim. Video clips and film audio need authorization. Rules:
+Owner decision: this channel is transformative commentary, so images may be used when credited. Three kinds are allowed:
+
+- **Creative Commons / public domain** (for example Wikimedia Commons). Record the licence, the attribution text and the licence URL. Follow the licence terms, such as share-alike or attribution wording.
+- **Publicity stills, posters and portraits** (copyrighted). Used under fair dealing for criticism and review; not a licence, and a rights holder can still file a claim. Record them as copyrighted and credit them in the video description. Credits do not go on screen, because on-screen credit text hurts the look of the video.
+- **Film video and audio** have stricter licensing and are where YouTube's copyright systems focus most. They need explicit authorization or a licence that allows this use. Images do not extend to them.
+
+Rules:
 
 - Download with `npm run short -- still SLUG --url IMAGE --source PAGE --credit "Studio" --label "Film (Year): what it shows" --name f1`. It saves to `public/shorts/SLUG/stills/` and records source, credit and rights in `stills.json`.
-- Verify film and year on the source page. Show the still only while its line plays, with the film/year tag and credit (`FilmStill` does both). Add the stills ledger to the description.
+- Verify film and year on the source page. For CC images, check the licence on the file page and keep the attribution text. Show the still only while its line plays, with the film/year tag and credit (`FilmStill` does both). Add the stills ledger to the description.
 - The commentary is the content: never a stills slideshow, never full-frame Ken Burns.
 
 ### Clean look (`src/collage/clean.tsx`)

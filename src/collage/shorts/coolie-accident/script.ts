@@ -11,48 +11,51 @@ export const lines: ScriptLine[] = [
   {
     id: 'hook',
     role: 'hook',
-    text: 'Coolie का climax एक punch से बदल गया?',
-    delivery: {rate: 16, sfx: [{word: 'punch', sound: 'stamp.wav', volume: 0.45}]},
+    en: "Coolie's climax changed because of one punch?",
+    text: "Coolie का climax एक punch से बदल गया?",
+    delivery: {sfx: [{word: "punch", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'promise',
     role: 'promise',
-    text: 'और वो punch film में freeze है।',
-    delivery: {rate: 16},
+    en: "And that punch is frozen in the film.",
+    text: "और वो punch film में freeze है.",
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    text: '26 July 1982, Bangalore University. Fight में table की कोने लगी।',
-    delivery: {rate: 16, sfx: [{word: '1982', sound: 'pop.wav', volume: 0.5}]},
+    en: "26 July 1982, Bangalore University. During the fight, Bachchan was hurt on the edge of a table.",
+    text: "26 July 1982, Bangalore University. Fight के दौरान table के कोने से चोट लगी.",
+    delivery: {sfx: [{word: "1982", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 0,
-    text: '2 August को Bachchan clinically dead रहे, कुछ मिनट। वो कहते हैं, second birthday।',
-    delivery: {rate: 16},
+    en: "On 2 August, Bachchan was clinically dead for a few minutes. He later called it his second birthday.",
+    text: "2 August को Bachchan कुछ मिनट के लिए clinically dead रहे. बाद में उन्होंने इसे अपना second birthday कहा.",
   },
   {
     id: 'f3',
     role: 'fact',
     source: 1,
-    text: 'Puneet Issar सालों work नहीं मिला। Bachchan ने hospital में कहा, गलती नहीं थी।',
-    delivery: {rate: 16, sfx: [{word: 'Puneet', sound: 'stamp.wav', volume: 0.45}]},
+    en: "Puneet Issar says he got no work for years. Bachchan walked him to the hospital gate.",
+    text: "Puneet Issar कहते हैं, उन्हें सालों तक काम नहीं मिला. Bachchan उन्हें hospital के gate तक छोड़ने आए.",
+    delivery: {sfx: [{word: "Puneet", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: [2, 3],
-    text: 'Script में Iqbal मरता था। Desai ने ending बदल दी। अब वो बचता है।',
-    delivery: {rate: 18},
+    en: "The script had Iqbal dying. Desai changed the ending, so he lives.",
+    text: "Script में Iqbal मरता था. Desai ने ending बदल दी, तो अब वो बचता है.",
   },
   {
     id: 'loop',
     role: 'loop',
-    text: 'Climax एक punch से बदल गया?',
-    delivery: {rate: 16},
+    en: "The climax changed because of one punch?",
+    text: "Climax एक punch से बदल गया?",
   },
 ];
 
@@ -162,44 +165,41 @@ export const plan: FunFactsPlan = {
 export const component = funFacts(plan);
 
 export const youtube = {
-  title: 'Coolie का climax एक punch से बदल गया #shorts',
+  title: 'Coolie का climax एक punch से बदल गया? #shorts',
   altTitles: [
-    'Amitabh Bachchan Coolie accident: ending ही बदल गई #shorts',
+    'Amitabh Bachchan Coolie accident: ending बदल गई #shorts',
     'Iqbal मरता था, Desai ने climax बदल दिया #shorts',
   ],
-  description: `Coolie का climax एक punch से बदल गया. 26 July 1982, Bangalore University, Puneet Issar के साथ fight.
+  description: `Coolie का climax एक punch से बदल गया. 26 July 1982, Bangalore University, Puneet Issar के साथ fight के दौरान.
 
-Published film histories और interviews पर commentary; first-hand screening नहीं है.
+Published film histories और interviews पर आधारित commentary. ये screening review नहीं है.
 
-26 July 1982 — table की कोने, near-fatal injury
-2 August — Bachchan ने लिखा, clinically dead, second birthday
-Puneet Issar — सालों work नहीं मिला; Bachchan ने hospital में कहा accident था
-Original script: Iqbal मरता है. Desai ने ending बदल दी. Film में वो shot freeze है.
+26 July 1982: Fight में table के कोने से चोट लगी.
+2 August: Bachchan कुछ मिनट के लिए clinically dead रहे. बाद में उन्होंने इसे अपना second birthday कहा.
+Puneet Issar कहते हैं, उन्हें सालों तक काम नहीं मिला.
+Script में Iqbal मरता था. Desai ने ending बदल दी, तो अब वो बचता है.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
-
-Stills:
-Coolie — MKD Films / Bollywood Hungama / Indian Express
+Film stills और posters copyrighted publicity images हैं. इन्हें commentary के लिए, credit के साथ इस्तेमाल किया गया है. ये licensed नहीं हैं.
 
 Sources:
-Coolie filming accident — https://en.wikipedia.org/wiki/Coolie_filming_accident
-Puneet Issar, Indian Express — https://indianexpress.com/article/entertainment/bollywood/puneet-issar-whose-accidental-punch-left-amitabh-bachchan-clinically-dead-says-he-lost-all-his-films-after-the-incident-people-were-scared-9953024/
-Coolie (1983) — https://en.wikipedia.org/wiki/Coolie_(1983_Hindi_film)
-Desai climax rewrite — https://indianexpress.com/article/entertainment/bollywood/manmohan-desai-changed-coolie-climax-after-amitabh-bachchan-accident-redefined-stardom-8852622/
+Wikipedia, Coolie filming accident: https://en.wikipedia.org/wiki/Coolie_filming_accident
+Indian Express, 19 Apr 2025, Puneet Issar: https://indianexpress.com/article/entertainment/bollywood/puneet-issar-whose-accidental-punch-left-amitabh-bachchan-clinically-dead-says-he-lost-all-his-films-after-the-incident-people-were-scared-9953024/
+Wikipedia, Coolie (1983 Hindi film): https://en.wikipedia.org/wiki/Coolie_(1983_Hindi_film)
+Indian Express, 22 Jul 2023, Desai on the ending: https://indianexpress.com/article/entertainment/bollywood/manmohan-desai-changed-coolie-climax-after-amitabh-bachchan-accident-redefined-stardom-8852622/
 
 Movie Idiots.
 
-#Coolie #AmitabhBachchan #PuneetIssar #BollywoodTrivia #HindiShorts #MovieIdiots`,
+#Coolie #AmitabhBachchan #ManmohanDesai #PuneetIssar #BollywoodTrivia #HindiShorts #MovieIdiots`,
   tags: [
-    'coolie 1983', 'amitabh bachchan', 'puneet issar', 'manmohan desai',
-    'bollywood trivia', 'hindi shorts', 'movie idiots',
+    'coolie', 'coolie 1983', 'amitabh bachchan', 'manmohan desai', 'puneet issar', 'coolie accident',
+    'bollywood trivia', 'hindi shorts', 'movie idiots', 'bollywood facts', 'bachchan coolie climax',
   ],
   settings: {
     category: 'Film & Animation',
     language: 'Hindi',
     madeForKids: false,
     visibility: 'Private',
-    alteredContent: 'No (stylised original animation, not realistic)',
+    alteredContent: 'No (real film stills and photos, not altered or synthetic)',
     audience: 'Not made for kids',
   },
 };

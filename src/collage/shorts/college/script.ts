@@ -5,19 +5,19 @@ export const title = '80s-90s की फिल्मों वाला College:
 
 // Spoken Hinglish, one line per breath. Film facts map to the sources below; jokes are opinion.
 export const lines: ScriptLine[] = [
-  {id: 'hook1', text: '80s और 90s की फिल्मों में college में सब कुछ होता था...'},
-  {id: 'hook2', text: 'बस पढ़ाई नहीं।'},
-  {id: 'setup', text: 'Classroom शायद ही दिखता था। लेकिन canteen, गाने, लड़ाई और प्यार? पूरा syllabus।'},
-  {id: 'qsqt', text: '1988, क़यामत से क़यामत तक। Raj की college farewell में गाना बजता है, पापा कहते हैं।'},
-  {id: 'qsqt2', text: 'Papa क्या कहते हैं, सबको याद है। Raj ने पढ़ा क्या, किसी को नहीं पता।'},
-  {id: 'dil', text: '1990, दिल। Raja और Madhu college में पढ़ते कम, एक दूसरे पर prank ज़्यादा करते हैं।'},
-  {id: 'jjws', text: '1992, जो जीता वही सिकंदर। Model School बनाम Rajput College, और असली exam? Cycle race।'},
-  {id: 'khkn', text: '1994, कभी हाँ कभी ना। Sunil exam में बार बार fail, लेकिन band में hit।'},
-  {id: 'kkhh', text: '1998, कुछ कुछ होता है। St. Xavier\'s में basketball है, दोस्ती है, Miss Braganza हैं...'},
-  {id: 'kkhh2', text: 'और Principal Malhotra? वो खुद Miss Braganza के पीछे पड़े हैं।'},
-  {id: 'twist1', text: 'पर 1981 में चश्मे बद्दूर पहले ही सच बता चुकी थी।'},
-  {id: 'twist2', text: 'दो दोस्त लड़की के पीछे घूमते रहे... और लड़की मिली उसे, जो पढ़ाई करता था।'},
-  {id: 'outro', text: 'तो पढ़ लो भाई। और बताओ, आपकी favourite college वाली फिल्म कौन सी है?'},
+  {id: 'hook1', en: "In 80s and 90s films, college had everything...", text: "80s और 90s की फिल्मों में college में सब कुछ होता था..."},
+  {id: 'hook2', en: "Just no studying.", text: "बस पढ़ाई नहीं."},
+  {id: 'setup', en: "You hardly saw a classroom. But canteen, songs, fights and love? That was the full syllabus.", text: "Classroom शायद ही दिखता था. लेकिन canteen, गाने, लड़ाई और प्यार? पूरा syllabus."},
+  {id: 'qsqt', en: "1988, Qayamat Se Qayamat Tak. Raj sings Papa Kehte Hain at his college farewell.", text: "1988, क़यामत से क़यामत तक. Raj की college farewell में एक गाना है, पापा कहते हैं."},
+  {id: 'qsqt2', en: "Everyone remembers what Papa says. Nobody knows what Raj studied.", text: "Papa क्या कहते हैं, सबको याद है. Raj ने क्या पढ़ा, किसी को नहीं पता."},
+  {id: 'dil', en: "1990, Dil. Raja and Madhu study less at college and play more pranks on each other.", text: "1990, दिल. Raja और Madhu college में पढ़ते कम हैं, और एक दूसरे पर prank ज़्यादा करते हैं."},
+  {id: 'jjws', en: "1992, Jo Jeeta Wohi Sikandar. Model School against Rajput College. And the real exam? A cycle race.", text: "1992, जो जीता वही सिकंदर. Model School बनाम Rajput College, और असली exam? एक Cycle race."},
+  {id: 'khkn', en: "1994, Kabhi Haan Kabhi Naa. Sunil fails his exams again and again, but his band is a hit.", text: "1994, कभी हाँ कभी ना. Sunil exam में बार बार fail होता है, लेकिन band में hit है."},
+  {id: 'kkhh', en: "1998, Kuch Kuch Hota Hai. St. Xavier's has basketball, friendship, and Miss Braganza.", text: "1998, कुछ कुछ होता है. St. Xavier's में basketball है, दोस्ती है, और Miss Braganza हैं."},
+  {id: 'kkhh2', en: "And Principal Malhotra? He is the one chasing Miss Braganza.", text: "और Principal Malhotra? वो खुद Miss Braganza के पीछे पड़े हैं."},
+  {id: 'twist1', en: "But in 1981, Chashme Buddoor had already told the truth.", text: "पर 1981 में चश्मे बद्दूर पहले ही सच बता चुकी थी."},
+  {id: 'twist2', en: "Two friends kept chasing the girl. In the end she got the one who studied.", text: "दो दोस्त लड़की के पीछे घूमते रहे. और लड़की मिली उसे, जो पढ़ाई करता था."},
+  {id: 'outro', en: "So go and study, friend. And tell me: which college film is your favourite?", text: "तो पढ़ लो भाई. और बताओ, आपकी favourite college वाली फिल्म कौन सी है?"},
 ];
 
 export const sources = [
@@ -36,9 +36,9 @@ export const youtube = {
     'Filmy college में canteen, गाने, प्यार… पढ़ाई कहाँ थी? #shorts',
     'QSQT से KKHH तक: Bollywood का college syllabus #shorts',
   ],
-  description: `80s और 90s की फिल्मों में college मतलब canteen, गाने, लड़ाई और प्यार। Classroom? शायद ही।
+  description: `80s और 90s की फिल्मों में college मतलब canteen, गाने, लड़ाई और प्यार. Classroom? शायद ही.
 
-ये एक original paper-collage Short है, film footage नहीं। Published film facts पर commentary; jokes हमारी राय हैं।
+ये एक original paper-collage Short है, film footage नहीं. Published film facts पर commentary; jokes हमारी राय हैं.
 
 1988 Qayamat Se Qayamat Tak — farewell पर “Papa Kehte Hain”
 1990 Dil — Raja और Madhu, पढ़ाई कम, prank ज़्यादा
@@ -47,7 +47,7 @@ export const youtube = {
 1998 Kuch Kuch Hota Hai — basketball, Miss Braganza, Principal भी पीछे
 1981 Chashme Buddoor — twist: लड़की उसी को मिली जो पढ़ता था
 
-Favourite college वाली फिल्म कौन सी है? बिना spoiler के comment करो।
+Favourite college वाली फिल्म कौन सी है? बिना spoiler के comment करो.
 Movie Idiots.
 
 Original illustrations; film titles are commentary only. No movie clips or publicity stills.

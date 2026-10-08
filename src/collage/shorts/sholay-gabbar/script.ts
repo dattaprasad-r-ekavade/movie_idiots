@@ -7,52 +7,57 @@ export const slug = 'sholay-gabbar';
 export const title = 'Sholay का Gabbar originally किसी और का था #shorts';
 export const format = 'fun-facts' as const;
 
+// Written in English first, then translated to Hinglish. Each `en` is the reviewed draft;
+// `text` is the translation the voice and captions use. Check `en` before translating.
 export const lines: ScriptLine[] = [
   {
     id: 'hook',
     role: 'hook',
-    text: 'Sholay का Gabbar originally किसी और का था?',
-    delivery: {rate: 16, sfx: [{word: 'Gabbar', sound: 'stamp.wav', volume: 0.45}]},
+    en: 'Was Gabbar in Sholay originally meant for someone else?',
+    text: 'Sholay का Gabbar असल में किसी और का था?',
+    delivery: {rate: -6, sfx: [{word: 'Gabbar', sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'promise',
     role: 'promise',
-    text: 'तीसरा fact तो Sippy interview में खुद आया।',
-    delivery: {rate: 16},
+    en: 'Ramesh Sippy himself explained why.',
+    text: 'इसकी वजह खुद Ramesh Sippy ने बताई है.',
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    text: 'Sanjeev Kumar dialogue सुनके Gabbar मांगने लगे। बने Thakur।',
-    delivery: {rate: 16, sfx: [{word: 'Gabbar', sound: 'pop.wav', volume: 0.5}]},
+    en: "Sanjeev Kumar heard Gabbar's dialogue and wanted that role. He was given Thakur instead.",
+    text: 'Sanjeev Kumar ने Gabbar का dialogue सुना, और यही role मांगने लगे. पर उन्हें Thakur का role दिया गया.',
+    delivery: {sfx: [{word: 'Gabbar', sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 1,
-    text: 'Amjad Khan theatre से आए। Javed को उनकी voice की टेंशन थी।',
-    delivery: {rate: 16},
+    en: 'Amjad Khan came from theatre. Javed Akhtar doubted his voice.',
+    text: 'Amjad Khan theatre से आए थे. Javed Akhtar को उनकी आवाज़ पर शक था.',
   },
   {
     id: 'f3',
     role: 'fact',
     source: [2, 3],
-    text: 'असली signed actor Afghanistan में फंस गए। Feroz Khan की Dharmatma।',
-    delivery: {rate: 16, sfx: [{word: 'Afghanistan', sound: 'stamp.wav', volume: 0.45}]},
+    en: "The first choice was Danny Denzongpa. But he was shooting Feroz Khan's Dharmatma in Afghanistan, and Sippy could not wait.",
+    text: 'असली पसंद Danny Denzongpa थे. पर वो Afghanistan में Feroz Khan की Dharmatma shoot कर रहे थे, और Sippy इंतज़ार नहीं कर सकते थे.',
+    delivery: {sfx: [{word: 'Afghanistan', sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: 2,
-    text: 'वो नाम? Danny Denzongpa। Role Amjad के पास चला गया।',
-    delivery: {rate: 18},
+    en: 'The first choice was Danny Denzongpa. The role went to Amjad Khan.',
+    text: 'वो पहली पसंद थे, Danny Denzongpa. और Gabbar का role Amjad Khan के पास चला गया.',
   },
   {
     id: 'loop',
     role: 'loop',
-    text: 'Gabbar originally किसी और का था?',
-    delivery: {rate: 16},
+    en: 'Was Gabbar in Sholay originally meant for someone else?',
+    text: 'Sholay का Gabbar असल में किसी और का था?',
   },
 ];
 
@@ -154,6 +159,12 @@ export const plan: FunFactsPlan = {
     lines: ['payoff'],
     headline: 'Danny\nDenzongpa',
     accent: ['Danny'],
+    // Own still: the 2023 actor portrait. Never the Amjad Khan hook still under a Danny label.
+    still: {
+      src: 'shorts/sholay-gabbar/stills/danny-portrait.jpg',
+      credit: 'Bollywood Hungama via Wikimedia Commons',
+      focus: '50% 30%',
+    },
   },
   loop: {lines: ['loop']},
 };
@@ -161,44 +172,40 @@ export const plan: FunFactsPlan = {
 export const component = funFacts(plan);
 
 export const youtube = {
-  title: 'Sholay का Gabbar originally किसी और का था #shorts',
+  title: 'Sholay का Gabbar असल में किसी और का था? #shorts',
   altTitles: [
-    'Danny Denzongpa Gabbar होते? Sippy ने बताया #shorts',
     'Amjad Khan से पहले Gabbar किसी और को मिला था #shorts',
+    'Sholay का पहला Gabbar कौन था? #shorts',
   ],
-  description: `Sholay का Gabbar originally किसी और का था — और वो नाम Amjad Khan नहीं है.
+  description: `Sholay का Gabbar असल में किसी और का था. वो नाम Amjad Khan नहीं, Danny Denzongpa था.
 
-Published interviews और film histories पर commentary; first-hand screening नहीं है.
+Published interviews और film histories पर आधारित commentary. ये screening review नहीं है.
 
-Sanjeev Kumar dialogue सुनके Gabbar मांगने लगे, बने Thakur
-Amjad Khan theatre से आए; Javed को voice की टेंशन बताई गई
-Ramesh Sippy: Danny Denzongpa Afghanistan में Dharmatma shoot कर रहे थे, wait नहीं हो सकती
+Sanjeev Kumar ने Gabbar का dialogue सुना, और यही role मांगने लगे. पर उन्हें Thakur का role दिया गया.
+Amjad Khan theatre से आए थे. Javed Akhtar को उनकी आवाज़ पर शक था.
+Danny Denzongpa पहली पसंद थे. पर वो Afghanistan में Feroz Khan की Dharmatma shoot कर रहे थे, और Sippy इंतज़ार नहीं कर सकते थे.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
-
-Stills:
-Sholay — Sippy Films / Indian Express
-Dharmatma — Feroz Khan Productions
+Film stills और posters copyrighted publicity images हैं. इन्हें commentary के लिए, credit के साथ इस्तेमाल किया गया है. ये licensed नहीं हैं.
 
 Sources:
-Scroll / Anupama Chopra reporting — https://scroll.in/article/745687/shatrughan-sinha-as-jai-pran-as-thakur-and-danny-as-gabbar-what-sholay-could-have-been
-Republic on Danny / Amjad voice — https://www.republicworld.com/entertainment/bollywood/danny-poses-with-the-star-studded-sholay-cast-in-this-unseen-pic
-Ramesh Sippy, Bollywood Bubble — https://www.bollywoodbubble.com/exclusive-news/ramesh-sippy-first-approached-danny-denzongpa-for-gabbar-singh-and-not-amjad-khan-sholay-director-reveals/
-Dharmatma — https://en.wikipedia.org/wiki/Dharmatma
+Scroll, Anupama Chopra की Sholay reporting: https://scroll.in/article/745687/shatrughan-sinha-as-jai-pran-as-thakur-and-danny-as-gabbar-what-sholay-could-have-been
+Republic, 4 Aug 2020: https://www.republicworld.com/entertainment/bollywood/danny-poses-with-the-star-studded-sholay-cast-in-this-unseen-pic
+Ramesh Sippy, Bollywood Bubble, 9 Jul 2024: https://www.bollywoodbubble.com/exclusive-news/ramesh-sippy-first-approached-danny-denzongpa-for-gabbar-singh-and-not-amjad-khan-sholay-director-reveals/
+Dharmatma: https://en.wikipedia.org/wiki/Dharmatma
 
 Movie Idiots.
 
 #Sholay #GabbarSingh #AmjadKhan #DannyDenzongpa #BollywoodTrivia #HindiShorts #MovieIdiots`,
   tags: [
-    'sholay', 'gabbar singh', 'amjad khan', 'danny denzongpa', 'ramesh sippy',
-    'bollywood trivia', 'hindi shorts', 'movie idiots', 'dharmatma', 'sanjeev kumar',
+    'sholay', 'gabbar singh', 'amjad khan', 'danny denzongpa', 'ramesh sippy', 'sanjeev kumar',
+    'dharmatma', 'bollywood trivia', 'hindi shorts', 'movie idiots', 'bollywood facts', 'sholay facts',
   ],
   settings: {
     category: 'Film & Animation',
     language: 'Hindi',
     madeForKids: false,
     visibility: 'Private',
-    alteredContent: 'No (stylised original animation, not realistic)',
+    alteredContent: 'No (real film stills and photos, not altered or synthetic)',
     audience: 'Not made for kids',
   },
 };

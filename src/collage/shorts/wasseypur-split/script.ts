@@ -11,48 +11,51 @@ export const lines: ScriptLine[] = [
   {
     id: 'hook',
     role: 'hook',
-    text: 'Wasseypur एक ही film थी, theatres ने काट दी?',
-    delivery: {rate: 16, sfx: [{word: 'काट', sound: 'stamp.wav', volume: 0.45}]},
+    en: "Gangs of Wasseypur was one film. Did theatres cut it in two?",
+    text: "Wasseypur एक ही film थी. Theatres ने उसे काट दिया?",
+    delivery: {sfx: [{word: "काट", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'promise',
     role: 'promise',
-    text: 'Cannes में पूरी चली। India में दो टुकड़े।',
-    delivery: {rate: 16},
+    en: "At Cannes it was shown whole. In India it came out in two parts.",
+    text: "Cannes में ये पूरी दिखाई गई. India में ये दो हिस्सों में आई.",
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    text: 'Shoot एक साथ हुआ। Total 319 minutes. Part 1 और 2 मिलाके।',
-    delivery: {rate: 16, sfx: [{word: '319', sound: 'pop.wav', volume: 0.5}]},
+    en: "It was shot as one film, 319 minutes long in total, both parts together.",
+    text: "ये एक साथ shoot हुई, कुल 319 minutes, दोनों parts मिलाकर.",
+    delivery: {sfx: [{word: "319", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 0,
-    text: 'May 2012, Cannes Directors Fortnight. पूरी film एक बैठक में।',
-    delivery: {rate: 16},
+    en: "In May 2012 it was screened as one whole film at Cannes Directors Fortnight.",
+    text: "मई 2012 में Cannes के Directors Fortnight में, पूरी film एक बार में दिखाई गई.",
   },
   {
     id: 'f3',
     role: 'fact',
     source: 1,
-    text: 'India में 22 June और 8 August, दो release. पाँच घंटे कोई hall नहीं लेता।',
-    delivery: {rate: 16, sfx: [{word: 'August', sound: 'stamp.wav', volume: 0.45}]},
+    en: "In India it was released in two parts, on 22 June and 8 August 2012. No theatre would take a five-hour film.",
+    text: "India में ये दो हिस्सों में release हुई, 22 June और 8 August 2012 को. पाँच घंटे की film कोई theatre नहीं लेता था.",
+    delivery: {sfx: [{word: "August", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: 2,
-    text: 'Kashyap कहते हैं, first cut साढ़े सात घंटे था। Motwane ने दो films बचाई।',
-    delivery: {rate: 18},
+    en: "Kashyap says the first cut ran seven and a half hours. Motwane cut it down.",
+    text: "Kashyap कहते हैं, पहला cut साढ़े सात घंटे का था. Motwane ने उसे छोटा किया.",
   },
   {
     id: 'loop',
     role: 'loop',
-    text: 'एक film theatres ने काट दी?',
-    delivery: {rate: 16},
+    en: "One film, yet theatres cut it up?",
+    text: "एक ही film थी, फिर भी theatres ने उसे काट दिया?",
   },
 ];
 
@@ -154,43 +157,40 @@ export const plan: FunFactsPlan = {
 export const component = funFacts(plan);
 
 export const youtube = {
-  title: 'Wasseypur एक ही film थी, theatres ने काट दी #shorts',
+  title: 'Wasseypur एक ही film थी, theatres ने काट दी? #shorts',
   altTitles: [
     'Gangs of Wasseypur 319 minutes, Cannes में एक film #shorts',
-    'Kashyap का first cut साढ़े सात घंटे था #shorts',
+    'Kashyap का first cut साढ़े सात घंटे का था #shorts',
   ],
-  description: `Gangs of Wasseypur एक shoot थी. Cannes में पूरी चली. India के theatres ने दो भाग कर दिए.
+  description: `Gangs of Wasseypur एक ही film थी. Cannes में ये पूरी दिखाई गई. India में theatres ने इसे दो हिस्सों में release किया.
 
-Published pages और Kashyap के interview पर commentary.
+Published reports और Kashyap के interview पर आधारित commentary. ये screening review नहीं है.
 
-Shot as one 319-minute film (160 + 159)
-Cannes Directors' Fortnight, May 2012 — screened in full
-India: Part 1 on 22 June 2012, Part 2 on 8 August 2012 — no hall would take five hours
-Kashyap (2023): first cut 7.5 hours; Motwane saved it as two films
+Shoot एक साथ हुआ, कुल 319 minutes (160 + 159).
+May 2012: Cannes Directors' Fortnight में पूरी film दिखाई गई.
+India में Part 1 22 June 2012 को, Part 2 8 August 2012 को release हुआ. कोई theatre पाँच घंटे की film नहीं लेना चाहता था.
+Kashyap के मुताबिक (2023), पहला cut साढ़े सात घंटे का था. Motwane ने उसे छोटा किया.
 
-Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
-
-Stills:
-Gangs of Wasseypur / Part 2 — Viacom18 Motion Pictures / Anurag Kashyap Films / Filmfare
+Film stills और posters copyrighted publicity images हैं. इन्हें commentary के लिए, credit के साथ इस्तेमाल किया गया है. ये licensed नहीं हैं.
 
 Sources:
-Gangs of Wasseypur — https://en.wikipedia.org/wiki/Gangs_of_Wasseypur
-Gangs of Wasseypur 2 — https://en.wikipedia.org/wiki/Gangs_of_Wasseypur_2
-Kashyap on first cut — https://indianexpress.com/article/entertainment/bollywood/gangs-of-wasseypur-first-cut-seven-hours-long-tigmanshu-dhulia-improvised-tumse-na-ho-payega-line-reveals-anurag-kashyap-8931783/
+Gangs of Wasseypur, Wikipedia: https://en.wikipedia.org/wiki/Gangs_of_Wasseypur
+Gangs of Wasseypur 2, Wikipedia: https://en.wikipedia.org/wiki/Gangs_of_Wasseypur_2
+Kashyap on the first cut, Indian Express, 2023: https://indianexpress.com/article/entertainment/bollywood/gangs-of-wasseypur-first-cut-seven-hours-long-tigmanshu-dhulia-improvised-tumse-na-ho-payega-line-reveals-anurag-kashyap-8931783/
 
 Movie Idiots.
 
 #GangsOfWasseypur #AnuragKashyap #NawazuddinSiddiqui #HindiShorts #MovieIdiots`,
   tags: [
-    'gangs of wasseypur', 'anurag kashyap', 'nawazuddin siddiqui', 'cannes',
-    'hindi shorts', 'movie idiots', 'bollywood trivia',
+    'gangs of wasseypur', 'gangs of wasseypur 2', 'anurag kashyap', 'nawazuddin siddiqui',
+    'cannes', 'hindi shorts', 'movie idiots', 'bollywood trivia', 'bollywood facts',
   ],
   settings: {
     category: 'Film & Animation',
     language: 'Hindi',
     madeForKids: false,
     visibility: 'Private',
-    alteredContent: 'No (stylised original animation, not realistic)',
+    alteredContent: 'No (real film stills and photos, not altered or synthetic)',
     audience: 'Not made for kids',
   },
 };

@@ -1,16 +1,5 @@
 [
   {
-    "file": "shorts/sholay-gabbar/stills/poster.jpg",
-    "label": "REJECTED — not Sholay 1975. Hungama Sholay-1.jpg is Shole (1961, B.R. Chopra / Rajendra Kumar / Sadhana). Do not wire.",
-    "credit": "B.R. Chopra / Bollywood Hungama (misfiled)",
-    "sourceUrl": "https://www.bollywoodhungama.com/movie/sholay/photos/",
-    "imageUrl": "https://www.bollywoodhungama.com/wp-content/uploads/2016/03/Sholay-1.jpg",
-    "width": 942,
-    "height": 1500,
-    "rights": "Copyrighted film still, not licensed. Used briefly as commentary support (fair dealing for criticism/review); credited on screen and in the description.",
-    "retrievedAt": "2026-10-07T18:06:17.512Z"
-  },
-  {
     "file": "shorts/sholay-gabbar/stills/gabbar.jpg",
     "label": "Sholay (1975): Amjad Khan as Gabbar Singh",
     "credit": "Sippy Films / Indian Express",
@@ -64,5 +53,16 @@
     "height": 361,
     "rights": "Copyrighted film still, not licensed. Used briefly as commentary support (fair dealing for criticism/review); credited on screen and in the description.",
     "retrievedAt": "2026-10-07T18:10:47.758Z"
+  },
+  {
+    "file": "shorts/sholay-gabbar/stills/danny-portrait.jpg",
+    "label": "Danny Denzongpa (actor, 2023 photo, not Sholay)",
+    "credit": "Bollywood Hungama (photo, 2023), via Wikimedia Commons",
+    "sourceUrl": "https://en.wikipedia.org/wiki/Danny_Denzongpa",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/f1/Danny_Denzongpa2_%28cropped%29.jpg",
+    "width": 231,
+    "height": 294,
+    "rights": "CC BY 3.0 per Commons file page (Bollywood Hungama permission note, 25 Apr 2023). Actor portrait, not a film still. Verify licence before publishing.",
+    "retrievedAt": "2026-10-08T04:21:42.384Z"
   }
 ]

@@ -19,14 +19,60 @@ export const format = 'fun-facts' as const;
 // `delivery` adds audio direction on top of the role defaults (src/delivery.ts): mood, rate, pitch,
 // pause before, hold after, music duck/drop/swell, and sfx on a spoken word.
 export const lines: ScriptLine[] = [
-  {id: 'hook', role: 'hook', text: 'इस film का villain... actually किसी और का था?'},
-  {id: 'promise', role: 'promise', text: 'और third fact तो fans को भी नहीं पता।'},
-  {id: 'f1', role: 'fact', source: 0, text: 'Fact one: shooting 1973 में शुरू हुई, और पूरे दो साल चली।'},
-  {id: 'f2', role: 'fact', source: 0, text: 'Fact two: एक scene के लिए पूरा गाँव set पर बना।'},
-  {id: 'f2r', role: 'reveal', text: 'और वो set? आज tourist spot है।', delivery: {sfx: [{word: 'tourist', sound: 'pop.wav', volume: 0.5}]}},
-  {id: 'f3', role: 'fact', source: 0, text: 'Fact three: climax दो बार shoot हुआ, और पहला version कभी release ही नहीं हुआ।', delivery: {hold: 0.2, sfx: [{word: 'कभी', sound: 'stamp.wav'}]}},
-  {id: 'payoff', role: 'payoff', source: 0, text: 'और वो villain? Role पहले किसी और actor को offer हुआ था।'},
-  {id: 'loop', role: 'loop', text: 'Socho, अगर villain बदल जाता... तो ये film कैसी होती?', say: 'सोचो, अगर विलेन बदल जाता... तो ये फ़िल्म कैसी होती?'},
+  {
+    id: 'hook',
+    role: 'hook',
+    en: "The villain of this film was originally someone else's role?",
+    text: "इस film का villain... actually किसी और का था?",
+  },
+  {
+    id: 'promise',
+    role: 'promise',
+    en: "And the third fact, even the fans don't know.",
+    text: "और third fact तो fans को भी नहीं पता.",
+  },
+  {
+    id: 'f1',
+    role: 'fact',
+    source: 0,
+    en: "Fact one: shooting started in 1973 and ran for two full years.",
+    text: "Fact one: shooting 1973 में शुरू हुई, और पूरे दो साल चली.",
+  },
+  {
+    id: 'f2',
+    role: 'fact',
+    source: 0,
+    en: "Fact two: for one scene, a whole village was built on the set.",
+    text: "Fact two: एक scene के लिए पूरा गाँव set पर बना.",
+  },
+  {
+    id: 'f2r',
+    role: 'reveal',
+    en: "And that set? Today it is a tourist spot.",
+    text: "और वो set? आज tourist spot है.",
+    delivery: {sfx: [{word: "tourist", sound: 'pop.wav', volume: 0.5}]},
+  },
+  {
+    id: 'f3',
+    role: 'fact',
+    source: 0,
+    en: "Fact three: the climax was shot twice, and the first version was never released.",
+    text: "Fact three: climax दो बार shoot हुआ, और पहला version कभी release नहीं हुआ.",
+    delivery: {sfx: [{word: "कभी", sound: 'stamp.wav', volume: 0.45}]},
+  },
+  {
+    id: 'payoff',
+    role: 'payoff',
+    source: 0,
+    en: "And that villain? The role was first offered to another actor.",
+    text: "और वो villain? Role पहले किसी और actor को offer हुआ था.",
+  },
+  {
+    id: 'loop',
+    role: 'loop',
+    en: "Imagine if the villain had changed. Would this film be different?",
+    text: "सोचिए, अगर villain बदल जाता. तो ये film कैसी होती?",
+  },
 ];
 
 export const sources = [{url: 'https://example.com/replace-me', note: 'Replace with the real source for each fact.'}];

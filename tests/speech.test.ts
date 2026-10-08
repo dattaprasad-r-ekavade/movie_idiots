@@ -12,7 +12,8 @@ test('years and dates are spoken in English, in pairs; amounts stay Hindi', () =
   assert.equal(englishYear(1900), 'नाइनटीन हंड्रेड');
   assert.equal(englishYear(2004), 'टू थाउज़ेंड फ़ोर');
   assert.equal(englishYear(2024), 'ट्वेंटी ट्वेंटी फ़ोर');
-  assert.equal(toSpoken('3 मई 1913.').text, 'थर्ड मे नाइनटीन थर्टीन.');
+  assert.equal(toSpoken('3 मई 1913.').text, 'थर्ड मई नाइनटीन थर्टीन.');
+  assert.equal(toSpoken('May 3, 1913').text, 'मे थर्ड, नाइनटीन थर्टीन');
   assert.equal(toSpoken('25 June 1975 को').text, 'ट्वेंटी फ़िफ़्थ जून नाइनटीन सेवेंटी फ़ाइव को');
   assert.equal(toSpoken('1990s की films').text, 'नाइनटीन नाइंटीज़ की फ़िल्में');
   assert.equal(toSpoken('Fact one: 15 रुपये').text, 'फ़ैक्ट वन: पंद्रह रुपये');
@@ -38,8 +39,8 @@ test('audio directions: role defaults, overrides and provider mapping', () => {
 
 test('Latin names and loanwords become Devanagari; unknown words are reported', () => {
   const s = toSpoken('1990, दिल। Raja और Madhu college में, St. Xavier\'s वाले Zorblat।');
-  assert.equal(s.text, 'नाइनटीन नाइंटी, दिल। राजा और मधु कॉलेज में, सेंट Xavier\'s वाले Zorblat।');
-  assert.deepEqual(s.unknown, ['Xavier\'s', 'Zorblat']);
+  assert.equal(s.text, 'नाइनटीन नाइंटी, दिल। राजा और मधु कॉलेज में, सेंट ज़ेवियर्स वाले Zorblat।');
+  assert.deepEqual(s.unknown, ['Zorblat']);
   assert.equal(toSpoken('Zorblat आया', undefined, {zorblat: 'ज़ोरब्लाट'}).text, 'ज़ोरब्लाट आया');
   assert.equal(toSpoken('80s-90s की फिल्में').text, 'एटीज़ नाइंटीज़ की फिल्में');
 });

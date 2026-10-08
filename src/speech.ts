@@ -29,6 +29,13 @@ export const LEXICON: Record<string, string> = {
   plan: 'प्लान', idea: 'आइडिया', problem: 'प्रॉब्लम', game: 'गेम', record: 'रिकॉर्ड', team: 'टीम', news: 'न्यूज़', interview: 'इंटरव्यू',
   restaurant: 'रेस्टोरेंट', crew: 'क्रू', reel: 'रील', reels: 'रील्स', develop: 'डेवलप', bank: 'बैंक', police: 'पुलिस', inspector: 'इंस्पेक्टर',
   model: 'मॉडल', mr: 'मिस्टर', mrs: 'मिसेज़', miss: 'मिस', ms: 'मिस', st: 'सेंट', dr: 'डॉक्टर', vs: 'वर्सेस', ok: 'ओके', tv: 'टीवी',
+  committee: 'कमेटी', panel: 'पैनल', selection: 'सिलेक्शन', process: 'प्रोसेस', ritesh: 'रितेश', batra: 'बत्रा',
+  gautam: 'गौतम', pick: 'पिक', nomination: 'नॉमिनेशन', gangs: 'गैंग्स', parts: 'पार्ट्स', projection: 'प्रोजेक्शन',
+  all: 'ऑल', living: 'लिविंग', breathing: 'ब्रीदिंग', brothers: 'ब्रदर्स', theatres: 'थिएटर्स', versions: 'वर्ज़न्स',
+  direct: 'डायरेक्ट', gate: 'गेट', 'r.k': 'आर के', s: 'एस', kramer: 'क्रेमर', pearl: 'पर्ल', buck: 'बक', danielewski: 'डैनियलेव्स्की',
+  motwane: 'मोटवानी', kashyap: 'कश्यप', wadia: 'वाडिया', vijay: 'विजय', narayan: 'नारायण', hunterwali: 'हंटरवाली', talkie: 'टॉकी',
+  rajput: 'राजपूत', "xavier's": 'ज़ेवियर्स', braganza: 'ब्रैगेंज़ा', malhotra: 'मल्होत्रा', life: 'लाइफ़', christ: 'क्राइस्ट', coronation: 'कोरोनेशन',
+  ramesh: 'रमेश', akhtar: 'अख़्तर', javed: 'जावेद', sippy: 'सिप्पी', sanjeev: 'संजीव', amjad: 'अमजद', denzongpa: 'डेन्ज़ोंगपा',
   papa: 'पापा', mummy: 'मम्मी', raja: 'राजा', raj: 'राज', rahul: 'राहुल', anjali: 'अंजलि', madhu: 'मधु', sunil: 'सुनील', simran: 'सिमरन',
   // Hinglish fillers and reactions a fun-facts script leans on
   seriously: 'सीरियसली', basically: 'बेसिकली', literally: 'लिटरली', crazy: 'क्रेज़ी', legend: 'लेजेंड', legendary: 'लेजेंडरी', iconic: 'आइकॉनिक',
@@ -119,7 +126,8 @@ const SPLIT = /^([^\p{L}\p{N}]*)(.*?)([^\p{L}\p{N}\p{M}]*)$/u;
 function speakToken(core: string): string | undefined {
   const key = core.toLowerCase();
   if (LEXICON[key]) return LEXICON[key];
-  if (MONTHS[key]) return MONTHS[key];
+  // English month names are read in English; Hindi month names (मई) stay Hindi.
+  if (MONTHS[key]) return /[A-Za-z]/.test(core) ? MONTHS[key] : core;
   if (EN_WORDS[key]) return EN_WORDS[key];
   if (isYear(core)) return englishYear(Number(core));
   // Decades: "1990s" → "नाइनटीन नाइंटीज़".
@@ -138,6 +146,8 @@ function speakToken(core: string): string | undefined {
  * display words by position). Latin words missing from the lexicon are returned in `unknown`.
  */
 export function toSpoken(text: string, say?: string, lexicon: Record<string, string> = {}): Spoken {
+  // Hindi text uses "." as the sentence mark. "|" is never a Hindi mark, so read it as a full stop.
+  text = text.replace(/\|/g, '.');
   const display = text.split(/\s+/).filter(Boolean);
   if (say?.trim()) {
     const spoken = say.split(/\s+/).filter(Boolean);

@@ -82,6 +82,9 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     if (spoken.unknown.length) warn(`Voice will guess at: ${spoken.unknown.join(', ')}. Add to LEXICON or set \`say\``, l.id);
   }
   for (const l of lines) {
+    if (l.text.includes('|') || l.say?.includes('|')) err('Use "." as the sentence mark, never "|"', l.id);
+    if (l.text.includes('।')) warn('Use "." instead of "।" (shown as is, read as a full stop)', l.id);
+    if (!l.en) warn('No English draft (en). Write the line in English first, then translate to Hinglish', l.id);
     const formal = words(l.text).map(stem).filter((w) => PURIST[w]);
     if (formal.length) warn(`Sounds like textbook Hindi: ${formal.map((w) => `${w} → ${PURIST[w]}`).join(', ')}`, l.id);
     for (const s of l.delivery?.sfx ?? []) {

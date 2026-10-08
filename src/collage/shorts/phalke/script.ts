@@ -1,23 +1,23 @@
 import type {ScriptLine} from '../../timeline';
 
 export const slug = 'phalke';
-export const title = 'भारत की पहली हीरोइन… एक आदमी था | Raja Harishchandra 1913 #shorts';
+export const title = 'भारत की पहली हीरोइन… एक आदमी था. Raja Harishchandra 1913 #shorts';
 
 // Spoken Hinglish, one line per breath. Each claim maps to a source below.
 export const lines: ScriptLine[] = [
-  {id: 'hook1', text: 'भारत की पहली फीचर फिल्म की हीरोइन... एक आदमी था।'},
-  {id: 'hook2', text: 'और इस फिल्म को बनाने में, डायरेक्टर की बीवी के गहने तक दाँव पर लग गए।'},
-  {id: 'theatre', text: 'बॉम्बे का एक थिएटर। धुंडिराज गोविंद फाल्के परदे पर The Life of Christ देख रहे हैं।'},
-  {id: 'idea', text: 'और सोचते हैं... हमारे अपने भगवान परदे पर क्यों नहीं?'},
-  {id: 'pea1', text: 'पर पैसा कौन देगा? तो फाल्के ने मटर का पौधा लगाया, और रोज़ उसकी एक फ्रेम शूट की।'},
-  {id: 'pea2', text: 'परदे पर पौधा बढ़ता दिखा। यही छोटी सी फिल्म लेकर वो पैसे वालों के पास गए।'},
-  {id: 'london', text: 'फिर 1912 में लंदन। फिल्म बनाना सीखा, कैमरा खरीदा। और इस सफ़र का खर्च? सरस्वतीबाई के गहने।'},
-  {id: 'nowomen', text: 'अब नई मुसीबत। कोई भी औरत फिल्म में काम करने को तैयार नहीं थी।'},
-  {id: 'salunke', text: 'तो रानी तारामती बने अण्णा सालुंके, एक restaurant में काम करने वाले। तनख्वाह? दस से सीधा पंद्रह रुपये।'},
-  {id: 'saraswati', text: 'और सरस्वतीबाई? उन्होंने film develop की, reels तैयार कीं, और पूरी crew का खाना भी बनाया।'},
-  {id: 'release', text: '3 मई 1913. बॉम्बे का Coronation Cinema. राजा हरिश्चंद्र रिलीज़ होती है।'},
-  {id: 'award', text: 'आज भारत का सबसे बड़ा फिल्म सम्मान उन्हीं के नाम पर है: दादासाहेब फाल्के अवॉर्ड।'},
-  {id: 'loop', text: 'और हाँ... पहली हीरोइन, एक आदमी था।'},
+  {id: 'hook1', en: "India's first feature film heroine was a man.", text: "भारत की पहली फीचर फिल्म की हीरोइन... एक आदमी था."},
+  {id: 'hook2', en: "To make it, even the director's wife's jewellery was on the line.", text: "और इस फिल्म को बनाने में, डायरेक्टर की बीवी के गहने तक दाँव पर लग गए."},
+  {id: 'theatre', en: "A theatre in Bombay. Dhundiraj Govind Phalke is watching The Life of Christ on screen.", text: "बॉम्बे का एक थिएटर. धुंडिराज गोविंद फाल्के परदे पर The Life of Christ देख रहे हैं."},
+  {id: 'idea', en: "And he thinks: why not our own gods on screen?", text: "और सोचते हैं... हमारे अपने भगवान परदे पर क्यों नहीं?"},
+  {id: 'pea1', en: "But who would pay? So Phalke planted a pea plant and shot one frame of it a day.", text: "पर पैसा कौन देगा? तो फाल्के ने मटर का पौधा लगाया, और रोज़ उसकी एक फ्रेम शूट की."},
+  {id: 'pea2', en: "On screen the plant grew. With this small film he went to the men with money.", text: "परदे पर पौधा बढ़ता दिखा. यही छोटी सी फिल्म लेकर वो पैसे वालों के पास गए."},
+  {id: 'london', en: "Then London, in 1912. He learned filmmaking and bought a camera. And who paid for the trip? Saraswatibai's jewellery.", text: "फिर 1912 में लंदन. फिल्म बनाना सीखा, कैमरा खरीदा. और इस सफ़र का खर्च? सरस्वतीबाई के गहने."},
+  {id: 'nowomen', en: "New trouble: no woman was ready to act in the film.", text: "अब नई मुसीबत. कोई भी औरत फिल्म में काम करने को तैयार नहीं थी."},
+  {id: 'salunke', en: "So Anna Salunke, a restaurant worker, played Queen Taramati. His pay went from 10 rupees to 15.", text: "तो रानी तारामती का रोल किया अण्णा सालुंके ने, जो एक restaurant में काम करते थे. तनख्वाह? दस से सीधा पंद्रह रुपये."},
+  {id: 'saraswati', en: "And Saraswatibai? She developed the film, prepared the reels, and even cooked for the whole crew.", text: "और सरस्वतीबाई? उन्होंने film develop की, reels तैयार कीं, और पूरी crew का खाना भी बनाया."},
+  {id: 'release', en: "3 May 1913. The Coronation Cinema in Bombay. Raja Harishchandra is released.", text: "3 मई 1913. बॉम्बे का Coronation Cinema. राजा हरिश्चंद्र रिलीज़ होती है."},
+  {id: 'award', en: "Today India's biggest film honour carries his name: the Dadasaheb Phalke Award.", text: "आज भारत का सबसे बड़ा फिल्म सम्मान उन्हीं के नाम पर है: दादासाहेब फाल्के अवॉर्ड."},
+  {id: 'loop', en: "And yes... the first heroine was a man.", text: "और हाँ... पहली हीरोइन, एक आदमी था."},
 ];
 
 export const sources = [
@@ -47,9 +47,9 @@ export const youtube = {
 
 आपको ये किस्सा पता था? Comment में बताओ 👇
 
-Movie Idiots: फिल्मों के किस्से, trivia और कहानियाँ, paper-collage style में। Subscribe करो!
+Movie Idiots: फिल्मों के किस्से, trivia और कहानियाँ, paper-collage style में. Subscribe करो!
 
-सभी illustrations इस channel के लिए बनाए गए original artwork हैं। Raja Harishchandra को आम तौर पर भारत की पहली full-length feature film माना जाता है; कुछ लोग Shree Pundalik (1912) को पहले मानते हैं।
+सभी illustrations इस channel के लिए बनाए गए original artwork हैं. Raja Harishchandra को आम तौर पर भारत की पहली full-length feature film माना जाता है; कुछ लोग Shree Pundalik (1912) को पहले मानते हैं.
 
 Sources:
 - Raja Harishchandra: https://en.wikipedia.org/wiki/Raja_Harishchandra

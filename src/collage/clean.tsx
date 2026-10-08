@@ -17,7 +17,7 @@ export function useSmooth(at: number, config = SMOOTH) {
 }
 
 /** 0→1 in, then 1→0 out after `exit` (frames local to the caller). */
-function useInOut(at: number, exit?: number, outFrames = 8) {
+function useInOut(at: number, exit?: number, outFrames = 2) {
   const frame = useCurrentFrame();
   const inP = useSmooth(at);
   const outP = exit === undefined ? 0 : interpolate(frame, [exit, exit + outFrames], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
@@ -40,8 +40,9 @@ export function Headline({text, at = 0, exit, size = 96, color = C.white, accent
 }) {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
-  const out = exit === undefined ? 0 : interpolate(frame, [exit, exit + 8], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
-  if (frame < at || (exit !== undefined && frame >= exit + 8)) return null;
+  // Exit is a hard cut: a 2-frame fade at most, so the old line never hangs over the next one.
+  const out = exit === undefined ? 0 : interpolate(frame, [exit, exit + 2], [0, 1], {...clamp, easing: Easing.in(Easing.cubic)});
+  if (frame < at || (exit !== undefined && frame >= exit + 2)) return null;
   return (
     <div style={{fontFamily: font, fontWeight: weight, fontSize: size, lineHeight: 1.22, color, textAlign: align, opacity: 1 - out}}>
       {text.split('\n').map((line, i) => {
@@ -82,7 +83,7 @@ export function Kicker({text, at = 0, exit, color = C.marigold, size = 46}: {tex
 export function FactBadge({n, of, at = 0, exit}: {n: number; of: number; at?: number; exit?: number}) {
   const p = useSmooth(at);
   const frame = useCurrentFrame();
-  const out = exit === undefined ? 0 : interpolate(frame, [exit, exit + 8], [0, 1], clamp);
+  const out = exit === undefined ? 0 : interpolate(frame, [exit, exit + 2], [0, 1], clamp);
   if (frame < at) return null;
   return (
     <div style={{display: 'inline-flex', alignItems: 'baseline', gap: 6, padding: '10px 26px', borderRadius: 999, background: C.marigold, color: C.ink, fontFamily: FONT.body, fontWeight: 800, transform: `scale(${0.7 + p * 0.3})`, opacity: p * (1 - out)}}>
@@ -94,10 +95,10 @@ export function FactBadge({n, of, at = 0, exit}: {n: number; of: number; at?: nu
 
 /**
  * A film still as a mounted print: thin white border, small tilt, slow push inside the frame,
- * film/year tag and an on-image credit. `blur` hides details for a hook that the payoff reveals.
+ * film/year tag. Credits go in the video description, not on screen. `blur` hides details for a hook that the payoff reveals.
  * Without `src` it draws a labelled placeholder so layouts can be reviewed before procurement.
  */
-export function FilmStill({src, at = 0, exit, width = 900, aspect = 16 / 9, tilt = -2, film, year, credit, blur = 0, push = [1.04, 1.12], duration = 240, focus = '50% 40%'}: {
+export function FilmStill({src, at = 0, exit, width = 900, aspect = 16 / 9, tilt = -2, film, year, credit: _credit, blur = 0, push = [1.04, 1.12], duration = 240, focus = '50% 40%'}: {
   src?: string; at?: number; exit?: number; width?: number; aspect?: number; tilt?: number; film?: string; year?: number | string; credit?: string; blur?: number; push?: [number, number]; duration?: number; focus?: string;
 }) {
   const frame = useCurrentFrame();
@@ -119,9 +120,6 @@ export function FilmStill({src, at = 0, exit, width = 900, aspect = 16 / 9, tilt
           )}
           {label && (
             <div style={{position: 'absolute', left: 14, top: 14, padding: '6px 16px', background: 'rgba(12,12,18,.78)', color: C.white, fontFamily: FONT.body, fontWeight: 800, fontSize: 34, borderRadius: 6}}>{label}</div>
-          )}
-          {credit && (
-            <div style={{position: 'absolute', right: 10, bottom: 8, fontFamily: FONT.body, fontWeight: 500, fontSize: 20, color: 'rgba(255,255,255,.85)', textShadow: '0 1px 3px rgba(0,0,0,.9)'}}>{credit}</div>
           )}
         </div>
       </div>
@@ -156,7 +154,8 @@ export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?
   const frame = useCurrentFrame();
   const {fps, width} = useVideoConfig();
   const t = frame / fps;
-  const line = timing.lines.find((l) => t >= l.start - 0.05 && t < l.start + l.duration + 0.15);
+  // No caption outside a spoken line: the window ends with the line, not 0.15 s after it.
+  const line = timing.lines.find((l) => t >= l.start - 0.05 && t < l.start + l.duration + 0.02);
   if (!line) return null;
   const groups: (typeof line.words)[] = [];
   for (const w of line.words) {
@@ -166,7 +165,8 @@ export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?
     else last.push(w);
   }
   const index = Math.max(0, groups.findIndex((g) => t < g[g.length - 1].end + 0.04));
-  const group = groups[index] ?? groups[groups.length - 1];
+  const group = groups[index];
+  if (!group || t > group[group.length - 1].end + 0.04) return null;
   const since = (t - group[0].start) * fps;
   const enter = interpolate(since, [0, 5], [0, 1], {...clamp, easing: EASE});
   return (

@@ -11,7 +11,7 @@ import {Presenter} from '../characters';
 import {ShortShell, local, type BeatProps, type ShortProps} from '../shell';
 
 /** A still from `npm run short -- still`, shown as a mounted print. */
-export type StillRef = {src?: string; film?: string; year?: number | string; credit?: string; focus?: string; aspect?: number};
+export type StillRef = {src?: string; film?: string; year?: number | string; credit?: string; focus?: string; aspect?: number; width?: number};
 /** Text that lands on a spoken word: `{line, word, text}` shows `text` when `word` is said. */
 export type Pop = {line?: string; word: string; text: string};
 
@@ -74,12 +74,14 @@ function HookFrame({plan, c, from, still, settle = false}: BeatProps & {plan: Fu
   // The hook headline is already on the very first frame (it is what stops the scroll).
   const at = settle ? -30 : -20;
   const blur = 16;
+  // Leave with the hook's last sentence so old text never sits over the next beat. The loop keeps it.
+  const out = settle ? undefined : L(c.end(hook.lines[hook.lines.length - 1]));
   return (
     <AbsoluteFill>
-      <Top><Kicker text={plan.kicker ?? DEFAULT_KICKER} at={at} /></Top>
-      <Title><Headline text={hook.headline} accent={hook.accent} at={at + 3} size={100} /></Title>
+      <Top><Kicker text={plan.kicker ?? DEFAULT_KICKER} at={at} exit={out} /></Top>
+      <Title><Headline text={hook.headline} accent={hook.accent} at={at + 3} size={100} exit={out} /></Title>
       <Stage>
-        {still ? <FilmStill {...still} at={settle ? at : 2} blur={blur} tilt={-1.5} credit={undefined} film={undefined} year={undefined} /> : null}
+        {still ? <FilmStill {...still} at={settle ? at : 2} exit={out} blur={blur} tilt={-1.5} credit={undefined} film={undefined} year={undefined} /> : null}
       </Stage>
       <PopAt pop={hook.pop} c={c} from={from} fallbackLine={hook.lines[0]} top={1080} />
       {plan.mascot && !settle && <Presenter at="bottom-right" width={230} enter={L(c.end(hook.lines[0], -0.3))} talk={false} cues={[{at: 0, pose: 'shrug', expression: 'shock'}]} />}
@@ -93,19 +95,22 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
   const L = local(from);
   const swap = fact.reveal ? L(c.line(fact.reveal.line)) - 4 : undefined;
   const length = to - from;
+  // Each on-screen element leaves when its sentence ends, so the previous text never lingers.
+  const end = L(c.end(fact.lines[fact.lines.length - 1]));
+  const revealEnd = fact.reveal ? L(c.end(fact.reveal.line)) : undefined;
   return (
     <AbsoluteFill>
-      <Top>{numbered ? <FactBadge n={index + 1} of={count} at={0} /> : <Kicker text={DEFAULT_KICKER} at={0} />}</Top>
+      <Top>{numbered ? <FactBadge n={index + 1} of={count} at={0} exit={end} /> : <Kicker text={DEFAULT_KICKER} at={0} exit={end} />}</Top>
       <Title>
-        <Headline text={fact.headline} accent={fact.accent} at={0} exit={swap} />
+        <Headline text={fact.headline} accent={fact.accent} at={0} exit={swap ?? end} />
       </Title>
       {fact.reveal && (
         <Title>
-          <Headline text={fact.reveal.headline} accent={fact.reveal.accent} at={(swap ?? 0) + 8} />
+          <Headline text={fact.reveal.headline} accent={fact.reveal.accent} at={(swap ?? 0) + 8} exit={revealEnd} />
         </Title>
       )}
       <Stage>
-        <FilmStill {...fact.still} at={2} tilt={index % 2 ? 2 : -2} duration={length} />
+        <FilmStill {...fact.still} at={2} exit={revealEnd ?? end} tilt={index % 2 ? 2 : -2} duration={length} />
       </Stage>
       <PopAt pop={fact.pop} c={c} from={from} fallbackLine={fact.lines[0]} top={1080} />
       <Sfx at={0} src="whoosh.wav" volume={0.35} />
@@ -122,11 +127,12 @@ function Payoff({plan, c, from, to}: BeatProps & {plan: FunFactsPlan}) {
   const still = payoff.still ?? plan.hook.still;
   // The hook's blurred still comes into focus: the loop closes on screen.
   const focus = interpolate(frame, [6, 26], [16, 0], clamp);
+  const end = L(c.end(payoff.lines[0]));
   return (
     <AbsoluteFill>
-      <Top><Kicker text="Answer" at={0} /></Top>
-      <Title><Headline text={payoff.headline} accent={payoff.accent} at={0} /></Title>
-      <Stage>{still && <FilmStill {...still} at={-20} blur={focus} tilt={-1.5} duration={to - from} />}</Stage>
+      <Top><Kicker text="Answer" at={0} exit={end} /></Top>
+      <Title><Headline text={payoff.headline} accent={payoff.accent} at={0} exit={end} /></Title>
+      <Stage>{still && <FilmStill {...still} at={-20} exit={end} blur={focus} tilt={-1.5} duration={to - from} />}</Stage>
       <PopAt pop={payoff.pop} c={c} from={from} fallbackLine={payoff.lines[0]} top={1080} />
       {plan.mascot && <Presenter at={{x: 980, y: 1475}} width={140} enter={L(c.line(payoff.lines[0])) + 10} talk={false} cues={[{at: 0, pose: 'point', expression: 'happy'}]} />}
       <Sfx at={6} src="whoosh.wav" volume={0.35} />
