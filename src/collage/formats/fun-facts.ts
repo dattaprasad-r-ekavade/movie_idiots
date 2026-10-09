@@ -38,11 +38,11 @@ const DEVANAGARI = /[ऀ-ॿ]/;
 
 // Finite verbs and auxiliaries. A fact line of 3+ Hindi words with none of these anywhere reads like a
 // telegram ("Maratha Light Infantry के साथ तीन साल training.") instead of a spoken sentence.
-const VERBS = new Set(`है हैं था थे थी थीं हो होता होती होते हुआ हुई हुए किया की किए कीं ली लिया लिए दी दिया दिए गया गए गई गयी गईं
-  रहा रहे रही सकता सकते सकी सका पाया पाए मिला मिली मिले बना बनी बने बनाई बनाया आया आई आए आएगा जाता जाती जाते करता करते करती करो
-  लगा लगी लगे कहा बोला बोले पड़ा पड़ी चाहिए निकला निकली निकले पहुँचे पहुँचा पहुँची छोड़ा छोड़ी छोड़े चला चली चले जीता जीती जीते
-  हारा हारी हारे देखा देखी देखे सुना सुनी लौटे लौटा भेजा भेजी उठा उठी गिरा गिरी मरा रखा रखी बदला बदली बिका बिकी चलेगा
-  लिखा लिखी लिखे सकीं सकें सके पता बताया बताई माना मानी गाया गाई खेला खेली दिखा दिखाई दिखाया कमाया कमाए कमाई चुना चुनी बिताए बिताया`.split(/\s+/));
+const VERBS = new Set(`है हैं था थे थी थीं हो होता होती होते हुआ हुई हुए किया किए कीं ली लिया लिए दी दिया दिए गया गए गई गयी गईं
+ रहा रहे रही सकता सकते सकी सका पाया पाए मिला मिली मिले बना बनी बने बनाई बनाया आया आई आए आएगा जाता जाती जाते करता करते करती करो
+ लगा लगी लगे कहा बोला बोले पड़ा पड़ी चाहिए निकला निकली निकले पहुँचे पहुँचा पहुँची छोड़ा छोड़ी छोड़े चला चली चले जीता जीती जीते
+ हारा हारी हारे देखा देखी देखे सुना सुनी लौटे लौटा भेजा भेजी उठा उठी गिरा गिरी मरा रखा रखी बदला बदली बिका बिकी चलेगा
+ लिखा लिखी लिखे सकीं सकें सके बताया बताई माना मानी गाया गाई खेला खेली दिखा दिखाई दिखाया कमाया कमाए कमाई चुना चुनी बिताए बिताया`.split(/\s+/));
 
 // Singular masculine verb forms. With `honorific`, a real person (an elder, a tribute subject) gets
 // the respectful plural: "Kargil गए थे", not "Kargil गया था".
@@ -90,7 +90,8 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
   if (hook) {
     const secs = estimateDuration(hook.text);
     if (words(hook.text).length > 10 || secs > 4) warn(`Hook runs ~${secs.toFixed(1)} s; land it in about 3 s (≤ 10 words)`, hook.id);
-    if (/^(नमस्ते|hello|hi|दोस्तों|आज हम|welcome)/i.test(hook.text.trim())) err('Hook opens with a greeting/intro; open on the fact', hook.id);
+    // Whole words only: "Hindi…" or "Highest…" is not a greeting.
+    if (/^(?:नमस्ते|hello|hi|दोस्तों|आज हम|welcome)(?![\p{L}\p{M}])/iu.test(hook.text.trim())) err('Hook opens with a greeting/intro; open on the fact', hook.id);
     if (!/[?…]|\.\.\.|\d/.test(hook.text)) warn('Hook has no question, number or trailing tease; make it specific and open a loop', hook.id);
   }
   if (of('hook').length > 2) warn('More than two hook lines; the hook is one breath');
@@ -165,6 +166,27 @@ export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: Ledger
         issues.push({level: 'warn', line: where, message: `Tag says ${still.year} but the ledger label "${entry.label}" ${years.length ? `says ${years.join('/')}` : 'has no year'}; check the photo's own date (signage, source caption) or drop the year`});
     }
   };
+  // Anchors are looked up with clock().word() at render time, which throws; catch them here instead.
+  const anchor = (lineId: string | undefined, word: string | undefined, where: string, what: string) => {
+    if (!lineId) return;
+    const line = byId.get(lineId);
+    if (!line) return issues.push({level: 'error', line: where, message: `${what} points at unknown line "${lineId}"`});
+    if (word !== undefined && !line.text.split(/\s+/).some((w) => w.includes(word)))
+      issues.push({level: 'error', line: where, message: `${what} word "${word}" is not in line "${lineId}"`});
+  };
+  const beats: {lines: string[]; pop?: {line?: string; word: string}}[] = [plan.hook, ...plan.facts, plan.payoff, plan.loop];
+  for (const b of beats) for (const id of b.lines) anchor(id, undefined, b.lines[0] ?? id, 'Plan');
+  for (const b of beats) if (b.pop) anchor(b.pop.line ?? b.lines[0], b.pop.word, b.lines[0], 'pop');
+  for (const fact of plan.facts) {
+    for (const cut of fact.cuts ?? []) anchor(cut.line ?? fact.lines[0], cut.word, fact.lines[0], 'cut');
+    if (fact.reveal) {
+      anchor(fact.reveal.line, undefined, fact.lines[0], 'reveal');
+      if (!fact.lines.includes(fact.reveal.line)) issues.push({level: 'error', line: fact.lines[0], message: `reveal line "${fact.reveal.line}" is not one of this beat's lines`});
+    }
+  }
+  // Every ledger entry is credited in the description; an unused one credits an image the video never shows.
+  const used = new Set([plan.hook.still?.src, plan.payoff.still?.src, ...plan.facts.flatMap((f) => [f.still?.src, ...(f.cuts ?? []).map((c) => c.src)])].filter(Boolean));
+  for (const e of ledger) if (!used.has(e.file)) issues.push({level: 'warn', message: `${e.file} is in stills.json but not used in the plan; remove it so the description does not credit it`});
   check(plan.hook.still, plan.hook.lines[0]);
   check(plan.payoff.still, plan.payoff.lines[0]);
   for (const fact of plan.facts) {

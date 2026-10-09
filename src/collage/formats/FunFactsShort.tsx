@@ -107,7 +107,7 @@ function Fact({fact, index, count, numbered, c, from, to}: BeatProps & {fact: Fa
   // A print leaves when a later `replace` cut lands (a few frames after, so the cut covers it); otherwise it holds to the beat's end.
   const exitAfter = (i: number) => {
     const next = (fact.cuts ?? []).findIndex((cut, j) => j > i && cut.replace);
-    return next < 0 ? length - 6 : cutAt[next] + 4;
+    return next < 0 ? length : cutAt[next] + 4;
   };
   return (
     <AbsoluteFill>
