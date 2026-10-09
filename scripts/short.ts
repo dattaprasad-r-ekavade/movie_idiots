@@ -137,12 +137,18 @@ async function windowsVoice() {
   await measure();
 }
 
+// Each render bundles the composition into %TEMP% (~50 MB). Delete them when the command ends,
+// or they pile up until the disk is full.
+const bundles: string[] = [];
+const cleanBundles = () => Promise.all(bundles.map((dir) => rm(dir, {recursive: true, force: true}).catch(() => {})));
+
 async function prepare(captions = true, music = true) {
   const short = entry();
   await ensureSoundKit();
   // Re-measure every time: script edits (pauses, music cues) and new recordings both re-time the edit.
   const timing: Timing = await measure();
   const serveUrl = await bundle({entryPoint: path.join(ROOT, 'src/collage/index.tsx'), publicDir: PUBLIC, onProgress: () => {}});
+  bundles.push(serveUrl);
   const inputProps = {timing, captions, music};
   const browser = browserExecutable();
   const composition = await selectComposition({serveUrl, id: slug, inputProps, browserExecutable: browser, logLevel: 'error'});
@@ -281,7 +287,10 @@ if (!fn) {
   console.error('Usage: short.ts list | say SLUG | lint SLUG | still SLUG --url … --source … --credit … --label … | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | package SLUG');
   process.exit(1);
 }
-fn().catch((e) => {
-  console.error(e instanceof Error ? e.message : e);
-  process.exit(1);
-});
+fn()
+  .then(cleanBundles)
+  .catch(async (e) => {
+    await cleanBundles();
+    console.error(e instanceof Error ? e.message : e);
+    process.exit(1);
+  });

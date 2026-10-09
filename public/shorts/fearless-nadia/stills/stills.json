@@ -33,14 +33,36 @@
     "retrievedAt": "2026-10-07T18:08:02.982Z"
   },
   {
-    "file": "shorts/fearless-nadia/stills/whip.jpg",
-    "label": "Hunterwali (1935): Fearless Nadia still",
-    "credit": "Wadia Movietone / NFAI Great Indian Film Hunt",
-    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hunterwali_-_%27Fearless_Nadia%27_Mary_Evans_2_(14381984404).jpg",
-    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/a/ad/Hunterwali_-_%27Fearless_Nadia%27_Mary_Evans_2_%2814381984404%29.jpg",
-    "width": 750,
-    "height": 500,
-    "rights": "Public domain in India (published before 1 January 1966). Wikimedia Commons.",
-    "retrievedAt": "2026-10-07T18:08:05.691Z"
+    "file": "shorts/fearless-nadia/stills/nadia-brochure-cover-hd.jpg",
+    "label": "Hunterwali (1935): 1936 brochure cover",
+    "credit": "Wadia Movietone (Hunterwali brochure, 1936)",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hunterwali_brochure_cover_(14379645451).jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/24/Hunterwali_brochure_cover_%2814379645451%29.jpg",
+    "width": 1500,
+    "height": 2000,
+    "rights": "Public domain (PD-India, pre-1966) per Wikimedia Commons file page",
+    "retrievedAt": "2026-10-09T11:35:48.310Z"
+  },
+  {
+    "file": "shorts/fearless-nadia/stills/nadia-brochure-page-b.png",
+    "label": "Hunterwali (1935): 1936 brochure page",
+    "credit": "Wadia Movietone (Hunterwali brochure, 1936)",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Hunterwali_brochure_(1936)_(14336118918).png",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/8/8b/Hunterwali_brochure_%281936%29_%2814336118918%29.png",
+    "width": 1365,
+    "height": 2000,
+    "rights": "Public domain (PD-India, pre-1966) per Wikimedia Commons file page",
+    "retrievedAt": "2026-10-09T11:35:58.421Z"
+  },
+  {
+    "file": "shorts/fearless-nadia/stills/nadia-11oclock-portrait.jpg",
+    "label": "Fearless Nadia (1948): 11 O'Clock film image",
+    "credit": "Unknown (screenshot from 11 O'Clock, 1948)",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Fearless_Nadia_in_11_O%27Clock_(1948).jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/4/43/Fearless_Nadia_in_11_O%27Clock_%281948%29.jpg",
+    "width": 466,
+    "height": 633,
+    "rights": "Public domain per Wikimedia Commons file page (tagged PD; the file page notes it is a screenshot from 11 O'Clock, 1948)",
+    "retrievedAt": "2026-10-09T11:37:04.880Z"
   }
 ]

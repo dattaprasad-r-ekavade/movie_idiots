@@ -18,7 +18,7 @@ Updated 8 October 2026. Voice rule: drafts use Edge, finals use ElevenLabs. Spee
 | `secret-remakes` | done | done (54s) | done (v4, 8%) | done. Upload `projects/shorts/secret-remakes/video-fast8.mp4` |
 | `nana-patekar` | done | done (44.9s) | not built | not built. Tribute facts; death in description only |
 | `alam-ara` | done | not built | not built | not built. Needs original art |
-| `fearless-nadia` | done | not built | not built | not built |
+| `fearless-nadia` | done | done (62s) | done (15%) | done. Upload `projects/shorts/fearless-nadia/video-fast15.mp4` |
 | `guide-twins` | done | not built | not built | not built. Needs a check on runtimes |
 | `mughal-colour` | done | not built | not built | not built |
 | `cult-flops` | done | not built | not built | not built. Earlier `video.mp4` is stale |
@@ -26,7 +26,7 @@ Updated 8 October 2026. Voice rule: drafts use Edge, finals use ElevenLabs. Spee
 | `phalke` | done | not built | not built | not built |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending, in order: `nana-patekar` (current; death 8 Oct 2026), then `fearless-nadia`, `mughal-colour`, `guide-twins`, `alam-ara`. Then re-render `college` and `cult-flops`, and build `phalke`.
+Pending, in order: `mughal-colour`, `guide-twins`, `alam-ara`. Then re-render `college` and `cult-flops`, and build `phalke`.
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.

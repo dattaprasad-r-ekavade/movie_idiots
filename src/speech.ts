@@ -30,6 +30,7 @@ export const LEXICON: Record<string, string> = {
   restaurant: 'रेस्टोरेंट', crew: 'क्रू', reel: 'रील', reels: 'रील्स', develop: 'डेवलप', bank: 'बैंक', police: 'पुलिस', inspector: 'इंस्पेक्टर',
   model: 'मॉडल', mr: 'मिस्टर', mrs: 'मिसेज़', miss: 'मिस', ms: 'मिस', st: 'सेंट', dr: 'डॉक्टर', vs: 'वर्सेस', ok: 'ओके', tv: 'टीवी',
   committee: 'कमेटी', panel: 'पैनल', selection: 'सिलेक्शन', process: 'प्रोसेस', ritesh: 'रितेश', batra: 'बत्रा',
+  female: 'फ़ीमेल', body: 'बॉडी', financiers: 'फ़ाइनेंसर्स', roy: 'रॉय', chandelier: 'शैंडलियर', australia: 'ऑस्ट्रेलिया',
   gautam: 'गौतम', pick: 'पिक', nomination: 'नॉमिनेशन', gangs: 'गैंग्स', parts: 'पार्ट्स', projection: 'प्रोजेक्शन',
   all: 'ऑल', living: 'लिविंग', breathing: 'ब्रीदिंग', brothers: 'ब्रदर्स', theatres: 'थिएटर्स', versions: 'वर्ज़न्स',
   direct: 'डायरेक्ट', gate: 'गेट', 'r.k': 'आर के', s: 'एस', kramer: 'क्रेमर', pearl: 'पर्ल', buck: 'बक', danielewski: 'डैनियलेव्स्की',
