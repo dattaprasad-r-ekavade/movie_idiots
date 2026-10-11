@@ -3,6 +3,7 @@
 //   tsx scripts/short.ts timing SLUG              measure recordings in public/shorts/SLUG/voice/
 //   tsx scripts/short.ts voice SLUG --edge          opt-in online Hindi voice (sends the script to Microsoft)
 //   tsx scripts/short.ts voice SLUG --elevenlabs    paid ElevenLabs voice (needs ELEVENLABS_API_KEY)
+//   tsx scripts/short.ts speed SLUG [--percent 8]  upload copy: video.mp4 → video-fast8.mp4 (pitch kept)
 //   tsx scripts/short.ts say SLUG                 print the Devanagari text each voice will speak
 //   tsx scripts/short.ts lint SLUG                check script structure (fun-facts) and pronunciation gaps
 //   tsx scripts/short.ts still SLUG --url IMG --source PAGE --credit WHO --label "Film (Year): what it shows" [--name file]
@@ -200,6 +201,20 @@ async function render() {
   console.log(`Wrote ${final} (${Number(meta.format.duration).toFixed(2)} s, timing ${JSON.stringify(sources)})`);
 }
 
+/** Upload copy sped up by `--percent` (default 8): video.mp4 → video-fast8.mp4 (draft.mp4 with --draft). Pitch is kept. */
+async function speed() {
+  const percent = Number(option('percent', '8'));
+  if (!(percent > 0 && percent <= 50)) throw new Error('--percent must be between 0 and 50');
+  const base = flag('draft') ? 'draft' : 'video';
+  const input = path.join(outDir(), `${base}.mp4`);
+  if (!existsSync(input)) throw new Error(`${input} not found; render it first`);
+  const factor = 1 + percent / 100;
+  const output = path.join(outDir(), `${base}-fast${percent}.mp4`);
+  await run(ffmpeg(), ['-y', '-i', input, '-filter_complex', `[0:v]setpts=PTS/${factor}[v];[0:a]atempo=${factor}[a]`, '-map', '[v]', '-map', '[a]', '-r', '30', '-c:v', 'libx264', '-crf', '17', '-preset', 'medium', '-pix_fmt', 'yuv420p', '-color_range', 'tv', '-c:a', 'aac', '-b:a', '192k', '-ar', '48000', '-movflags', '+faststart', output], 600000);
+  const meta = await probe(output);
+  console.log(`Wrote ${output} (${Number(meta.format.duration).toFixed(2)} s, ${percent}% faster)`);
+}
+
 async function youtubePackage() {
   const short = entry();
   if (!short.youtube) throw new Error(`Short "${slug}" has no youtube metadata in its script.ts`);
@@ -280,11 +295,12 @@ const commands: Record<string, () => Promise<unknown>> = {
   },
   stills,
   render,
+  speed,
   package: youtubePackage,
 };
 const fn = commands[command];
 if (!fn) {
-  console.error('Usage: short.ts list | say SLUG | lint SLUG | still SLUG --url … --source … --credit … --label … | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | package SLUG');
+  console.error('Usage: short.ts list | say SLUG | lint SLUG | still SLUG --url … --source … --credit … --label … | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | speed SLUG [--percent 8] [--draft] | package SLUG');
   process.exit(1);
 }
 fn()

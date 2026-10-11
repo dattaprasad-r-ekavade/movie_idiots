@@ -39,7 +39,7 @@ Open every sheet and fail the draft if:
 
 - **One picture with nothing changing for more than ~3 s.** Add a `cuts` print on a spoken word (`replace: true` swaps it), a `pop` stamp, or a `reveal` headline.
 - **Small print with empty space around it.** Prints should be ~860–980 px wide; set `width`/`aspect` on the still.
-- **The hook face is blurred or unreadable.** Use `hook.blur: 0` unless the payoff reveal depends on it.
+- **The hook image is blurred or unreadable.** The first image is always sharp (channel rule); never set `hook.blur`.
 - **The tag's film/year doesn't match the photo.** Look at signage, captions and the ledger label. Drop the year if unsure.
 - **Headlines repeat the caption** instead of adding a label, name or number.
 - **Something overlaps** (mascot over a print, a print over captions, text in the bottom ~380 px or the right-edge Shorts UI).

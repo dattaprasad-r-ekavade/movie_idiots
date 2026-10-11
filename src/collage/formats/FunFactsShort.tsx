@@ -33,7 +33,7 @@ export type FactBeat = {
 
 export type FunFactsPlan = {
   kicker?: string;
-  /** `blur` hides the hook still until the payoff (default 16); 0 shows it sharp from the first frame. */
+  /** Hook still is sharp from the first frame (channel rule). `blur` > 0 hides it until the payoff; avoid. */
   hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; blur?: number};
   facts: FactBeat[];
   /** Closes the hook's loop. Reuses the hook still, now sharp, unless it brings its own. */
@@ -78,7 +78,7 @@ function HookFrame({plan, c, from, still, settle = false}: BeatProps & {plan: Fu
   // On the loop the frame is already "there": no entrance, so the restart reads as one shot.
   // The hook headline is already on the very first frame (it is what stops the scroll).
   const at = settle ? -30 : -20;
-  const blur = hook.blur ?? 16;
+  const blur = hook.blur ?? 0;
   // Leave with the hook's last sentence so old text never sits over the next beat. The loop keeps it.
   const out = settle ? undefined : L(c.end(hook.lines[hook.lines.length - 1]));
   return (

@@ -28,6 +28,7 @@ python -m venv .venv && .venv/bin/pip install numpy edge-tts   # sound kit + opt
 npm run short -- stills phalke --every 1        # contact sheets → projects/shorts/phalke/sheet-*.jpg
 npm run short -- render phalke --draft          # 540×960 draft → projects/shorts/phalke/draft.mp4
 npm run short -- render phalke                  # 1080×1920 final → projects/shorts/phalke/video.mp4
+npm run short -- speed phalke                   # upload copy, 8% faster → projects/shorts/phalke/video-fast8.mp4
 npm run studio:shorts                           # Remotion Studio for timeline scrubbing
 ```
 
@@ -77,7 +78,7 @@ Every line has a `role`. `npm run short -- lint SLUG` checks the rules below. `r
 | `promise` (optional) | ≤ 5 s | Reason to stay: "और third fact तो fans को भी नहीं पता।" |
 | `fact` ×3–5 | 5–9 s each | One fact per beat, each with `source` (index into `sources`). Escalate; strongest fact last. |
 | `reveal` (optional) | short | Punch line right after its fact; the headline swaps. |
-| `payoff` | short | Closes the hook's loop with the withheld detail. The hook's blurred still comes into focus. |
+| `payoff` | short | Closes the hook's loop with the withheld detail. Its still racks into focus. |
 | `loop` | short | Repeats the hook's key word. The hook frame returns, so the restart reads as one shot. |
 | `cta` (optional) | very short | Only after the loop. Prefer pinned comment/description. |
 
@@ -136,7 +137,7 @@ Plan options for a livelier beat (`src/collage/formats/FunFactsShort.tsx`):
 | Option | Effect |
 |---|---|
 | `still.width`, `still.aspect`, `still.push` | Print size, crop ratio and slow-push range. Prints of ~860–980 px fill the frame; a small print over empty space looks unfinished. |
-| `hook.blur` | Blur on the hook still (default 16, cleared at the payoff). Use `0` to show a face sharp from the first frame. |
+| `hook.blur` | Default 0. Channel rule: the hook (first) image is always sharp, so don't blur it. |
 | `cuts: [{word, line?, src, …, offset?, tilt?, replace?}]` | Another print drops in when `word` is spoken. `replace: true` takes the previous print away; otherwise it stacks. Use it so a 7–9 s beat changes picture every 2–4 s. |
 | `pop: {word, line?, text}` | Short stamp (number, label) on a spoken word. |
 

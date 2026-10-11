@@ -18,38 +18,38 @@ export const lines: ScriptLine[] = [
   {
     id: 'promise',
     role: 'promise',
-    en: "That song was shot on a Sheesh Mahal set.",
-    text: "वो गाना Sheesh Mahal के set पर shoot हुआ.",
+    en: "That song was shot on a Sheesh Mahal replica set.",
+    text: "वो गाना Sheesh Mahal के replica set पर shoot हुआ.",
   },
   {
     id: 'f1',
     role: 'fact',
     source: 0,
-    en: "Work began in 1944, stalled at Partition, and the film was released in 1960.",
-    text: "Film 1944 में शुरू हुई. Partition पर रुक गई. और 1960 में release हुई.",
+    en: "The film started in 1944, but after Partition its financier left for Pakistan. It released in 1960.",
+    text: "Film 1944 में शुरू हुई, पर Partition के बाद financier पाकिस्तान चले गए. Release हुई 1960 में.",
     delivery: {sfx: [{word: "1960", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f2',
     role: 'fact',
     source: 0,
-    en: "It was the most expensive Hindi film of its time. One song cost about as much as a whole ordinary film.",
-    text: "अपने समय की सबसे महंगी Hindi film थी. एक गाने का खर्च लगभग एक पूरी आम film जितना था.",
+    en: "It was the most expensive Hindi film of its time. One song cost more than a whole film of that era.",
+    text: "ये अपने time की सबसे महंगी Hindi film थी. एक गाने पर उस दौर की पूरी film से भी ज़्यादा खर्च हुआ.",
   },
   {
     id: 'f3',
     role: 'fact',
     source: 1,
-    en: "Pyar Kiya To Darna Kya has Madhubala and Lata, shot in colour on a Sheesh Mahal set.",
-    text: "Pyar Kiya To Darna Kya में Madhubala हैं, और Lata की आवाज़. ये colour में, Sheesh Mahal के set पर shoot हुआ.",
+    en: "Pyar Kiya To Darna Kya: Madhubala on screen, Lata's voice, and the whole song in colour.",
+    text: "Pyar Kiya To Darna Kya में Madhubala हैं, आवाज़ Lata जी की, और ये पूरा गाना colour में है.",
     delivery: {sfx: [{word: "Kya", sound: 'stamp.wav', volume: 0.45}]},
   },
   {
     id: 'payoff',
     role: 'payoff',
     source: 2,
-    en: "Asif wanted the whole film in colour in 1960. The distributors said no. The full colour version came in 2004.",
-    text: "Asif पूरी film colour में चाहते थे. Distributors ने मना कर दिया. पूरी colour version 2004 में आई.",
+    en: "Asif wanted the whole film in colour, but the financiers refused. The full colour film was released in 2004.",
+    text: "Asif पूरी film colour में चाहते थे, पर financiers नहीं माने. पूरी colour film 2004 में release हुई.",
   },
   {
     id: 'loop',
@@ -74,7 +74,15 @@ export const sources = [
   },
 ];
 
+// Real people who have died (Asif, Madhubala, Lata): plural, respectful verbs.
+export const honorific = true;
+
 export const lexicon: Record<string, string> = {
+  time: 'टाइम',
+  financier: 'फ़ाइनेंसर',
+  financiers: 'फ़ाइनेंसर्स',
+  replica: 'रेप्लिका',
+  budget: 'बजट',
   colour: 'कलर',
   black: 'ब्लैक',
   white: 'व्हाइट',
@@ -89,12 +97,11 @@ export const lexicon: Record<string, string> = {
   madhubala: 'मधुबाला',
   lata: 'लता',
   asif: 'आसिफ़',
-  distributors: 'डिस्ट्रिब्यूटर्स',
 };
 
 export const plan: FunFactsPlan = {
   kicker: 'Did you know?',
-  mascot: true,
+  mascot: false,
   numbered: true,
   hook: {
     lines: ['hook', 'promise'],
@@ -105,7 +112,9 @@ export const plan: FunFactsPlan = {
       film: 'Mughal-e-Azam',
       year: 1960,
       credit: 'Sterling Investment Corporation',
-      focus: '50% 28%',
+      width: 860,
+      aspect: 1.25,
+      focus: '50% 22%',
     },
   },
   facts: [
@@ -118,8 +127,19 @@ export const plan: FunFactsPlan = {
         film: 'Mughal-e-Azam',
         year: 1960,
         credit: 'Sterling Investment Corporation',
+        width: 860,
+        aspect: 585 / 361,
         focus: '50% 40%',
       },
+      cuts: [{
+        word: 'पाकिस्तान',
+        src: 'shorts/mughal-colour/stills/still2.jpg',
+        credit: 'Sterling Investment Corporation',
+        width: 860,
+        aspect: 585 / 341,
+        focus: '50% 40%',
+        replace: true,
+      }],
       pop: {word: '1960', text: '1960'},
     },
     {
@@ -127,24 +147,46 @@ export const plan: FunFactsPlan = {
       headline: 'सबसे महंगी\nHindi film',
       accent: ['महंगी'],
       still: {
+        // Year not verified for this frame (could be the 2004 colour version), so the tag carries no year.
         src: 'shorts/mughal-colour/stills/still2.jpg',
         film: 'Mughal-e-Azam',
-        year: 1960,
         credit: 'Sterling Investment Corporation',
+        width: 860,
+        aspect: 585 / 341,
         focus: '50% 40%',
       },
+      cuts: [{
+        word: 'खर्च',
+        src: 'shorts/mughal-colour/stills/still1.jpg',
+        credit: 'Sterling Investment Corporation',
+        width: 860,
+        aspect: 585 / 361,
+        focus: '50% 40%',
+        replace: true,
+      }],
     },
     {
       lines: ['f3'],
       headline: 'Pyar Kiya\nTo Darna Kya',
       accent: ['Kya'],
       still: {
-        src: 'shorts/mughal-colour/stills/bw-colour.jpg',
+        src: 'shorts/mughal-colour/stills/still1.jpg',
         film: 'Mughal-e-Azam',
         year: 1960,
         credit: 'Sterling Investment Corporation',
+        width: 860,
+        aspect: 585 / 361,
         focus: '50% 40%',
       },
+      cuts: [{
+        word: 'colour',
+        src: 'shorts/mughal-colour/stills/bw-colour.jpg',
+        credit: 'Sterling Investment Corporation',
+        width: 620,
+        aspect: 278 / 358,
+        focus: '50% 40%',
+        replace: true,
+      }],
       pop: {word: 'Kya', text: 'COLOUR'},
     },
   ],
@@ -152,6 +194,7 @@ export const plan: FunFactsPlan = {
     lines: ['payoff'],
     headline: '2004:\nपूरी colour',
     accent: ['2004'],
+    pop: {word: 'colour', text: 'FULL COLOUR'},
   },
   loop: {lines: ['loop']},
 };
@@ -166,10 +209,10 @@ export const youtube = {
   ],
   description: `Mughal-e-Azam का ज्यादातर हिस्सा black-and-white है. Pyar Kiya To Darna Kya colour में shoot हुआ.
 
-1944 में शुरू, Partition पे रुकी, 5 August 1960 को release
-अपने समय की सबसे महंगी Hindi film — एक song sequence ordinary film जितना (Wikipedia). Budget figures disagree (₹1.05 vs ₹1.5 crore); script avoids a single rupee lock
+1944 में शुरू, Partition के बाद financier Pakistan गए और काम रुका (Wikipedia), 5 August 1960 को release
+अपने समय की सबसे महंगी Hindi film; एक song sequence का budget उस दौर की पूरी film से ज़्यादा (Wikipedia). Budget figures disagree (₹1.05 vs ₹1.5 crore); script avoids a single rupee lock
 Sheesh Mahal replica; Madhubala, Lata, Naushad, Shakeel
-Asif wanted the whole film in colour in 1960; distributors said no. Full digital colourization, theatrical re-release 2004
+Asif wanted a full re-shoot in Technicolor; financiers refused (Wikipedia; Britannica says 1960, not re-verified). Full digital colourization, theatrical re-release 12 Nov 2004 (Wikipedia)
 
 Film stills/posters are copyrighted publicity images, used briefly as commentary support, credited on screen. Not licensed.
 
