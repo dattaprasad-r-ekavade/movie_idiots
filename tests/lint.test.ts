@@ -49,3 +49,32 @@ test('plan lint checks the stills ledger, year tags and static beats', () => {
   plan.hook.still = undefined;
   assert.deepEqual(lintPlan(plan, lines, ledger), []);
 });
+
+test('v2 plan lint: layout specs, variety, cameo count and tributes', () => {
+  const lines: ScriptLine[] = [
+    {id: 'hook', role: 'hook', text: 'Guide दो बार बनी?'},
+    {id: 'f1', role: 'fact', text: 'English version 120 minutes की थी.', source: 0},
+    {id: 'f2', role: 'fact', text: 'Hindi version 183 minutes की थी.', source: 0},
+    {id: 'payoff', role: 'payoff', text: 'एक hit, एक गायब.', source: 0},
+    {id: 'loop', role: 'loop', text: 'Guide दो बार?'},
+  ];
+  const plan: FunFactsPlan = {
+    design: 'v2',
+    hook: {lines: ['hook'], headline: 'h', react: {word: 'बनी', expression: 'shock'}},
+    facts: [
+      {lines: ['f1'], headline: 'a', layout: 'number'},
+      {lines: ['f2'], headline: 'b', layout: 'number', number: {word: '999', value: 183}, react: {word: 'Hindi', expression: 'happy'}},
+    ],
+    payoff: {lines: ['payoff'], headline: 'p', react: {word: 'hit', expression: 'wink'}},
+    loop: {lines: ['loop']},
+  };
+  const out = messages(lintPlan(plan, lines, [], {tribute: true}));
+  assert.match(out, /layout "number" needs a `number` spec/);
+  assert.match(out, /Same layout \(number\)/);
+  assert.match(out, /number word "999" is not in line "f2"/);
+  assert.match(out, /tribute Short/);
+  plan.facts[1].react = undefined;
+  plan.facts[0] = {lines: ['f1'], headline: 'a', layout: 'number', number: {word: '120', value: 120}};
+  plan.facts[1] = {lines: ['f2'], headline: 'b', layout: 'versus', versus: {top: {word: 'Hindi'}, bottom: {word: '183'}, middle: 'VS'}};
+  assert.deepEqual(lintPlan(plan, lines, []), []);
+});

@@ -139,13 +139,15 @@ export const lexicon: Record<string, string> = {
 
 export const plan: FunFactsPlan = {
   kicker: 'Did you know?',
-  mascot: false,
-  numbered: true,
+  // Design v2 (docs/shorts-redesign.md): marquee palette, layout per beat, mascot cameos.
+  design: 'v2',
+  palette: 'marquee',
   hook: {
     lines: ['hook', 'promise'],
     headline: 'DDLJ का title\nकिसका?',
     accent: ['title'],
     pop: {line: 'promise', word: 'credits', text: 'CREDITS'},
+    react: {word: 'Aditya', expression: 'skeptic', pose: 'think'},
     // Sharp from frame 0 (channel rule): the mustard-field frame is the scroll-stopper.
     still: {
       src: 'shorts/ddlj-title/stills/ddlj-mustard.jpg',
@@ -203,6 +205,9 @@ export const plan: FunFactsPlan = {
       lines: ['f3'],
       headline: '1009 weeks\nफिर वापस',
       accent: ['1009'],
+      layout: 'number',
+      number: {word: '1009', value: 1009, suffix: ' weeks', label: 'Maratha Mandir'},
+      react: {word: 'fans', expression: 'happy', pose: 'thumbsUp'},
       still: {
         src: 'shorts/ddlj-title/stills/ddlj-1000-weeks.jpg',
         film: 'DDLJ 1000-weeks poster',
@@ -212,22 +217,13 @@ export const plan: FunFactsPlan = {
         aspect: 0.82,
         focus: '50% 40%',
       },
-      cuts: [{
-        word: 'fans',
-        src: 'shorts/ddlj-title/stills/ddlj-train.jpg',
-        film: 'Dilwale Dulhania Le Jayenge',
-        year: 1995,
-        credit: 'Yash Raj Films',
-        width: 940,
-        aspect: 0.9,
-        focus: '35% 55%',
-        replace: true,
-      }],
     },
     {
       lines: ['f4'],
       headline: '30 साल बाद भी\nरोज़ 11:30',
       accent: ['11:30'],
+      layout: 'ticket',
+      ticket: {word: 'show', title: 'Maratha Mandir', figure: '11:30', sub: 'रोज़ सुबह का show'},
       still: {
         src: 'shorts/ddlj-title/stills/ddlj-hug.jpg',
         film: 'Dilwale Dulhania Le Jayenge',
@@ -237,18 +233,6 @@ export const plan: FunFactsPlan = {
         aspect: 0.82,
         focus: '50% 45%',
       },
-      pop: {word: '1500', text: '1500+ WEEKS'},
-      cuts: [{
-        word: 'show',
-        src: 'shorts/ddlj-title/stills/maratha-mandir.jpg',
-        film: 'Maratha Mandir',
-        year: 2022,
-        credit: 'Cinzia007 / Wikimedia Commons',
-        width: 940,
-        aspect: 1.1,
-        focus: '62% 45%',
-        replace: true,
-      }],
     },
   ],
   payoff: {
@@ -265,6 +249,7 @@ export const plan: FunFactsPlan = {
     },
     // Calls back to the promise: the answer is in the credits.
     pop: {word: 'Credits', text: 'CREDITS'},
+    react: {word: 'Kirron', expression: 'wink', pose: 'present'},
   },
   loop: {lines: ['loop']},
 };

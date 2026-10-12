@@ -54,6 +54,8 @@ const SINGULAR: Record<string, string> = {
 export type LintOptions = {
   /** The Short is about a real person who should be spoken of respectfully (plural verbs). */
   honorific?: boolean;
+  /** A tribute or tragedy: no mascot cameos. */
+  tribute?: boolean;
 };
 
 /** Grammar checks for one line: verbless fact clauses, bare English verbs, and honorific agreement. */
@@ -154,7 +156,7 @@ export type LedgerEntry = {file: string; label: string; credit?: string; sourceU
  * Design and provenance checks for a fun-facts plan: every still is in the ledger, on-screen year tags
  * agree with the ledger label, and no beat holds one picture with nothing else changing for too long.
  */
-export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: LedgerEntry[]): Issue[] {
+export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: LedgerEntry[], options: LintOptions = {}): Issue[] {
   const issues: Issue[] = [];
   const byId = new Map(lines.map((l) => [l.id, l]));
   const byFile = new Map(ledger.map((e) => [e.file, e]));
@@ -190,16 +192,39 @@ export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: Ledger
     }
   }
   // Every ledger entry is credited in the description; an unused one credits an image the video never shows.
-  const used = new Set([plan.hook.still?.src, plan.payoff.still?.src, ...plan.facts.flatMap((f) => [f.still?.src, ...(f.cuts ?? []).map((c) => c.src)])].filter(Boolean));
+  const used = new Set([plan.hook.still?.src, plan.payoff.still?.src, ...plan.facts.flatMap((f) => [f.still?.src, f.versus?.top.src, f.versus?.bottom.src, ...(f.cuts ?? []).map((c) => c.src)])].filter(Boolean));
   for (const e of ledger) if (!used.has(e.file)) issues.push({level: 'warn', message: `${e.file} is in stills.json but not used in the plan; remove it so the description does not credit it`});
   check(plan.hook.still, plan.hook.lines[0]);
   check(plan.payoff.still, plan.payoff.lines[0]);
+  const reacts = [plan.hook, ...plan.facts, plan.payoff].filter((b) => b.react);
+  for (const b of reacts) anchor(b.react!.line ?? b.lines[0], b.react!.word, b.lines[0], 'react');
+  if (plan.design === 'v2') {
+    const cameos = reacts.length;
+    if (cameos > 3) issues.push({level: 'warn', message: `${cameos} mascot cameos; keep it to 3 so the reactions still land`});
+    if (cameos && options.tribute) issues.push({level: 'warn', message: 'Mascot cameos on a tribute Short; remove the `react` cues'});
+    let prev: string | undefined;
+    for (const f of plan.facts) {
+      const where = f.lines[0];
+      const layout = f.layout ?? (f.cuts?.length ? 'stack' : 'print');
+      if (layout === prev) issues.push({level: 'warn', line: where, message: `Same layout (${layout}) as the previous beat; vary it so the Short doesn't feel templated`});
+      prev = layout;
+      if (layout === 'number' && !f.number) issues.push({level: 'error', line: where, message: 'layout "number" needs a `number` spec'});
+      if (layout === 'versus' && !f.versus) issues.push({level: 'error', line: where, message: 'layout "versus" needs a `versus` spec'});
+      if (layout === 'ticket' && !f.ticket) issues.push({level: 'error', line: where, message: 'layout "ticket" needs a `ticket` spec'});
+      if (f.number) anchor(f.number.line ?? where, f.number.word, where, 'number');
+      if (f.ticket) anchor(f.ticket.line ?? where, f.ticket.word, where, 'ticket');
+      if (f.versus?.top.word) anchor(f.versus.top.line ?? where, f.versus.top.word, where, 'versus top');
+      if (f.versus?.bottom.word) anchor(f.versus.bottom.line ?? where, f.versus.bottom.word, where, 'versus bottom');
+      check(f.versus?.top, where);
+      check(f.versus?.bottom, where);
+    }
+  }
   for (const fact of plan.facts) {
     const where = fact.lines[0];
     check(fact.still, where);
     for (const cut of fact.cuts ?? []) check(cut, where);
     const secs = fact.lines.reduce((n, id) => n + estimateDuration(byId.get(id)?.text ?? ''), 0);
-    const changes = (fact.cuts?.length ?? 0) + (fact.pop ? 1 : 0) + (fact.reveal ? 1 : 0);
+    const changes = (fact.cuts?.length ?? 0) + (fact.pop ? 1 : 0) + (fact.reveal ? 1 : 0) + (fact.number || fact.versus || fact.ticket ? 1 : 0);
     if (secs > 6 && changes === 0)
       issues.push({level: 'warn', line: where, message: `~${secs.toFixed(0)} s on one still with no cut, pop or reveal; add a \`cuts\` print or a \`pop\` so the picture changes every 2–4 s`});
   }

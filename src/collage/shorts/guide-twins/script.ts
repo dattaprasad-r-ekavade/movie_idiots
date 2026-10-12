@@ -106,8 +106,9 @@ export const lexicon: Record<string, string> = {
 
 export const plan: FunFactsPlan = {
   kicker: 'Did you know?',
-  mascot: false,
-  numbered: true,
+  // Design v2 (docs/shorts-redesign.md): a layout per beat, velvet palette, mascot cameos.
+  design: 'v2',
+  palette: 'velvet',
   hook: {
     lines: ['hook', 'promise'],
     headline: 'दो Guide\nएक गायब',
@@ -123,22 +124,19 @@ export const plan: FunFactsPlan = {
       focus: '50% 40%',
     },
     pop: {line: 'promise', word: 'stars', text: 'SAME STARS'},
+    react: {word: 'गायब', expression: 'shock', pose: 'shrug'},
   },
   facts: [
     {
       lines: ['f1'],
       headline: 'Dev + Waheeda\nदो versions',
       accent: ['दो'],
-      still: {
-        src: 'shorts/guide-twins/stills/leads.jpg',
-        film: 'Guide',
-        year: 1965,
-        credit: 'Navketan Films',
-        width: 960,
-        aspect: 1200 / 675,
-        focus: '50% 35%',
+      layout: 'versus',
+      versus: {
+        top: {word: 'Hindi', src: 'shorts/guide-twins/stills/leads.jpg', film: 'Guide · Hindi', year: 1965, credit: 'Navketan Films', aspect: 1200 / 675, focus: '50% 35%'},
+        bottom: {word: 'English', src: 'shorts/guide-twins/stills/pair.jpg', film: 'The Guide · English', year: 1965, credit: 'Navketan Films', aspect: 1200 / 667, focus: '50% 40%'},
+        middle: 'VS',
       },
-      pop: {word: 'English', text: 'ENGLISH'},
     },
     {
       lines: ['f2'],
@@ -190,12 +188,16 @@ export const plan: FunFactsPlan = {
         focus: '50% 40%',
         replace: true,
       }],
+      layout: 'print',
       pop: {word: 'scratch', text: 'FROM SCRATCH'},
+      react: {word: 'झगड़ा', expression: 'skeptic', pose: 'facepalm'},
     },
     {
       lines: ['f4'],
       headline: 'English version\nसालों गायब',
       accent: ['गायब'],
+      layout: 'number',
+      number: {word: '120', value: 120, suffix: ' min', label: 'English The Guide'},
       still: {
         src: 'shorts/guide-twins/stills/pair.jpg',
         film: 'Guide',
@@ -205,18 +207,6 @@ export const plan: FunFactsPlan = {
         aspect: 1200 / 667,
         focus: '50% 40%',
       },
-      cuts: [{
-        word: 'गायब',
-        src: 'shorts/guide-twins/stills/waheeda.jpg',
-        film: 'Guide',
-        year: 1965,
-        credit: 'Navketan Films',
-        width: 460,
-        aspect: 759 / 1076,
-        focus: '50% 30%',
-        replace: true,
-      }],
-      pop: {word: '120', text: '120 MIN'},
     },
   ],
   payoff: {
@@ -233,6 +223,7 @@ export const plan: FunFactsPlan = {
       focus: '50% 45%',
     },
     pop: {word: '183', text: '183 MIN'},
+    react: {word: 'Narayan', expression: 'sad', pose: 'shrug'},
   },
   loop: {lines: ['loop']},
 };

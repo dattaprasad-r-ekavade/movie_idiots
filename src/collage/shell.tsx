@@ -14,7 +14,7 @@ export type Beat = {first: string; render: (p: BeatProps) => React.ReactNode; wi
 /** Converts absolute frames into frames local to a beat's Sequence. */
 export const local = (from: number) => (absolute: number) => absolute - from;
 
-export function ShortShell({timing, captions, music, beats, lead = 4, background = C.cream, captionStyle = 'collage', grain = 0.16}: ShortProps & {beats: Beat[]; lead?: number; background?: string; captionStyle?: 'collage' | 'clean'; grain?: number}) {
+export function ShortShell({timing, captions, music, beats, lead = 4, background = C.cream, captionStyle = 'collage', grain = 0.16, captionAccent, captionInk}: ShortProps & {beats: Beat[]; lead?: number; background?: string; captionStyle?: 'collage' | 'clean'; grain?: number; captionAccent?: string; captionInk?: string}) {
   const {fps} = useVideoConfig();
   const c = clock(timing, fps);
   // Each beat cuts in a few frames before its first word.
@@ -52,7 +52,7 @@ export function ShortShell({timing, captions, music, beats, lead = 4, background
         ) : null,
       )}
       {grain > 0 && <Grain strength={grain} />}
-      {captions && (captionStyle === 'clean' ? <CleanCaptions timing={timing} /> : <Captions timing={timing} />)}
+      {captions && (captionStyle === 'clean' ? <CleanCaptions timing={timing} accent={captionAccent} ink={captionInk} /> : <Captions timing={timing} />)}
       {voiced.map((l) => (
         <Sequence key={`vo-${l.id}`} from={c.line(l.id)} name={`voice ${l.id}`} layout="none">
           <Audio src={staticFile(l.audio!)} />

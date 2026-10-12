@@ -101,8 +101,9 @@ export const lexicon: Record<string, string> = {
 
 export const plan: FunFactsPlan = {
   kicker: 'Did you know?',
-  mascot: false,
-  numbered: true,
+  // Design v2 (docs/shorts-redesign.md): newsprint palette on paper, layout per beat, mascot cameos.
+  design: 'v2',
+  palette: 'newsprint',
   hook: {
     lines: ['hook', 'promise'],
     headline: 'एक गाना\ncolour में',
@@ -116,12 +117,15 @@ export const plan: FunFactsPlan = {
       aspect: 1.25,
       focus: '50% 22%',
     },
+    react: {word: 'colour', expression: 'shock'},
   },
   facts: [
     {
       lines: ['f1'],
       headline: '1944 → 1960\n16 साल',
       accent: ['1960'],
+      layout: 'number',
+      number: {word: '1960', value: 16, suffix: ' साल', label: '1944 → 1960'},
       still: {
         src: 'shorts/mughal-colour/stills/still1.jpg',
         film: 'Mughal-e-Azam',
@@ -131,21 +135,14 @@ export const plan: FunFactsPlan = {
         aspect: 585 / 361,
         focus: '50% 40%',
       },
-      cuts: [{
-        word: 'पाकिस्तान',
-        src: 'shorts/mughal-colour/stills/still2.jpg',
-        credit: 'Sterling Investment Corporation',
-        width: 860,
-        aspect: 585 / 341,
-        focus: '50% 40%',
-        replace: true,
-      }],
-      pop: {word: '1960', text: '1960'},
     },
     {
       lines: ['f2'],
       headline: 'सबसे महंगी\nHindi film',
       accent: ['महंगी'],
+      layout: 'ticket',
+      ticket: {word: 'खर्च', title: 'Mughal-e-Azam', figure: '1 गाना', sub: 'पूरी film से ज़्यादा खर्च'},
+      react: {word: 'ज़्यादा', expression: 'shock', pose: 'shrug'},
       still: {
         // Year not verified for this frame (could be the 2004 colour version), so the tag carries no year.
         src: 'shorts/mughal-colour/stills/still2.jpg',
@@ -155,15 +152,6 @@ export const plan: FunFactsPlan = {
         aspect: 585 / 341,
         focus: '50% 40%',
       },
-      cuts: [{
-        word: 'खर्च',
-        src: 'shorts/mughal-colour/stills/still1.jpg',
-        credit: 'Sterling Investment Corporation',
-        width: 860,
-        aspect: 585 / 361,
-        focus: '50% 40%',
-        replace: true,
-      }],
     },
     {
       lines: ['f3'],
@@ -195,6 +183,7 @@ export const plan: FunFactsPlan = {
     headline: '2004:\nपूरी colour',
     accent: ['2004'],
     pop: {word: 'colour', text: 'FULL COLOUR'},
+    react: {word: 'माने', expression: 'sad', pose: 'facepalm'},
   },
   loop: {lines: ['loop']},
 };

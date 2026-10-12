@@ -8,6 +8,8 @@ export const title = 'Nana Patekar सच में Kargil गए थे? #short
 export const format = 'fun-facts' as const;
 // Tribute to a real person: lint flags singular verbs (गया/था → गए/थे).
 export const honorific = true;
+// Tribute: no mascot cameos.
+export const tribute = true;
 
 export const lines: ScriptLine[] = [
   {

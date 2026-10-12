@@ -143,6 +143,19 @@ Plan options for a livelier beat (`src/collage/formats/FunFactsShort.tsx`):
 
 Prints hold until the next beat starts, so a directed pause never shows an empty frame.
 
+#### Design v2 (`design: 'v2'`, `src/collage/formats/v2.tsx`)
+
+New Shorts use v2 ([redesign plan](shorts-redesign.md)); v1 Shorts render unchanged. v2 drops the "1/3" counters and the "Answer" kicker, puts headlines top-left with accent words boxed, boxes the spoken caption word, and rotates beat entries (whip, TV static, slide, cut).
+
+| Plan field | Effect |
+|---|---|
+| `palette` | `marquee` (dark, gold), `velvet` (red curtain), `newsprint` (paper, red), `lagoon` (teal, coral), or custom colours. Vary it between uploads. |
+| `layout` per fact | `print`, `stack` (with `cuts`), `number` (`number: {word, value, suffix, label}`, counts up on its word; the print shrinks under it), `versus` (`versus: {top, bottom, middle}`), `ticket` (`ticket: {word, title, figure, sub}`). No two beats in a row share a layout. |
+| `react` on hook/fact/payoff | Movie Idiot cameo, top-right, on a spoken word: `{word, expression, pose}`. Max 3 per Short; reacts only, never talks. Set `export const tribute = true` on tributes and tragedies: lint flags any cameo. |
+| `transition` per fact | Override the rotation: `whip`, `static`, `slide`, `cut`. |
+
+Pick anchor words early in the line for `number` and `ticket`; a figure that lands in the last second barely registers.
+
 ### Script and design review
 
 `/review-short SLUG` (`.claude/commands/review-short.md`) is the full review. `npm run short -- lint SLUG` automates part of it:

@@ -241,7 +241,7 @@ function lint() {
   const ledgerFile = path.join(PUBLIC, 'shorts', slug, 'stills', 'stills.json');
   const ledger: LedgerEntry[] = existsSync(ledgerFile) ? JSON.parse(readFileSync(ledgerFile, 'utf8')) : [];
   const issues = short.format === 'fun-facts'
-    ? [...lintFunFacts(short.lines, short.sources, short.lexicon, {honorific: short.honorific}), ...(short.plan ? lintPlan(short.plan, short.lines, ledger) : [])]
+    ? [...lintFunFacts(short.lines, short.sources, short.lexicon, {honorific: short.honorific, tribute: short.tribute}), ...(short.plan ? lintPlan(short.plan, short.lines, ledger, {honorific: short.honorific, tribute: short.tribute}) : [])]
     : short.lines.flatMap((l) => spoken(l).unknown.map((w) => ({level: 'warn' as const, line: l.id, message: `Voice will guess at: ${w}`})));
   for (const i of issues) console.log(`${i.level.toUpperCase()}${i.line ? ` [${i.line}]` : ''} ${i.message}`);
   if (!issues.length) console.log('Script lint: clean');

@@ -9,6 +9,7 @@ import {Sfx, clamp} from '../primitives';
 import {Backdrop, Callout, FactBadge, FilmStill, Headline, Kicker} from '../clean';
 import {Presenter} from '../characters';
 import {ShortShell, local, type BeatProps, type ShortProps} from '../shell';
+import {funFactsV2, type Layout, type NumberSpec, type Palette, type React_, type Texture, type TicketSpec, type Transition, type VersusSpec} from './v2';
 
 /** A still from `npm run short -- still`, shown as a mounted print. */
 export type StillRef = {src?: string; film?: string; year?: number | string; credit?: string; focus?: string; aspect?: number; width?: number; push?: [number, number]};
@@ -29,21 +30,39 @@ export type FactBeat = {
   cuts?: Cut[];
   /** Second headline for the punch line (`reveal` role); swaps in when that line starts. */
   reveal?: {line: string; headline: string; accent?: string[]};
+  /** v2: composition for this beat (default `print`, or `stack` when it has `cuts`). */
+  layout?: Layout;
+  /** v2 `number` layout: big figure that counts up on its word. */
+  number?: NumberSpec;
+  /** v2 `versus` layout: two prints and a middle label. */
+  versus?: VersusSpec;
+  /** v2 `ticket` layout: cinema-ticket card. */
+  ticket?: TicketSpec;
+  /** v2: how the beat enters (default rotates whip, static, slide, cut). */
+  transition?: Transition;
+  /** v2: mascot cameo reacting on a word (max 3 per Short; none on tributes). */
+  react?: React_;
 };
 
 export type FunFactsPlan = {
   kicker?: string;
   /** Hook still is sharp from the first frame (channel rule). `blur` > 0 hides it until the payoff; avoid. */
-  hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; blur?: number};
+  hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; blur?: number; react?: React_};
   facts: FactBeat[];
   /** Closes the hook's loop. Reuses the hook still, now sharp, unless it brings its own. */
-  payoff: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop};
+  payoff: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; react?: React_};
   /** The loop line(s): the hook frame returns so the restart feels continuous. */
   loop: {lines: string[]};
   /** Mascot cameo on the hook and the payoff. */
   mascot?: boolean;
-  /** Show "2/4" on fact beats. */
+  /** Show "2/4" on fact beats (v1 only; v2 has no counters). */
   numbered?: boolean;
+  /** `v2`: layouts per beat, palette, varied transitions, mascot cameos (docs/shorts-redesign.md). */
+  design?: 'v1' | 'v2';
+  /** v2 palette: a house name (marquee, velvet, newsprint, lagoon) or custom colours. */
+  palette?: string | Palette;
+  /** v2 backdrop texture; defaults to the palette's. */
+  texture?: Texture;
 };
 
 const DEFAULT_KICKER = 'Did you know?';
@@ -164,6 +183,7 @@ function Payoff({plan, c, from, to}: BeatProps & {plan: FunFactsPlan}) {
 
 /** Build a Short component from a plan. The shell supplies captions, voice, music and grain. */
 export function funFacts(plan: FunFactsPlan): React.FC<ShortProps> {
+  if (plan.design === 'v2') return funFactsV2(plan);
   const FunFacts = (props: ShortProps) => (
     <ShortShell
       {...props}

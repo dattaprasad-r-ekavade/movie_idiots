@@ -150,7 +150,8 @@ export function Backdrop({from = '#151a2e', to = '#0c0e17', glow = 'rgba(244,180
  * Captions on a soft dark pill; the spoken word turns accent-coloured with a small lift.
  * Two to three words at a time; no heavy outline, so Devanagari matras stay crisp.
  */
-export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?: number; size?: number}) {
+/** With `ink`, the spoken word is boxed in `accent` (v2); without it, it turns `accent` (v1 look). */
+export function CleanCaptions({timing, y = 1400, size = 62, accent = C.marigold, ink}: {timing: Timing; y?: number; size?: number; accent?: string; ink?: string}) {
   const frame = useCurrentFrame();
   const {fps, width} = useVideoConfig();
   const t = frame / fps;
@@ -175,7 +176,9 @@ export function CleanCaptions({timing, y = 1400, size = 62}: {timing: Timing; y?
         {group.map((w, i) => {
           const active = t >= w.start && t < w.end + 0.04;
           return (
-            <span key={i} style={{color: active ? C.marigold : C.white, display: 'inline-block', transform: `translateY(${active ? -3 : 0}px)`}}>
+            <span key={i} style={ink
+              ? {color: active ? ink : C.white, background: active ? accent : 'transparent', borderRadius: 10, padding: '0 10px', margin: '0 -10px', display: 'inline-block'}
+              : {color: active ? accent : C.white, display: 'inline-block', transform: `translateY(${active ? -3 : 0}px)`}}>
               {w.text}
             </span>
           );

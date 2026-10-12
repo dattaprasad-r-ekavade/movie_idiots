@@ -33,6 +33,8 @@ export type ShortEntry = {
   plan?: FunFactsPlan;
   /** About a real person spoken of respectfully: `lint` flags singular verbs (गया/था → गए/थे). */
   honorific?: boolean;
+  /** Tribute or tragedy: `lint` flags mascot cameos. */
+  tribute?: boolean;
   /** Extra Latin → Devanagari pronunciations for this short (names, titles). */
   lexicon?: Record<string, string>;
   /** Upload package: written to youtube.txt by `npm run short -- package SLUG` and on render. */

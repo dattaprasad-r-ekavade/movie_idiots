@@ -45,7 +45,8 @@ Open every sheet and fail the draft if:
 - **The tag's film/year doesn't match the photo.** Look at signage, captions and the ledger label. Drop the year if unsure.
 - **Headlines repeat the caption** instead of adding a label, name or number.
 - **Something overlaps** (mascot over a print, a print over captions, text in the bottom ~380 px or the right-edge Shorts UI).
-- **Tone mismatch.** No cartoon mascot reaction on a tribute or tragedy.
+- **Tone mismatch.** No cartoon mascot reaction on a tribute or tragedy (`tribute = true`).
+- **v2 Shorts:** the layout changes from beat to beat, at most 3 mascot cameos, a different palette from the last upload, and big numbers/tickets land early enough to read.
 - **A still is not in `stills.json`.** Download it with `npm run short -- still` so source, credit and rights are recorded.
 
 Contact sheets can drop or duplicate a frame when tiled. Before calling a frame empty, check the matching `projects/shorts/<slug>/stills/element-NN.jpeg`.
