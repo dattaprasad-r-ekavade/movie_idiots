@@ -19,5 +19,6 @@ If a running session cannot load newly configured tools, `scripts/produce.ts` is
 - Real people, especially elders and the recently deceased, get plural verbs ("गए थे"). Set `honorific = true` in the script.
 - `npm run short -- stills SLUG`, then open every contact sheet. Prints are large; the picture changes every 2–4 s (`cuts`, `pop`, `reveal`). Year tags match the photo. Nothing overlaps, and tone fits the subject. The hook (first) image is always sharp, never blurred.
 - Finals: `voice SLUG --elevenlabs` (only when requested), `render SLUG`, then `speed SLUG`. Upload `video-fast8.mp4` with `youtube.txt`.
+- After each upload, add a row to `docs/uploads.csv` (date, slug, title, length, whether the hook opens on a famous name). When the user shares Studio stats, update `views`, `views_as_of`, `avg_pct_viewed`, likes and comments there, and use that file to judge what works.
 
 For source changes run `npm run typecheck` and `npm test`. Verify renderer changes with representative scene previews and a render. Do not invoke paid providers unless requested/configured for the production. Keep one operation per project at a time.

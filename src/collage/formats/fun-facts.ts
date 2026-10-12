@@ -95,6 +95,10 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     if (!/[?…]|\.\.\.|\d/.test(hook.text)) warn('Hook has no question, number or trailing tease; make it specific and open a loop', hook.id);
   }
   if (of('hook').length > 2) warn('More than two hook lines; the hook is one breath');
+  for (const p of of('promise')) {
+    const secs = estimateDuration(p.text);
+    if (secs > 3) warn(`Promise runs ~${secs.toFixed(1)} s; viewers swipe in seconds 3–8. Keep it under 3 s or drop it`, p.id);
+  }
   const facts = of('fact');
   if (facts.length < 3 || facts.length > 5) err(`Use 3–5 fact lines (found ${facts.length})`);
   const order = (role: LineRole) => roles.lastIndexOf(role);
@@ -137,7 +141,8 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     }
   }
   const total = lines.reduce((n, l) => n + estimateDuration(l.text) + 0.28, 0.4);
-  if (total > 50) warn(`Estimated ${total.toFixed(0)} s; fun-fact Shorts do best around 30–45 s`);
+  // Channel data (Oct 2026): Shorts of 28–43 s led; 44–47 s ones stalled at ~33% viewed.
+  if (total > 40) warn(`Estimated ${total.toFixed(0)} s; this channel's best Shorts run 28–40 s. Cut the promise or a fact`);
   if (total < 20) warn(`Estimated ${total.toFixed(0)} s; too thin for 3+ facts`);
   return issues;
 }

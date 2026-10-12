@@ -26,6 +26,8 @@ Read each line's `text` out loud as a friend would say it, then check:
 - **Unambiguous.** "पहले film के लिए…" can read as "first film". Reorder until there is one reading.
 - **Claims still match `sources`.** Rewording must not add a number, quote or detail the source does not say.
 - **Hook ≤ 10 words, loop echoes the hook**, and the loop flows into the hook on replay.
+- **A name everyone knows, in the first second.** The hook line, the headline and the first image all show a famous film, star or character (Gabbar, Nana Patekar, Wasseypur, Coolie). Hooks that open on something unnamed or obscure ("1930s की star", "पहली talking film", "Cannes hit", "Masterpiece") stalled at 30–250 views on this channel. If the subject is obscure, anchor it to a famous one ("Sholay से 40 साल पहले…").
+- **Short.** 28–40 s total. Promise under 3 s, or drop it.
 
 Update the `en` line too when the meaning changes.
 
