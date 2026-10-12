@@ -19,6 +19,7 @@ import * as fearlessNadia from './fearless-nadia/script';
 import * as guideTwins from './guide-twins/script';
 import * as mughalColour from './mughal-colour/script';
 import * as nanaPatekar from './nana-patekar/script';
+import * as ddljTitle from './ddlj-title/script';
 
 export type ShortEntry = {
   slug: string;
@@ -55,4 +56,5 @@ export const SHORTS: ShortEntry[] = [
   guideTwins,
   mughalColour,
   nanaPatekar,
+  ddljTitle,
 ];
