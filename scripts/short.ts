@@ -22,7 +22,7 @@ import {speakElevenLabs} from '../src/elevenlabs';
 import {displayCues, toSpoken, type SpokenWord} from '../src/speech';
 import {fetchImage} from '../src/web-assets';
 import {lintFunFacts, lintPlan, type LedgerEntry} from '../src/collage/formats/fun-facts';
-import {describeDelivery, edgeProsody, elevenDelivery, resolveDelivery, windowsRate} from '../src/delivery';
+import {describeDelivery, edgeProsody, elevenDelivery, resolveDelivery, tagsSupported, windowsRate} from '../src/delivery';
 import {SHORTS} from '../src/collage/shorts';
 import {buildTiming, displayText, type MeasuredLine, type Timing, type Word} from '../src/collage/timeline';
 
@@ -103,6 +103,20 @@ async function edgeVoice() {
   await measure();
 }
 
+/** Spoken text with inline audio tags ("[surprised]") placed before the spoken form of each cue word. */
+function withCues(line: {text: string; say?: string}, cues: {word: string; tag: string}[] = []) {
+  const s = spoken(line);
+  const tokens = s.text.split(' ');
+  const display = line.text.split(/\s+/).filter(Boolean);
+  const at = cues.map((c) => {
+    const i = display.findIndex((w) => w.includes(c.word));
+    if (i < 0) throw new Error(`Audio cue word "${c.word}" is not in the line`);
+    return {index: s.map[i][0], tag: c.tag};
+  });
+  for (const {index, tag} of at.sort((a, b) => b.index - a.index)) tokens.splice(index, 0, `[${tag}]`);
+  return tokens.join(' ');
+}
+
 async function elevenlabsVoice() {
   if (!flag('elevenlabs')) throw new Error('Pass --elevenlabs to confirm sending the script to ElevenLabs.');
   const short = entry();
@@ -110,8 +124,10 @@ async function elevenlabsVoice() {
   for (const [index, line] of short.lines.entries()) {
     const previous = short.lines[index - 1];
     const next = short.lines[index + 1];
-    const direction = elevenDelivery(resolveDelivery(line), process.env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2');
-    const words = await speakElevenLabs({text: spoken(line).text, output: path.join(voiceDir(), `${line.id}.mp3`), previousText: previous && spoken(previous).text, nextText: next && spoken(next).text, ...direction});
+    const model = process.env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
+    const delivery = resolveDelivery(line);
+    const direction = elevenDelivery(delivery, model);
+    const words = await speakElevenLabs({text: tagsSupported(model) ? withCues(line, delivery.cues) : spoken(line).text, output: path.join(voiceDir(), `${line.id}.mp3`), previousText: previous && spoken(previous).text, nextText: next && spoken(next).text, ...direction});
     await saveCues(line, words);
     console.log(`voiced ${line.id} (ElevenLabs)`);
   }

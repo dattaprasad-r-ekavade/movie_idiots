@@ -146,13 +146,22 @@ function speakToken(core: string): string | undefined {
  * Spoken Devanagari for a display line. `say` overrides the whole line (its words then map to
  * display words by position). Latin words missing from the lexicon are returned in `unknown`.
  */
+/**
+ * Hindi voices sometimes read a Latin "." after a Devanagari word aloud instead of pausing
+ * ("कपूर को." came back as one token). The voice gets the Devanagari full stop "।" there;
+ * captions keep showing ".". Dots after Latin text, decimals and abbreviations are untouched.
+ */
+export function hindiStops(spoken: string) {
+  return spoken.replace(/(?<=[\u0900-\u097F])\.(?=\s|$)/g, '।');
+}
+
 export function toSpoken(text: string, say?: string, lexicon: Record<string, string> = {}): Spoken {
   // Hindi text uses "." as the sentence mark. "|" is never a Hindi mark, so read it as a full stop.
   text = text.replace(/\|/g, '.');
   const display = text.split(/\s+/).filter(Boolean);
   if (say?.trim()) {
     const spoken = say.split(/\s+/).filter(Boolean);
-    return {text: spoken.join(' '), map: proportionalMap(display.length, spoken.length), unknown: spoken.filter((w) => LATIN.test(w))};
+    return {text: hindiStops(spoken.join(' ')), map: proportionalMap(display.length, spoken.length), unknown: spoken.filter((w) => LATIN.test(w))};
   }
   const out: string[] = [];
   const map: [number, number][] = [];
@@ -180,7 +189,7 @@ export function toSpoken(text: string, say?: string, lexicon: Record<string, str
     }
     map.push([begin, out.length]);
   }
-  return {text: out.join(' '), map, unknown: [...new Set(unknown)]};
+  return {text: hindiStops(out.join(' ')), map, unknown: [...new Set(unknown)]};
 }
 
 function proportionalMap(display: number, spoken: number): [number, number][] {

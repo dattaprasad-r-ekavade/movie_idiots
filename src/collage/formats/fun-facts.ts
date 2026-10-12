@@ -72,7 +72,10 @@ export function lintGrammar(line: ScriptLine, options: LintOptions = {}): Issue[
   for (const m of line.text.matchAll(/\b([A-Za-z]+ed)\s*(?=[.?!,;]|$)/g))
     warn(`"${m[1]}" ends the clause as an English past tense; use the stem + Hindi helper ("${m[1].replace(/e?d$/, '')} की / किया")`);
   if (options.honorific) {
-    const found = words(line.text).map(stem).filter((w) => SINGULAR[w]);
+    // Clause by clause, skipping constructions where a singular verb is correct: ergative "ने"
+    // (agrees with the object), passives ("दिया गया") and impersonal "कहा जाता" / "का कहना".
+    const agreeing = /(^|\s)ने(\s|$)|दिया गया|किया गया|कहा जाता|का कहना/;
+    const found = line.text.split(/[.?!;,]+/).filter((c) => !agreeing.test(c)).flatMap((c) => words(c).map(stem)).filter((w) => SINGULAR[w]);
     if (found.length) warn(`Honorific Short: ${found.map((w) => `${w} → ${SINGULAR[w]}`).join(', ')} (use plural for the person, unless the subject is a thing)`);
   }
   return issues;
@@ -137,6 +140,7 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     issues.push(...lintGrammar(l, options));
     const formal = words(l.text).map(stem).filter((w) => PURIST[w]);
     if (formal.length) warn(`Sounds like textbook Hindi: ${formal.map((w) => `${w} → ${PURIST[w]}`).join(', ')}`, l.id);
+    for (const c of l.delivery?.cues ?? []) if (!l.text.includes(c.word)) err(`audio cue word "${c.word}" is not in the line`, l.id);
     for (const s of l.delivery?.sfx ?? []) {
       if (!l.text.includes(s.word)) err(`sfx word "${s.word}" is not in the line`, l.id);
       if (!SOUNDS.includes(s.sound)) err(`Unknown sound ${s.sound}; use one of ${SOUNDS.join(', ')}`, l.id);
@@ -192,10 +196,28 @@ export function lintPlan(plan: FunFactsPlan, lines: ScriptLine[], ledger: Ledger
     }
   }
   // Every ledger entry is credited in the description; an unused one credits an image the video never shows.
-  const used = new Set([plan.hook.still?.src, plan.payoff.still?.src, ...plan.facts.flatMap((f) => [f.still?.src, f.versus?.top.src, f.versus?.bottom.src, ...(f.cuts ?? []).map((c) => c.src)])].filter(Boolean));
+  const used = new Set([plan.hook.still?.src, plan.payoff.still?.src, ...(plan.payoff.cuts ?? []).map((c) => c.src), ...plan.facts.flatMap((f) => [f.still?.src, f.versus?.top.src, f.versus?.bottom.src, ...(f.cuts ?? []).map((c) => c.src)])].filter(Boolean));
   for (const e of ledger) if (!used.has(e.file)) issues.push({level: 'warn', message: `${e.file} is in stills.json but not used in the plan; remove it so the description does not credit it`});
   check(plan.hook.still, plan.hook.lines[0]);
   check(plan.payoff.still, plan.payoff.lines[0]);
+  for (const cut of plan.payoff.cuts ?? []) {
+    anchor(cut.line ?? plan.payoff.lines[0], cut.word, plan.payoff.lines[0], 'payoff cut');
+    check(cut, plan.payoff.lines[0]);
+  }
+  // On-screen grammar: the hook headline is the first thing a viewer reads, and a question without a
+  // verb ("Mr. India / Amitabh की?") reads as broken Hindi. Labels and answers ("Danny / Denzongpa") are fine.
+  const hasVerb = (t: string) => words(t.replace(/\n/g, ' ')).map(stem).some((w) => VERBS.has(w));
+  const headlines: [string, string, boolean][] = [
+    [plan.hook.headline, plan.hook.lines[0], true],
+    ...plan.facts.flatMap((f) => [[f.headline, f.lines[0], false], ...(f.reveal ? [[f.reveal.headline, f.lines[0], false]] : [])] as [string, string, boolean][]),
+    [plan.payoff.headline, plan.payoff.lines[0], false],
+  ];
+  for (const [text, where, isHook] of headlines) {
+    if (hasVerb(text)) continue;
+    const flat = text.replace(/\n/g, ' / ');
+    if (isHook) issues.push({level: 'warn', line: where, message: `Hook headline "${flat}" has no verb. Write it as a short spoken sentence ("Mr. India पहले Amitabh को मिली थी?"), not a label`});
+    else if (text.trim().endsWith('?')) issues.push({level: 'warn', line: where, message: `Question headline "${flat}" has no verb; add one or make it a plain label`});
+  }
   const reacts = [plan.hook, ...plan.facts, plan.payoff].filter((b) => b.react);
   for (const b of reacts) anchor(b.react!.line ?? b.lines[0], b.react!.word, b.lines[0], 'react');
   if (plan.design === 'v2') {

@@ -162,7 +162,10 @@ export function CleanCaptions({timing, y = 1400, size = 62, accent = C.marigold,
   for (const w of line.words) {
     const last = groups[groups.length - 1];
     const long = w.text.replace(/[^\p{L}\p{N}]/gu, '').length >= 12;
-    if (!last || last.length >= 3 || long || /[.?!।,…]$/.test(last[last.length - 1].text)) groups.push([w]);
+    // A sentence mark ends the group, but "Mr." / "Dr." / "St." are abbreviations, not sentence ends.
+    const prev = last?.[last.length - 1].text ?? '';
+    const ends = /[.?!।,…]$/.test(prev) && !/^(mr|mrs|ms|dr|st)\.$/i.test(prev);
+    if (!last || last.length >= 3 || long || ends) groups.push([w]);
     else last.push(w);
   }
   const index = Math.max(0, groups.findIndex((g) => t < g[g.length - 1].end + 0.04));

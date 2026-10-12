@@ -12,7 +12,9 @@ test('years and dates are spoken in English, in pairs; amounts stay Hindi', () =
   assert.equal(englishYear(1900), 'नाइनटीन हंड्रेड');
   assert.equal(englishYear(2004), 'टू थाउज़ेंड फ़ोर');
   assert.equal(englishYear(2024), 'ट्वेंटी ट्वेंटी फ़ोर');
-  assert.equal(toSpoken('3 मई 1913.').text, 'थर्ड मई नाइनटीन थर्टीन.');
+  assert.equal(toSpoken('3 मई 1913.').text, 'थर्ड मई नाइनटीन थर्टीन।');
+  // The voice gets "।" after Devanagari; Latin dots and decimals stay.
+  assert.equal(toSpoken('Kapoor को. Dr. Rao 1.5 गुना.').text, 'Kapoor को। डॉक्टर Rao 1.5 गुना।');
   assert.equal(toSpoken('May 3, 1913').text, 'मे थर्ड, नाइनटीन थर्टीन');
   assert.equal(toSpoken('25 June 1975 को').text, 'ट्वेंटी फ़िफ़्थ जून नाइनटीन सेवेंटी फ़ाइव को');
   assert.equal(toSpoken('1990s की films').text, 'नाइनटीन नाइंटीज़ की फ़िल्में');

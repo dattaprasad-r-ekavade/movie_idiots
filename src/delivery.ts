@@ -1,6 +1,6 @@
 // Audio directions for a script line: how the voice says it and how music/effects react.
 // A line's `delivery` overrides the defaults for its role. Every provider gets the nearest
-// equivalent: Edge rate/pitch/volume, ElevenLabs voice settings (+ audio tags on eleven_v3),
+// equivalent: Edge rate/pitch/volume, ElevenLabs voice settings (+ audio tags on eleven_v3/v4),
 // Windows speech rate. Pauses and music moves are applied by the edit, not the voice.
 
 export type Mood = 'neutral' | 'excited' | 'curious' | 'serious' | 'punch' | 'hushed' | 'deadpan' | 'warm';
@@ -20,6 +20,10 @@ export type Delivery = {
   music?: 'duck' | 'drop' | 'swell';
   /** Sound effects on spoken words: {word: 'फ़ेल', sound: 'stamp.wav'}. */
   sfx?: {word: string; sound: string; volume?: number}[];
+  /** ElevenLabs v3/v4 audio tag for the whole line, e.g. 'surprised', 'whispering', 'dramatic'. Overrides the mood's tag. */
+  emotion?: string;
+  /** ElevenLabs v3/v4 audio tags placed just before a spoken word: [{word: 'हटा', tag: 'surprised'}]. Never shown in captions. */
+  cues?: {word: string; tag: string}[];
 };
 
 type Preset = {rate: number; pitch: number; volume: number; stability: number; style: number; tag?: string};
@@ -29,11 +33,11 @@ export const MOODS: Record<Mood, Preset> = {
   neutral: {rate: 0, pitch: 0, volume: 0, stability: 0.45, style: 0.2},
   excited: {rate: 10, pitch: 8, volume: 5, stability: 0.3, style: 0.6, tag: 'excited'},
   curious: {rate: 2, pitch: 4, volume: 0, stability: 0.4, style: 0.45, tag: 'curious'},
-  serious: {rate: -7, pitch: -4, volume: 0, stability: 0.6, style: 0.3},
-  punch: {rate: -4, pitch: 2, volume: 10, stability: 0.35, style: 0.7},
+  serious: {rate: -7, pitch: -4, volume: 0, stability: 0.6, style: 0.3, tag: 'serious'},
+  punch: {rate: -4, pitch: 2, volume: 10, stability: 0.35, style: 0.7, tag: 'dramatic'},
   hushed: {rate: -8, pitch: -6, volume: -15, stability: 0.5, style: 0.4, tag: 'whispers'},
   deadpan: {rate: -4, pitch: -3, volume: 0, stability: 0.8, style: 0, tag: 'sarcastic'},
-  warm: {rate: -2, pitch: 2, volume: 0, stability: 0.5, style: 0.4},
+  warm: {rate: -2, pitch: 2, volume: 0, stability: 0.5, style: 0.4, tag: 'warm'},
 };
 
 /** Defaults by script role (fun-facts structure). Lines without a role stay neutral. */
@@ -66,14 +70,17 @@ export function edgeProsody(d: ReturnType<typeof resolveDelivery>, baseRate = '+
   };
 }
 
-/** ElevenLabs voice settings, plus an audio tag that only eleven_v3 understands. */
+/** Audio tags ([excited], [whispering] …) are understood by eleven_v3 and eleven_v4 models. */
+export const tagsSupported = (model: string) => /^eleven_v[34]/.test(model);
+
+/** ElevenLabs voice settings, plus the line's audio tag on models that understand tags. */
 export function elevenDelivery(d: ReturnType<typeof resolveDelivery>, model: string) {
   const pct = d.preset.rate + (d.rate ?? 0);
   // TTS speed is 0.7–1.2; map delivery.rate the same way Edge uses percent.
   const speed = Math.max(0.7, Math.min(1.2, Math.round((1 + pct / 100) * 100) / 100));
   return {
     voiceSettings: {stability: d.preset.stability, similarity_boost: 0.75, style: d.preset.style, use_speaker_boost: true, speed},
-    tag: model.startsWith('eleven_v3') ? d.preset.tag : undefined,
+    tag: tagsSupported(model) ? d.emotion ?? d.preset.tag : undefined,
   };
 }
 
@@ -89,5 +96,8 @@ export function describeDelivery(d: ReturnType<typeof resolveDelivery>) {
   if (d.hold) parts.push(`hold ${d.hold}s`);
   if (d.music && d.music !== 'duck') parts.push(`music ${d.music}`);
   for (const s of d.sfx ?? []) parts.push(`${s.sound}@${s.word}`);
+  const tag = d.emotion ?? d.preset.tag;
+  if (tag) parts.push(`[${tag}]`);
+  for (const c of d.cues ?? []) parts.push(`[${c.tag}]@${c.word}`);
   return parts.join(', ');
 }

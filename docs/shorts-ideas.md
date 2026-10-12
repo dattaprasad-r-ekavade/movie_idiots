@@ -25,9 +25,10 @@ Updated 12 October 2026. **Uploads and their stats are logged in [uploads.csv](u
 | `cult-flops` | done | done | done | done. Uploaded |
 | `college` | done | done | done | done. Uploaded |
 | `phalke` | done | done | done | done. Uploaded |
+| `mr-india` | done | done (44s, v2 velvet, 13 Oct) | not built | built. First Short in design v2; Amitabh's reason hedged (“कहा जाता है”) |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending: next batch 2 slug (`mr-india`), then batch 3. `alam-ara`, `guide-twins`, `mughal-colour`, `cult-flops`, `college` and `phalke` are uploaded. `ddlj-title` (batch 2 #1) is built.
+Pending: `mr-india` final (ElevenLabs + 8%), then `om-shanti-om`, `kantara`, then batch 3. `alam-ara`, `guide-twins`, `mughal-colour`, `cult-flops`, `college` and `phalke` are uploaded. `ddlj-title` (batch 2 #1) is built.
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.

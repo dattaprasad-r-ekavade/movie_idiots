@@ -85,6 +85,11 @@ export async function speakElevenLabs(opts:{text:string;output:string;previousTe
   const data=await response.json() as {audio_base64?:string;alignment?:Alignment;normalized_alignment?:Alignment};
   if(!data.audio_base64) throw new Error('ElevenLabs returned no audio.');
   await writeFile(opts.output,Buffer.from(data.audio_base64,'base64'));
-  // Audio tags are directions, not words: keep them out of the caption cues.
-  return wordsFromAlignment(data.alignment||data.normalized_alignment||{}).filter(word=>!/^\[[^\]]*\]$/.test(word.text));
+  // Audio tags are directions, not words: keep them (multi-word ones too, "[soft chuckle]") out of the caption cues.
+  let inTag=false;
+  return wordsFromAlignment(data.alignment||data.normalized_alignment||{}).filter(word=>{
+    const opens=word.text.startsWith('['), closes=word.text.endsWith(']');
+    if(inTag||opens){ inTag=!closes; return false; }
+    return true;
+  });
 }

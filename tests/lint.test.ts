@@ -34,7 +34,7 @@ test('plan lint checks the stills ledger, year tags and static beats', () => {
     {id: 'loop', role: 'loop', text: 'Hook.'},
   ];
   const plan: FunFactsPlan = {
-    hook: {lines: ['hook'], headline: 'h', still: {src: 'shorts/x/stills/missing.jpg'}},
+    hook: {lines: ['hook'], headline: 'असली villain कौन था?', still: {src: 'shorts/x/stills/missing.jpg'}},
     facts: [{lines: ['f1'], headline: 'f', still: {src: 'shorts/x/stills/naam.jpg', year: 2015}}],
     payoff: {lines: ['payoff'], headline: 'p'},
     loop: {lines: ['loop']},
@@ -60,7 +60,7 @@ test('v2 plan lint: layout specs, variety, cameo count and tributes', () => {
   ];
   const plan: FunFactsPlan = {
     design: 'v2',
-    hook: {lines: ['hook'], headline: 'h', react: {word: 'बनी', expression: 'shock'}},
+    hook: {lines: ['hook'], headline: 'Guide दो बार बनी?', react: {word: 'बनी', expression: 'shock'}},
     facts: [
       {lines: ['f1'], headline: 'a', layout: 'number'},
       {lines: ['f2'], headline: 'b', layout: 'number', number: {word: '999', value: 183}, react: {word: 'Hindi', expression: 'happy'}},
@@ -77,4 +77,26 @@ test('v2 plan lint: layout specs, variety, cameo count and tributes', () => {
   plan.facts[0] = {lines: ['f1'], headline: 'a', layout: 'number', number: {word: '120', value: 120}};
   plan.facts[1] = {lines: ['f2'], headline: 'b', layout: 'versus', versus: {top: {word: 'Hindi'}, bottom: {word: '183'}, middle: 'VS'}};
   assert.deepEqual(lintPlan(plan, lines, []), []);
+});
+
+test('headline lint: the hook headline and question headlines need a verb', () => {
+  const lines: ScriptLine[] = [
+    {id: 'hook', role: 'hook', text: 'Mr. India पहले Amitabh को offer हुई थी?'},
+    {id: 'f1', role: 'fact', text: 'Salim-Javed ने ये role लिखा था.', source: 0},
+    {id: 'payoff', role: 'payoff', text: 'Anil Kapoor को मिला.', source: 0},
+    {id: 'loop', role: 'loop', text: 'Mr. India?'},
+  ];
+  const plan: FunFactsPlan = {
+    hook: {lines: ['hook'], headline: 'Mr. India\nAmitabh की?'},
+    facts: [{lines: ['f1'], headline: 'पहली पसंद\nकौन?'}],
+    payoff: {lines: ['payoff'], headline: 'Anil\nKapoor'},
+    loop: {lines: ['loop']},
+  };
+  const out = messages(lintPlan(plan, lines, []));
+  assert.match(out, /Hook headline "Mr. India \/ Amitabh की\?" has no verb/);
+  assert.match(out, /Question headline "पहली पसंद \/ कौन\?" has no verb/);
+  assert.doesNotMatch(out, /Anil/);
+  plan.hook.headline = 'Mr. India पहले\nAmitabh को मिली थी?';
+  plan.facts[0].headline = 'पहली पसंद\nRajesh Khanna';
+  assert.deepEqual(lintPlan(plan, lines, []).filter((i) => /headline/i.test(i.message)), []);
 });

@@ -96,11 +96,13 @@ Each line can carry `delivery` on top of its role default (`src/delivery.ts`):
 
 | Field | Effect |
 |---|---|
-| `mood` | neutral, excited, curious, serious, punch, hushed, deadpan, warm. Edge: rate/pitch/volume. ElevenLabs: stability/style, plus an audio tag ([excited], [curious], [whispers], [sarcastic]) only on `eleven_v3` models. Windows: rate only. |
+| `mood` | neutral, excited, curious, serious, punch, hushed, deadpan, warm. Edge: rate/pitch/volume. ElevenLabs: stability (style/speed are ignored by v4), plus an audio tag ([excited], [curious], [serious], [dramatic] …) on `eleven_v3`/`eleven_v4` models. Windows: rate only. |
 | `rate`, `pitch` | Extra % / Hz on top of the mood. Keep changes small; big jumps sound robotic. |
 | `pause`, `hold` | Seconds of silence before / after the line, placed on the timeline so cuts and music play into it. |
 | `music` | `duck` (default), `drop` (music out through the pause, voice lands in silence, music returns 1.5 s in), `swell` (music sits up under the line). |
 | `sfx` | `[{word, sound, volume}]`: an effect on a spoken word (`pop.wav`, `stamp.wav`, `whoosh.wav`, `riser.wav`, `shutter.wav`, `coin.wav`, `paper.wav`, `flicker.wav`). |
+| `emotion` | ElevenLabs v3/v4 audio tag for the whole line (`'surprised'`, `'conspiratorial'`, `'playful'` …). Overrides the mood's tag. |
+| `cues` | `[{word, tag}]`: an audio tag placed just before a spoken word, e.g. `{word: 'बिना', tag: 'surprised'}`. Tags never reach captions. |
 
 Role defaults: hook excited; promise curious; reveal punch with a 0.25 s pause; payoff serious with a 0.45 s pause and music drop; loop curious with music swell; cta warm. `npm run short -- say SLUG` prints each line's direction next to its spoken text. Render re-measures timing every time, so direction changes re-time the edit.
 

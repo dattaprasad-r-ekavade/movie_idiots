@@ -342,10 +342,19 @@ function Payoff2({plan, pal, c, from, to}: BeatProps & {plan: FunFactsPlan; pal:
   const end = L(c.end(payoff.lines[0]));
   // A short rack focus on the answer still; the hook itself is never blurred.
   const focus = interpolate(frame, [4, 18], [10, 0], clamp);
+  // Cuts swap the print on a spoken word, so each person is on screen only while named.
+  const cutAt = (payoff.cuts ?? []).map((cut) => L(c.word(cut.line ?? payoff.lines[0], cut.word)));
+  const firstOut = cutAt.length ? cutAt[0] + 4 : end;
   return (
     <Enter2 kind="static">
       <Headline2 text={payoff.headline} accent={payoff.accent} pal={pal} exit={end} />
-      {still && <At top={540}><FilmStill {...fit(still, 960, 800)} at={-12} exit={end} blur={focus} tilt={-1} duration={to - from} /></At>}
+      {still && <At top={540}><FilmStill {...fit(still, 960, 800)} at={-12} exit={firstOut} blur={focus} tilt={-1} duration={to - from} /></At>}
+      {payoff.cuts?.map((cut, i) => (
+        <At key={i} top={540}>
+          <FilmStill {...fit(cut, 960, 800)} at={cutAt[i]} exit={i + 1 < cutAt.length ? cutAt[i + 1] + 4 : end} tilt={cut.tilt ?? 1.5} duration={to - from - cutAt[i]} />
+          <Sfx at={cutAt[i]} src="shutter.wav" volume={0.3} />
+        </At>
+      ))}
       <Pop2 pop={payoff.pop} c={c} from={from} fallbackLine={payoff.lines[0]} pal={pal} />
       <Cameo react={payoff.react} c={c} from={from} fallbackLine={payoff.lines[0]} />
       <Sfx at={0} src="flicker.wav" volume={0.3} />

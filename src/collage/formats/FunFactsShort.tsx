@@ -50,7 +50,7 @@ export type FunFactsPlan = {
   hook: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; blur?: number; react?: React_};
   facts: FactBeat[];
   /** Closes the hook's loop. Reuses the hook still, now sharp, unless it brings its own. */
-  payoff: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; react?: React_};
+  payoff: {lines: string[]; headline: string; accent?: string[]; still?: StillRef; pop?: Pop; react?: React_; /** v2: prints that replace the payoff still on spoken words. */ cuts?: Cut[]};
   /** The loop line(s): the hook frame returns so the restart feels continuous. */
   loop: {lines: string[]};
   /** Mascot cameo on the hook and the payoff. */
