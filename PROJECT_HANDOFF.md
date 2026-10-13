@@ -89,7 +89,7 @@ Set executable paths in `.env` when the commands are absent from PATH. The origi
 
 ### Reconnect MCP
 
-The checked-in `.mcp.json` and `.codex/config.toml` currently use `D:/Projects/video-editor`. **Replace those absolute paths with your new checkout path** before using project MCP configuration. The Codex project must be trusted; Claude may ask to enable the project server. Restart the host session after configuration changes.
+The checked-in `.mcp.json` uses paths relative to the project folder and needs no edits. `.codex/config.toml` still uses `D:/Projects/video-editor`: **replace those absolute paths with your new checkout path** before using it with Codex. The Codex project must be trusted; Claude may ask to enable the project server. Restart the host session after configuration changes.
 
 Alternatively register the current checkout through Codex CLI:
 

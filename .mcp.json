@@ -3,7 +3,7 @@
     "movie-idiots-studio": {
       "type": "stdio",
       "command": "node",
-      "args": ["D:/Projects/video-editor/node_modules/tsx/dist/cli.mjs", "D:/Projects/video-editor/src/mcp.ts"]
+      "args": ["node_modules/tsx/dist/cli.mjs", "src/mcp.ts"]
     }
   }
 }

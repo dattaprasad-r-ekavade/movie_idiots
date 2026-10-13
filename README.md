@@ -61,7 +61,7 @@ Start Claude in this folder:
 claude
 ```
 
-The checked-in `.mcp.json` points to the local server. Enable/trust this project server in Claude if prompted, then check `/mcp`. This is a client-controlled first-use step. No global Claude settings have been changed. If moving the repository, update the two absolute paths in `.mcp.json`.
+The checked-in `.mcp.json` points to the local server. Enable/trust this project server in Claude if prompted, then check `/mcp`. This is a client-controlled first-use step. No global Claude settings have been changed. Its paths are relative to the project folder, so any clone works without edits.
 
 Example prompt:
 
@@ -71,15 +71,12 @@ Or use `/create-video Andhadhun review a Hindi/Hinglish analysis of unreliable n
 
 The host session writes the script using `planning_brief` and `write_project`, without an additional scripting API key. The server exposes 20 tools, a channel resource and a production prompt. This includes image search, page-image discovery, downloading and original sound design. Long voice/preview/render operations return a job ID; call `job_status` until complete. Jobs live in the same MCP process and stop when it exits.
 
-Any local stdio MCP client can launch:
+Any local stdio MCP client can launch it from the project folder (use absolute paths if your client starts servers elsewhere):
 
 ```json
 {
   "command": "node",
-  "args": [
-    "D:/Projects/video-editor/node_modules/tsx/dist/cli.mjs",
-    "D:/Projects/video-editor/src/mcp.ts"
-  ]
+  "args": ["node_modules/tsx/dist/cli.mjs", "src/mcp.ts"]
 }
 ```
 

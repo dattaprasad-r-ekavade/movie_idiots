@@ -21,4 +21,6 @@ If a running session cannot load newly configured tools, `scripts/produce.ts` is
 - Finals: `voice SLUG --elevenlabs` (only when requested), `render SLUG`, then `speed SLUG`. Upload `video-fast8.mp4` with `youtube.txt`.
 - After each upload, add a row to `docs/uploads.csv` (date, slug, title, length, whether the hook opens on a famous name). When the user shares Studio stats, update `views`, `views_as_of`, `avg_pct_viewed`, likes and comments there, and use that file to judge what works.
 
+**Claude Code helpers (in `.claude/`).** Skills: `/new-short SLUG` (idea → sourced v2 draft) and `/final-short SLUG` (ElevenLabs final, speed copy, uploads.csv row; user-invoked only). Agents: `fact-checker` (checks each line against its sources) and `shorts-design-reviewer` (reads contact sheets against the checklist). Hooks: saving a `src/collage/shorts/<slug>/script.ts` runs that Short's lint and reports back; edits to `.env` are refused. The project MCP server in `.mcp.json` uses relative paths.
+
 For source changes run `npm run typecheck` and `npm test`. Verify renderer changes with representative scene previews and a render. Do not invoke paid providers unless requested/configured for the production. Keep one operation per project at a time.
