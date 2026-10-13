@@ -21,6 +21,7 @@ import * as mughalColour from './mughal-colour/script';
 import * as nanaPatekar from './nana-patekar/script';
 import * as ddljTitle from './ddlj-title/script';
 import * as mrIndia from './mr-india/script';
+import * as omShantiOm from './om-shanti-om/script';
 
 export type ShortEntry = {
   slug: string;
@@ -61,4 +62,5 @@ export const SHORTS: ShortEntry[] = [
   nanaPatekar,
   ddljTitle,
   mrIndia,
+  omShantiOm,
 ];

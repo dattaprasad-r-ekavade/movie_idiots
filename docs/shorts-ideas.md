@@ -25,10 +25,11 @@ Updated 12 October 2026. **Uploads and their stats are logged in [uploads.csv](u
 | `cult-flops` | done | done | done | done. Uploaded |
 | `college` | done | done | done | done. Uploaded |
 | `phalke` | done | done | done | done. Uploaded |
-| `mr-india` | done | done (44s, v2 velvet, 13 Oct) | not built | built. First Short in design v2; Amitabh's reason hedged (“कहा जाता है”) |
+| `mr-india` | done | done (44s, v2 velvet, 13 Oct) | done | done. First Short in design v2; Amitabh's reason hedged (“कहा जाता है”) |
+| `om-shanti-om` | done | done (46.6s, v2 lagoon, 13 Oct) | done (40.6s, 15%) | done. Upload `projects/shorts/om-shanti-om/video-fast15.mp4` (35.3 s). Star count said as “30 से ज़्यादा” (sources: 30 or 31) |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending: `mr-india` final (ElevenLabs + 8%), then `om-shanti-om`, `kantara`, then batch 3. `alam-ara`, `guide-twins`, `mughal-colour`, `cult-flops`, `college` and `phalke` are uploaded. `ddlj-title` (batch 2 #1) is built.
+Pending: `kantara`, then batch 3. `mr-india` and `om-shanti-om` finals are built. `alam-ara`, `guide-twins`, `mughal-colour`, `cult-flops`, `college` and `phalke` are uploaded. `ddlj-title` (batch 2 #1) is built.
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.
@@ -70,6 +71,7 @@ House rules for every pitch:
 | `guide-twins` | `src/collage/shorts/guide-twins/script.ts` |
 | `mughal-colour` | `src/collage/shorts/mughal-colour/script.ts` |
 | `nana-patekar` | `src/collage/shorts/nana-patekar/script.ts` |
+| `om-shanti-om` | `src/collage/shorts/om-shanti-om/script.ts` |
 | `ddlj-title` | `src/collage/shorts/ddlj-title/script.ts` |
 
 `npm run short -- lint SLUG` and `npm run short -- say SLUG` work on each. `npm run short -- list` shows them next to `phalke`, `college`, `cult-flops`.
