@@ -145,6 +145,10 @@ Plan options for a livelier beat (`src/collage/formats/FunFactsShort.tsx`):
 
 Prints hold until the next beat starts, so a directed pause never shows an empty frame.
 
+#### Whiteboard (experiment)
+
+VideoScribe-style hand-drawn boards (`src/whiteboard/`, test bench `whiteboard-demo`): see [whiteboard.md](whiteboard.md).
+
 #### Design v2 (`design: 'v2'`, `src/collage/formats/v2.tsx`)
 
 New Shorts use v2 ([redesign plan](shorts-redesign.md)); v1 Shorts render unchanged. v2 drops the "1/3" counters and the "Answer" kicker, puts headlines top-left with accent words boxed, boxes the spoken caption word, and rotates beat entries (whip, TV static, slide, cut).
