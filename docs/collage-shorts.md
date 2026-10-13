@@ -173,6 +173,23 @@ Pick anchor words early in the line for `number` and `ticket`; a figure that lan
 
 Lint cannot hear the line. Still read every line aloud for collocations ("सूखे farmers" means dry farmers), ambiguity and tone, and open every contact sheet.
 
+## Finishing in FilmCraft, stings in EffectCraft (optional)
+
+On a machine with the Storyteller apps installed (`C:\Program Files\FilmCraft`, `C:\Program Files\EffectCraft`), a rendered Short can get a finishing pass. First used on `12th-fail`.
+
+```bash
+npm run short -- render SLUG                                   # Remotion base: projects/shorts/SLUG/video.mp4
+"C:/Program Files/EffectCraft/effectcraft-cli.exe" --empty script scripts/effectcraft/sting.jsx --save-as projects/shorts/SLUG/fx/sting.ecproj
+"C:/Program Files/EffectCraft/effectcraft-cli.exe" --project projects/shorts/SLUG/fx/sting.ecproj render --comp sting --out projects/shorts/SLUG/fx/sting.mov --format prores --prores 4444 --channels rgba --audio off
+node scripts/filmcraft/finish-short.mjs SLUG --sting fx/sting.mov --sting-line payoff --sting-word 50 --shake "f2:पहले,f3:कमाई"
+npm run short -- speed SLUG --percent 15 --from video-filmcraft  # upload copy: video-filmcraft-fast15.mp4
+```
+
+- `scripts/effectcraft/sting.jsx`: After Effects-style script for a transparent 1.5 s number sting (glowing text, double shockwave). Edit `STING` at the top (text, colour, y). Drop the Remotion `pop` on that word so the two don't double up.
+- `scripts/filmcraft/finish-short.mjs`: drives FilmCraft's MCP server headless. V1 the render with its audio; V2 the sting on its word; V3 a full-length grade (Lumetri contrast and saturation, vignette, fine grain); V4 a 0.4 s light-leak flash on every beat cut; V5 an RGB-split hit on the hook and camera shake on the `--shake` words. Exports `video-filmcraft.mp4` (H.264, -14 LUFS) and saves `SLUG.fcproj` for hand edits in FilmCraft.
+- Keep effects subtle: the first pass at light-leak intensity 70 washed the whole frame out; 30 reads as a warm flash.
+- The MCP servers are registered per machine (`claude mcp add --scope local filmcraft -- "C:\Program Files\FilmCraftilmcraft-cli.exe" mcp`), not in `.mcp.json`.
+
 ## Known gaps / next steps
 
 - **Voice**: none yet in this environment (no reachable TTS). Record lines as above.

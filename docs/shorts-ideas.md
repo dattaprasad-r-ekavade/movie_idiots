@@ -28,6 +28,7 @@ Updated 12 October 2026. **Uploads and their stats are logged in [uploads.csv](u
 | `mr-india` | done | done (44s, v2 velvet, 13 Oct) | done | done. First Short in design v2; Amitabh's reason hedged (“कहा जाता है”) |
 | `om-shanti-om` | done | done (46.6s, v2 lagoon, 13 Oct) | done (40.6s, 15%) | done. Upload `projects/shorts/om-shanti-om/video-fast15.mp4` (35.3 s). Star count said as “30 से ज़्यादा” (sources: 30 or 31) |
 | `the-lady-killer` | done | done (46s, v2 newsprint, 13 Oct) | done (41.3s, 15%) | done. Upload `projects/shorts/the-lady-killer/video-fast15.mp4` (35.9 s). Day-1/lifetime said as estimates; no budget, loss or ticket counts |
+| `12th-fail` | done | n/a (straight to ElevenLabs) | done (37.9s) | done. First FilmCraft-finished Short: upload `projects/shorts/12th-fail/video-filmcraft-fast15.mp4` (33 s). Facts checked by the fact-checker agent |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
 Pending: `kantara`, then batch 3 (`budget-vs-box-office`, `flop-fee`, `best-roi`, `12th-fail-day-one`, `saiyaara`). `mr-india`, `om-shanti-om` and `the-lady-killer` finals are built.

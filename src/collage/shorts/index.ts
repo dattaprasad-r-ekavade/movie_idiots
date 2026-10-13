@@ -24,6 +24,7 @@ import * as mrIndia from './mr-india/script';
 import * as omShantiOm from './om-shanti-om/script';
 import * as theLadyKiller from './the-lady-killer/script';
 import * as whiteboardDemo from './whiteboard-demo/script';
+import * as twelfthFail from './12th-fail/script';
 
 export type ShortEntry = {
   slug: string;
@@ -69,4 +70,5 @@ export const SHORTS: ShortEntry[] = [
   omShantiOm,
   theLadyKiller,
   whiteboardDemo,
+  twelfthFail,
 ];

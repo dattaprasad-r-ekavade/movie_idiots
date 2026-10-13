@@ -77,7 +77,7 @@ function Headline2({text, accent = [], pal, at = 0, exit, size = 92}: {text: str
   const out = exit === undefined ? 0 : interpolate(frame, [exit, exit + 3], [0, 1], clamp);
   if (frame < at || (exit !== undefined && frame >= exit + 3)) return null;
   const longest = Math.max(...text.split('\n').map((l) => [...l].length));
-  size = Math.min(size, Math.floor(740 / (longest * 0.5)));
+  size = Math.min(size, Math.floor(740 / (longest * 0.56)));
   return (
     <div style={{position: 'absolute', left: 70, right: 270, top: 170, fontFamily: FONT.body, fontWeight: 800, fontSize: size, whiteSpace: 'nowrap', lineHeight: 1.18, color: pal.text, opacity: 1 - out}}>
       {text.split('\n').map((line, i) => {
@@ -174,7 +174,7 @@ function Ticket({spec, at, pal}: {spec: TicketSpec; at: number; pal: Palette}) {
           {spec.sub && <div style={{fontWeight: 800, fontSize: 34, opacity: 0.7}}>{spec.sub}</div>}
         </div>
         <div style={{width: 260, borderLeft: '6px dashed rgba(29,26,23,.35)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 24px 0 18px'}}>
-          <div style={{fontWeight: 800, fontSize: spec.figure.length > 6 ? 58 : 76, lineHeight: 1, textAlign: 'center', color: C.red}}>{spec.figure}</div>
+          <div style={{fontWeight: 800, fontSize: Math.min(76, Math.floor(220 / (spec.figure.length * 0.55))), lineHeight: 1, textAlign: 'center', color: C.red, whiteSpace: 'nowrap'}}>{spec.figure}</div>
         </div>
       </div>
     </div>

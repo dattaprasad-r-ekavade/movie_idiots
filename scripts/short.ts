@@ -221,7 +221,8 @@ async function render() {
 async function speed() {
   const percent = Number(option('percent', '8'));
   if (!(percent > 0 && percent <= 50)) throw new Error('--percent must be between 0 and 50');
-  const base = flag('draft') ? 'draft' : 'video';
+  // --from picks another render in the Short's folder, e.g. `--from video-filmcraft` (FilmCraft finishing pass).
+  const base = option('from', flag('draft') ? 'draft' : 'video');
   const input = path.join(outDir(), `${base}.mp4`);
   if (!existsSync(input)) throw new Error(`${input} not found; render it first`);
   const factor = 1 + percent / 100;
@@ -316,7 +317,7 @@ const commands: Record<string, () => Promise<unknown>> = {
 };
 const fn = commands[command];
 if (!fn) {
-  console.error('Usage: short.ts list | say SLUG | lint SLUG | still SLUG --url … --source … --credit … --label … | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | speed SLUG [--percent 8] [--draft] | package SLUG');
+  console.error('Usage: short.ts list | say SLUG | lint SLUG | still SLUG --url … --source … --credit … --label … | timing SLUG | voice SLUG [--voice NAME] [--edge|--elevenlabs] | stills SLUG [--every s] | render SLUG [--draft] | speed SLUG [--percent 8] [--draft | --from NAME] | package SLUG');
   process.exit(1);
 }
 fn()
