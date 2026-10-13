@@ -1,6 +1,6 @@
 # Movie Idiots Studio
 
-> **Experimental path:** an illustrated paper-collage Shorts prototype lives in [docs/collage-shorts.md](docs/collage-shorts.md). Its `phalke` example is not an approved channel style. Current collage renders are in [samples/](samples/README.md). The main production goal remains Hindi/Hinglish movie reviews and full revisits; see the workflow below.
+> **Experimental path:** an illustrated paper-collage Shorts prototype lives in [docs/collage-shorts.md](docs/collage-shorts.md). Its `phalke` example is not an approved channel style. Shorts status and upload log: [docs/shorts-ideas.md](docs/shorts-ideas.md), [docs/uploads.csv](docs/uploads.csv). The main production goal remains Hindi/Hinglish movie reviews and full revisits; see the workflow below.
 
 A local prompt-driven toolchain for **[@movieidiots5542](https://www.youtube.com/@movieidiots5542)**: animated movie reviews, full revisits, and YouTube Shorts in Hindi/Hinglish. Built in `D:\Projects\video-editor`.
 
@@ -21,7 +21,7 @@ npm run dev
 
 Open **http://127.0.0.1:3210**. Pick a film, direction and format. The local scaffold creates editable chapter placeholders. For a real AI-written script use Claude through MCP, local Ollama, or the optional Claude API.
 
-The redesigned production is `projects/drishyam-review-v2`: six downloaded/inspected web images, 31 shots, original animated evidence boards, split screens, collages, moving image framing, kinetic words and a short channel sign-off. Free online Hindi speech supplies actual word-boundary captions. Original music/transition effects are synthesized locally. The first export was rejected as a slide deck; v2 changes the default production approach. See [the redesign notes](docs/video-redesign.md).
+The early long-form Drishyam prototypes (a stills-essay with evidence boards and kinetic type) were rejected as the style to avoid; their manifests and notes were removed on 13 Oct 2026 and remain in git history.
 
 An older Hindi demo is rendered at `projects/studio-demo/exports/video.mp4`. Run `npm run doctor` to check local tools and voices.
 
@@ -45,8 +45,8 @@ For a complete v2 production, including web acquisition and online voice (only s
 ```powershell
 python -m venv .venv
 .venv/Scripts/python.exe -m pip install -r requirements-voice.txt
-node node_modules/tsx/dist/cli.mjs scripts/produce.ts productions/drishyam-review-v2.json --assets productions/drishyam-remake-assets.json --edge --sound --draft-only
-node node_modules/tsx/dist/cli.mjs scripts/produce.ts --render-only drishyam-review-v2
+node node_modules/tsx/dist/cli.mjs scripts/produce.ts path/to/manifest.json --assets path/to/assets.json --edge --sound --draft-only
+node node_modules/tsx/dist/cli.mjs scripts/produce.ts --render-only PROJECT-ID
 ```
 
 The assets file records reviewed image/source URLs, labels, attribution and actual rights status. Use `--procure-only` first to collect and inspect assets without rendering. `--discover SOURCE-URL` discovers images on an article; `--search-images "query"` searches Commons. These are also MCP tools and web studio controls. Source credit is recorded separately from permission/license status; the downloader does not claim to clear rights.
@@ -145,7 +145,7 @@ CLI `plan` defaults to scaffold without an API key; use MCP/studio for explicit 
 
 Install Node 22+, FFmpeg/FFprobe and PowerShell 7 on Windows, then run `npm ci`. Keep `FFMPEG_PATH`, `FFPROBE_PATH` and `POWERSHELL_PATH` configurable; absolute executable paths work. Remotion downloads its headless browser on first render. Local narration needs an installed voice for the chosen language; use recorded audio or ElevenLabs if none is available.
 
-`npm run typecheck` and `npm test` validate the project and a real MCP stdio handshake. See `docs/validation.md` for the actual render evidence.
+`npm run typecheck` and `npm test` validate the project and a real MCP stdio handshake.
 
 If startup reports a reserved/busy port, set `PORT` to another port in `.env`. Windows reserves 4111–4510 on this machine, so the default is 3210. `PORT=0` prints a dynamically assigned port. A missing Hindi voice under Windows PowerShell 5 can be fixed by using PowerShell 7 (`pwsh.exe`); this toolchain defaults to it.
 

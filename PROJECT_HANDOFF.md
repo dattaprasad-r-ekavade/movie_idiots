@@ -66,15 +66,9 @@ The `origin/claude/dreamy-bardeen-pm2udg` branch was merged into `main` at `ab40
 
 Rendered local output: `projects/shorts/phalke/video.mp4`, 100.90 s, 1080×1920, 30 fps, H.264/yuv420p + AAC, 69,475,702 bytes. A full FFmpeg decode passed. The 540×960 draft and contact sheets are alongside it. All production output/narration remains git-ignored. YouTube upload metadata is prepared in `projects/shorts/phalke/youtube-metadata.md`; the private upload awaits user approval for the browser extension's temporary local-file permission. Do not publish this experiment publicly without reviewing the cut and revising the opener/narration/style.
 
-The remake source is `productions/drishyam-review-v2.json`; its six web-image requests are in `productions/drishyam-remake-assets.json`. It contains seven narration segments and **31 shots**. Retrieved images were viewed before use. Older franchise stills and an actor portrait are labelled accordingly; they are not represented as footage of the new film.
+The Drishyam long-form prototypes (`drishyam-conclusion-review-20261005`, `drishyam-review-v2`) were removed from the repo on 13 Oct 2026: their manifests (`productions/`), notes (`docs/first-production.md`, `docs/video-redesign.md`, `docs/validation.md`) and preview images are in git history before that date. They remain the pitfall reference described above, not something to rebuild.
 
-On the original machine, final video: `D:\Projects\video-editor\projects\drishyam-review-v2\exports\video.mp4`.
-
-Verified remake: **142.333333 seconds**, 1920×1080, 30fps, H.264/yuv420p, AAC; 63,762,348 bytes. Technical QC passed, a complete FFmpeg decode succeeded, and the studio player loaded without a media error. Measured final audio: −16.28 LUFS integrated, −3.44 dBTP true peak. `docs/video-redesign.md` explains the changes; `docs/remake-studio-preview.png` records the studio preview.
-
-Historical sources/evidence: `productions/drishyam-conclusion-review-20261005.json`, `docs/first-production.md`, `docs/validation.md`. The initial 185-second export was technically valid but creatively rejected. Demo and Short exports also remain on the original machine.
-
-**Git contains source code, plans, authored manifests, asset request URLs and documentation screenshots.** Generated projects, downloaded film images, audio, MP4s, `node_modules`, `.venv`, caches and `.env` are ignored. A fresh clone can regenerate the remake; it will not contain its existing rendered file or narration recordings. To preserve the exact existing edit, copy both `projects/drishyam-review-v2/` and `public/projects/drishyam-review-v2/` separately. Regeneration depends on source URL/service availability and may produce different voice timings.
+**Git contains source code, plans, authored manifests, asset request URLs and documentation screenshots.** Generated projects, downloaded film images, audio, MP4s, `node_modules`, `.venv`, caches and `.env` are ignored. Shorts renders live in `projects/shorts/SLUG/` and are not in git; only the upload files (`video.mp4`, the speed copy, `youtube.txt`) are kept locally after upload.
 
 ## Resume on another Windows machine
 
@@ -115,16 +109,13 @@ node node_modules/tsx/dist/cli.mjs scripts/produce.ts --check
 
 Keep the process that starts a job alive and poll `job_status`. Jobs and queues are in memory, serialized per server process. Do not modify/render one production concurrently from different studio/MCP/CLI processes.
 
-### Rebuild the remake from tracked inputs
-
-Use a fresh checkout or back up an existing project with this ID before rebuilding. `produce.ts` saves the supplied source manifest and regenerates narration.
+### Long-form productions
 
 ```powershell
-node node_modules/tsx/dist/cli.mjs scripts/produce.ts productions/drishyam-review-v2.json --assets productions/drishyam-remake-assets.json --procure-only
+node node_modules/tsx/dist/cli.mjs scripts/produce.ts path/to/manifest.json --assets path/to/assets.json --procure-only
 # Inspect the collected images and their labels before continuing.
-node node_modules/tsx/dist/cli.mjs scripts/produce.ts productions/drishyam-review-v2.json --assets productions/drishyam-remake-assets.json --edge --sound --draft-only
-# Watch the draft; make revisions before the final render.
-node node_modules/tsx/dist/cli.mjs scripts/produce.ts --render-only drishyam-review-v2
+node node_modules/tsx/dist/cli.mjs scripts/produce.ts path/to/manifest.json --assets path/to/assets.json --edge --sound --draft-only
+node node_modules/tsx/dist/cli.mjs scripts/produce.ts --render-only PROJECT-ID
 ```
 
 `--edge` sends narration to Microsoft's online speech service. For a new production, explicitly select the intended voice provider. Use `--preview-only PROJECT-ID` to regenerate shot previews. The advanced shot plan is currently edited through full JSON, not a visual timeline editor.

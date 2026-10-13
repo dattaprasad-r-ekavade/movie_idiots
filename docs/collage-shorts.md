@@ -1,6 +1,6 @@
 # Collage Shorts: experimental production path
 
-For the full system design and roadmap, see [system-outline.md](system-outline.md). Current renders and upload packages are in [samples/](../samples/README.md) (`npm run samples` refreshes them).
+For the full system design and roadmap, see [system-outline.md](system-outline.md). Renders and upload packages are written to `projects/shorts/SLUG/` (git-ignored); the status table is in [shorts-ideas.md](shorts-ideas.md).
 
 This document describes an **illustrated Shorts prototype**, not an approved change to the channel's style. The user's stated goal remains movie reviews and full revisits, and the merged Phalke Short has not received creative approval. For those reviews and mashups, make an edit from actual footage/selects and use graphics as support. The Phalke prototype is all original vectors: it does not exercise web-image procurement, use film footage, or establish that any future soundtrack/assets are free of rights claims.
 
