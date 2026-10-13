@@ -77,7 +77,7 @@ async function measure(): Promise<Timing> {
     const words: Word[] | undefined = existsSync(wordsFile) ? JSON.parse(await readFile(wordsFile, 'utf8')) : undefined;
     measured[line.id] = {duration: Number(meta.format.duration), audio: `shorts/${slug}/voice/${file}`, words, source: words ? 'speech-service' : 'recorded'};
   }
-  const timing = buildTiming(short.lines, measured);
+  const timing = buildTiming(short.lines, measured, short.tail);
   await mkdir(path.dirname(timingFile()), {recursive: true});
   await writeFile(timingFile(), JSON.stringify(timing, null, 2));
   const counts = timing.lines.reduce<Record<string, number>>((n, l) => ({...n, [l.source]: (n[l.source] || 0) + 1}), {});

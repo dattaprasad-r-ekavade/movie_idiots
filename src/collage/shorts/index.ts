@@ -22,6 +22,7 @@ import * as nanaPatekar from './nana-patekar/script';
 import * as ddljTitle from './ddlj-title/script';
 import * as mrIndia from './mr-india/script';
 import * as omShantiOm from './om-shanti-om/script';
+import * as theLadyKiller from './the-lady-killer/script';
 import * as whiteboardDemo from './whiteboard-demo/script';
 
 export type ShortEntry = {
@@ -38,6 +39,8 @@ export type ShortEntry = {
   honorific?: boolean;
   /** Tribute or tragedy: `lint` flags mascot cameos. */
   tribute?: boolean;
+  /** Seconds the picture holds after the last line (default 2.2). Shorter tails loop sooner. */
+  tail?: number;
   /** Extra Latin → Devanagari pronunciations for this short (names, titles). */
   lexicon?: Record<string, string>;
   /** Upload package: written to youtube.txt by `npm run short -- package SLUG` and on render. */
@@ -64,5 +67,6 @@ export const SHORTS: ShortEntry[] = [
   ddljTitle,
   mrIndia,
   omShantiOm,
+  theLadyKiller,
   whiteboardDemo,
 ];
