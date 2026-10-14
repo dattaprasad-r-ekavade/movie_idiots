@@ -188,7 +188,7 @@ npm run short -- speed SLUG --percent 15 --from video-filmcraft  # upload copy: 
 - `scripts/effectcraft/sting.jsx`: After Effects-style script for a transparent 1.5 s number sting (glowing text, double shockwave). Edit `STING` at the top (text, colour, y). Drop the Remotion `pop` on that word so the two don't double up.
 - `scripts/filmcraft/finish-short.mjs`: drives FilmCraft's MCP server headless. V1 the render with its audio; V2 the sting on its word; V3 a full-length grade (Lumetri contrast and saturation, vignette, fine grain); V4 a 0.4 s light-leak flash on every beat cut; V5 an RGB-split hit on the hook and camera shake on the `--shake` words. Exports `video-filmcraft.mp4` (H.264, -14 LUFS) and saves `SLUG.fcproj` for hand edits in FilmCraft.
 - Keep effects subtle: the first pass at light-leak intensity 70 washed the whole frame out; 30 reads as a warm flash.
-- The MCP servers are registered per machine (`claude mcp add --scope local filmcraft -- "C:\Program Files\FilmCraftilmcraft-cli.exe" mcp`), not in `.mcp.json`.
+- The MCP servers are registered per machine (`claude mcp add --scope local filmcraft -- "C:\Program Files\FilmCraft\filmcraft-cli.exe" mcp`), not in `.mcp.json`.
 
 ## Known gaps / next steps
 

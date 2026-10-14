@@ -8,7 +8,7 @@ disable-model-invocation: true
 Make the final for `$ARGUMENTS`. This spends ElevenLabs credits, so it only runs when the user invokes it.
 
 1. **Preconditions.** The draft has been reviewed. `npm run short -- lint <slug>` has no errors. The script has `delivery.emotion` / `delivery.cues` where tone matters.
-2. **Voice:** `npm run short -- voice <slug> --elevenlabs` (model from `ELEVENLABS_MODEL_ID`; v3/v4 get the emotion tags). Afterwards confirm no `[tag]` text reached `public/shorts/<slug>/voice/*.words.json`.
+2. **Voice:** `npm run short -- voice <slug> --elevenlabs` (model: `eleven_v4` by default, `ELEVENLABS_MODEL_ID` overrides; v3/v4 get the emotion tags). Afterwards confirm no `[tag]` text reached `public/shorts/<slug>/voice/*.words.json`.
 3. **Render:** `npm run short -- render <slug>`. This also writes `projects/shorts/<slug>/youtube.txt`.
 4. **Speed copy:** `npm run short -- speed <slug> --percent <N>`. Default N is the latest the user asked for (15); use the argument if given. Output: `projects/shorts/<slug>/video-fast<N>.mp4`.
 5. **Spot-check:** grab frames at 0.6 s (the hook image must be sharp) and at each word-anchored cut; check the headline and captions read correctly.

@@ -18,7 +18,7 @@ import {bundle} from '@remotion/bundler';
 import {renderFrames, renderMedia, selectComposition} from '@remotion/renderer';
 import {ROOT, PUBLIC} from '../src/paths';
 import {ffmpeg, probe, run} from '../src/process';
-import {speakElevenLabs} from '../src/elevenlabs';
+import {elevenLabsModel, speakElevenLabs} from '../src/elevenlabs';
 import {displayCues, toSpoken, type SpokenWord} from '../src/speech';
 import {fetchImage} from '../src/web-assets';
 import {lintFunFacts, lintPlan, type LedgerEntry} from '../src/collage/formats/fun-facts';
@@ -124,7 +124,7 @@ async function elevenlabsVoice() {
   for (const [index, line] of short.lines.entries()) {
     const previous = short.lines[index - 1];
     const next = short.lines[index + 1];
-    const model = process.env.ELEVENLABS_MODEL_ID || 'eleven_multilingual_v2';
+    const model = elevenLabsModel();
     const delivery = resolveDelivery(line);
     const direction = elevenDelivery(delivery, model);
     const words = await speakElevenLabs({text: tagsSupported(model) ? withCues(line, delivery.cues) : spoken(line).text, output: path.join(voiceDir(), `${line.id}.mp3`), previousText: previous && spoken(previous).text, nextText: next && spoken(next).text, ...direction});

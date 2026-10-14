@@ -68,10 +68,15 @@ export async function resolveElevenLabsVoice() {
   return cachedVoiceId=ranked.voice_id;
 }
 
+/** Default voice model. Shorts voiced with eleven_v3 sounded AI-like and collapsed to 1-2 views (Oct 2026); v4 is the house model. */
+export const DEFAULT_ELEVENLABS_MODEL='eleven_v4';
+/** Model for this run: `ELEVENLABS_MODEL_ID` overrides the default. */
+export const elevenLabsModel=()=>process.env.ELEVENLABS_MODEL_ID?.trim()||DEFAULT_ELEVENLABS_MODEL;
+
 /** `voiceSettings` overrides the defaults per line; `tag` (eleven_v3 only) prefixes an audio tag such as [excited]. */
 export async function speakElevenLabs(opts:{text:string;output:string;previousText?:string;nextText?:string;voiceSettings?:Record<string,number|boolean>;tag?:string}):Promise<WordCue[]> {
   const voiceId=await resolveElevenLabsVoice();
-  const model=process.env.ELEVENLABS_MODEL_ID||'eleven_multilingual_v2';
+  const model=elevenLabsModel();
   const body:Record<string,unknown>={
     text:opts.tag?`[${opts.tag}] ${opts.text}`:opts.text,
     model_id:model,

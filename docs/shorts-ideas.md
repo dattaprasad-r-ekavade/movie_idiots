@@ -31,7 +31,7 @@ Updated 12 October 2026. **Uploads and their stats are logged in [uploads.csv](u
 | `12th-fail` | done | n/a (straight to ElevenLabs) | done (37.9s) | done. First FilmCraft-finished Short: upload `projects/shorts/12th-fail/video-filmcraft-fast15.mp4` (33 s). Facts checked by the fact-checker agent |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending: `kantara`, then batch 3 (`budget-vs-box-office`, `flop-fee`, `best-roi`, `12th-fail-day-one`, `saiyaara`). `mr-india`, `om-shanti-om` and `the-lady-killer` finals are built.
+Pending: `kantara`, then batch 3 (`budget-vs-box-office`, `flop-fee`, `best-roi`, `saiyaara`). Built, not yet logged as uploaded: `mr-india`, `om-shanti-om`, `the-lady-killer`, `12th-fail` (batch 3's `12th-fail-day-one`).
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.
