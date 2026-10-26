@@ -27,11 +27,26 @@ Updated 12 October 2026. **Uploads and their stats are logged in [uploads.csv](u
 | `phalke` | done | done | done | done. Uploaded |
 | `mr-india` | done | done (44s, v2 velvet, 13 Oct) | done | done. First Short in design v2; Amitabh's reason hedged (“कहा जाता है”) |
 | `om-shanti-om` | done | done (46.6s, v2 lagoon, 13 Oct) | done (40.6s, 15%) | done. Upload `projects/shorts/om-shanti-om/video-fast15.mp4` (35.3 s). Star count said as “30 से ज़्यादा” (sources: 30 or 31) |
-| `the-lady-killer` | done | done (46s, v2 newsprint, 13 Oct) | done (41.3s, 15%) | done. Upload `projects/shorts/the-lady-killer/video-fast15.mp4` (35.9 s). Day-1/lifetime said as estimates; no budget, loss or ticket counts |
+| `the-lady-killer` | redone 17 Oct (hook → setup → tension → payoff) | done (38.7s Edge, v2 newsprint, 17 Oct) | done (ElevenLabs v4, 15%: 29 s) | done. Upload `projects/shorts/the-lady-killer/video-fast15.mp4`. Music: city-lights |
 | `12th-fail` | done | n/a (straight to ElevenLabs) | done (37.9s) | done. First FilmCraft-finished Short: upload `projects/shorts/12th-fail/video-filmcraft-fast15.mp4` (33 s). Facts checked by the fact-checker agent |
+| `kantara` | done (17 Oct) | done (32.8s, v2 marquee) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/kantara/video-fast15.mp4`. Music: mass-entry |
+| `budget-vs-box-office` | done (17 Oct) | done (35.7s, v2 velvet) | done (ElevenLabs v4, 15%: 26 s) | done. Upload `projects/shorts/budget-vs-box-office/video-fast15.mp4`. Music: neon-bhairav |
+| `flop-fee` | done (17 Oct) | done (31.9s, v2 lagoon) | done (ElevenLabs v4, 15%: 23 s) | done. Upload `projects/shorts/flop-fee/video-fast15.mp4`. Music: pahadi-winter |
+| `best-roi` | done (17 Oct) | done (33.8s, v2 newsprint) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/best-roi/video-fast15.mp4`. Music: spring-dream |
+| `saiyaara` | done (17 Oct) | done (38.0s, v2 velvet) | done (ElevenLabs v4, 15%: 28 s) | done. Upload `projects/shorts/saiyaara/video-fast15.mp4`. Music: sandhya |
+| `pushpa-voice` | done (18 Oct, batch 4) | done (30.5s Edge) | done (ElevenLabs v4, 15%: 27 s) | done. Upload `projects/shorts/pushpa-voice/video-fast15.mp4`. Music: mass-entry |
+| `naatu-naatu-ukraine` | done (18 Oct, batch 4) | done (33.6s Edge) | done (ElevenLabs v4, 15%: 29 s) | done. Upload `projects/shorts/naatu-naatu-ukraine/video-fast15.mp4`. Music: neon-bhairav |
+| `dangal-china` | done (18 Oct, batch 4) | done (28.7s Edge) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/dangal-china/video-fast15.mp4`. Music: spring-dream |
+| `hera-pheri-remake` | done (18 Oct, batch 4) | done (28.3s Edge) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/hera-pheri-remake/video-fast15.mp4`. Music: city-lights |
+| `drishyam-china` | done (18 Oct, batch 4) | done (35.2s Edge) | done (ElevenLabs v4, 15%: 29 s) | done. Upload `projects/shorts/drishyam-china/video-fast15.mp4`. Music: pahadi-winter |
+| `bahubali-kattappa` | done (18 Oct, batch 4) | done (33.5s Edge) | done (ElevenLabs v4, 15%: 32 s) | done. Upload `projects/shorts/bahubali-kattappa/video-fast15.mp4`. Music: mass-entry |
+| `three-idiots-age` | done (18 Oct, batch 4) | done (27.7s Edge) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/three-idiots-age/video-fast15.mp4`. Music: golden-hour |
+| `lagaan-oscar` | done (18 Oct, batch 4) | done (29.3s Edge) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/lagaan-oscar/video-fast15.mp4`. Music: sandhya |
+| `kaho-naa-awards` | done (18 Oct, batch 4) | done (27.7s Edge) | done (ElevenLabs v4, 15%: 25 s) | done. Upload `projects/shorts/kaho-naa-awards/video-fast15.mp4`. Music: golden-hour |
+| `kgf-kannada` | done (18 Oct, batch 4) | done (37.3s Edge) | done (ElevenLabs v4, 15%: 31 s) | done. Upload `projects/shorts/kgf-kannada/video-fast15.mp4`. Music: neon-bhairav |
 | `fun-facts-template` | done | n/a | n/a | n/a. Starter only |
 
-Pending: `kantara`, then batch 3 (`budget-vs-box-office`, `flop-fee`, `best-roi`, `saiyaara`). Built, not yet logged as uploaded: `mr-india`, `om-shanti-om`, `the-lady-killer`, `12th-fail` (batch 3's `12th-fail-day-one`).
+Batch 4 finals ready to upload (19 Oct): `pushpa-voice`, `naatu-naatu-ukraine`, `dangal-china`, `hera-pheri-remake`, `drishyam-china`, `bahubali-kattappa`, `three-idiots-age`, `lagaan-oscar`, `kaho-naa-awards`, `kgf-kannada`. Ready to upload (finals 17 Oct): `the-lady-killer` (redo), `kantara`, `budget-vs-box-office`, `flop-fee`, `best-roi`, `saiyaara`. Scheduled: `om-shanti-om`, `12th-fail`. The backlog needs batch 4.
 
 Open items:
 - Images: the `coolie-accident` Puneet beat uses the 269×371 `wiki-poster.jpg`. Low-res.
@@ -62,20 +77,20 @@ House rules for every pitch:
 
 | Slug | File |
 |---|---|
-| `sholay-gabbar` | `src/collage/shorts/sholay-gabbar/script.ts` |
-| `coolie-accident` | `src/collage/shorts/coolie-accident/script.ts` |
-| `secret-remakes` | `src/collage/shorts/secret-remakes/script.ts` |
-| `lunchbox-oscar` | `src/collage/shorts/lunchbox-oscar/script.ts` |
-| `wasseypur-split` | `src/collage/shorts/wasseypur-split/script.ts` |
-| `interval-india` | `src/collage/shorts/interval-india/script.ts` |
-| `alam-ara` | `src/collage/shorts/alam-ara/script.ts` |
-| `fearless-nadia` | `src/collage/shorts/fearless-nadia/script.ts` |
-| `guide-twins` | `src/collage/shorts/guide-twins/script.ts` |
-| `mughal-colour` | `src/collage/shorts/mughal-colour/script.ts` |
-| `nana-patekar` | `src/collage/shorts/nana-patekar/script.ts` |
-| `om-shanti-om` | `src/collage/shorts/om-shanti-om/script.ts` |
-| `the-lady-killer` | `src/collage/shorts/the-lady-killer/script.ts` |
-| `ddlj-title` | `src/collage/shorts/ddlj-title/script.ts` |
+| `sholay-gabbar` | `src/collage/shorts/archive/sholay-gabbar/script.ts` |
+| `coolie-accident` | `src/collage/shorts/archive/coolie-accident/script.ts` |
+| `secret-remakes` | `src/collage/shorts/archive/secret-remakes/script.ts` |
+| `lunchbox-oscar` | `src/collage/shorts/archive/lunchbox-oscar/script.ts` |
+| `wasseypur-split` | `src/collage/shorts/archive/wasseypur-split/script.ts` |
+| `interval-india` | `src/collage/shorts/archive/interval-india/script.ts` |
+| `alam-ara` | `src/collage/shorts/archive/alam-ara/script.ts` |
+| `fearless-nadia` | `src/collage/shorts/archive/fearless-nadia/script.ts` |
+| `guide-twins` | `src/collage/shorts/archive/guide-twins/script.ts` |
+| `mughal-colour` | `src/collage/shorts/archive/mughal-colour/script.ts` |
+| `nana-patekar` | `src/collage/shorts/archive/nana-patekar/script.ts` |
+| `om-shanti-om` | `src/collage/shorts/archive/om-shanti-om/script.ts` |
+| `the-lady-killer` | `src/collage/shorts/archive/the-lady-killer/script.ts` |
+| `ddlj-title` | `src/collage/shorts/archive/ddlj-title/script.ts` |
 
 `npm run short -- lint SLUG` and `npm run short -- say SLUG` work on each. `npm run short -- list` shows them next to `phalke`, `college`, `cult-flops`.
 
@@ -239,3 +254,39 @@ Checklist before render: hook on frame 0, source on every fact, no textbook Hind
 ## Parked (not in the ten)
 
 Use later if a slug dies in research: Mother India Oscar near-miss (the “one vote” line is widely repeated and weakly sourced — do not lock it); *Black Friday* court stay (overlaps Kashyap + *wasseypur*); Nawazuddin extra-to-lead (weaker hook); first 100-crore club as its own Short (belongs inside `secret-remakes`).
+
+## Batch 4: famous films, guessable-but-wrong answers (17 Oct 2026)
+
+All built in the hook → setup → tension → payoff shape. Finished Shorts moved to `src/collage/shorts/archive/`.
+
+| Slug | Hook | Tension | Payoff | Lock before use |
+|---|---|---|---|---|
+| `pushpa-voice` | Pushpa की Hindi आवाज़ किसकी थी? | Allu Arjun doesn't speak Hindi, but the Hindi dialogues became a craze | Shreyas Talpade dubbed him | Dubbing credit, 2 sources |
+| `naatu-naatu-ukraine` | Naatu Naatu किस देश में shoot हुआ? | Looks Indian, but shot abroad months before a war | Ukraine, presidential palace in Kyiv; later the Oscar | Palace name, shoot date |
+| `dangal-china` | Dangal की सबसे बड़ी कमाई India में नहीं हुई? | A Hindi wrestling film, released in another country a year later | China earned more than India | China vs India gross, 2 sources |
+| `hera-pheri-remake` | Hera Pheri असल में original नहीं थी? | Babu Bhaiya feels pure Bollywood, but the story came from the South | Remake of Malayalam *Ramji Rao Speaking* (1989) | Remake credit |
+| `drishyam-china` | Drishyam की कहानी China तक पहुँची? | Malayalam thriller remade across India, then further | *Sheep Without a Shepherd* (2019) | Remake/rights and gross. Space from `dangal-china` |
+| `bahubali-kattappa` | एक सवाल के लिए पूरा देश 2 साल रुका? | "Kattappa ने Baahubali को क्यों मारा?", makers silent | Baahubali 2 about ₹1,800 crore | Gross wording |
+| `three-idiots-age` | 3 Idiots में college student 44 साल का था? | College role, but the lead was born in 1965 | Aamir 44 at release; co-leads late 30s | Ages at release |
+| `lagaan-oscar` | Lagaan Oscar के कितने करीब पहुँची? | No big studio push, Aamir campaigned anyway | Top-5 nomination; lost to *No Man's Land* | Category, year |
+| `kaho-naa-awards` | Hrithik की पहली film ने कितने awards जीते? | A debutant, then a sweep | Record awards count | Count/record disputed: soften or 2 sources |
+| `kgf-kannada` | एक Kannada film ने ₹1,200 करोड़ कमाए? | Kannada seen as a small industry, KGF 2 went pan-India | ₹1,200 crore+ worldwide | Gross wording. Space from the Kantara Shorts |
+
+## Batch 5: fresh news (26 Oct 2026)
+
+Rule from the owner: topics come from recent film news (last 2–4 weeks), not evergreen trivia. Titles are approved before voicing. Shorter shape: hook → one setup → one tension → payoff → loop (about 20–24 s after the 15 % speed-up), because the 26 Oct export showed viewers leave after 6–10 s. Rejected evergreen pitches (Amitabh/AIR, Disco Dancer, Mannat, Tumbbad, Kishore ban, Taare Zameen Par, Pakeezah) were deleted.
+
+| Slot (IST) | Slug | Title |
+|---|---|---|
+| 27 Oct 12:00 | `rajini-conductor` | Jailer 2 के hero पहले bus conductor थे? |
+| 27 Oct 19:00 | `ramayana-ticket` | Ramayana का एक ticket ₹2,770 का? |
+| 28 Oct 12:00 | `drishyam3-stories` | Drishyam 3 की Hindi और Malayalam कहानी अलग क्यों? |
+| 28 Oct 19:00 | `ganguly-doosra` | Sourav Ganguly एक film रोकने court क्यों गए? |
+| 29 Oct 12:00 | `suryaa-doctors` | Sunny Deol की नई film से doctors नाराज़ क्यों? |
+| 29 Oct 19:00 | `dhaakad-day8` | Kangana की ₹85 करोड़ की film ने एक दिन में ₹4,420 कमाए? |
+| 30 Oct 12:00 | `cbfc-leak` | Censor Board से 500 films के documents leak हुए? |
+| 30 Oct 19:00 | `kiran-court` | Sonakshi की film court ने क्यों रोक दी? |
+| 31 Oct 12:00 | `gadar2-auction` | Sunny Deol का घर नीलाम क्यों होने वाला था? |
+| 31 Oct 19:00 | `arjun-deepfake` | Arjun Kapoor ने AI के ख़िलाफ़ case जीत लिया? |
+
+Single-source or softened claims: the IMA letter (`suryaa-doctors`, "Reports के मुताबिक"), the "500+ titles" figure (`cbfc-leak`, all outlets trace to The Hindu), and the suspense reason (`drishyam3-stories`, said as a consequence, not as the makers' stated reason).

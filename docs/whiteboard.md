@@ -1,6 +1,6 @@
 # Whiteboard videos (VideoScribe-style)
 
-Code: `src/whiteboard/`. Test bench: `whiteboard-demo` (`src/collage/shorts/whiteboard-demo/script.ts`). Tests: `tests/whiteboard.test.ts`.
+Code: `src/whiteboard/`. Test bench: `whiteboard-demo` (`src/collage/shorts/archive/whiteboard-demo/script.ts`). Tests: `tests/whiteboard.test.ts`.
 
 This is an experiment, not house style. It is a way to explain a fact visually, and the commentary is still the content. CLAUDE.md's rules still apply: no stills-essay, and credited stills only while their line is spoken.
 

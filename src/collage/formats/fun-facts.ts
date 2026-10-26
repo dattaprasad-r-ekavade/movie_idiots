@@ -5,17 +5,20 @@
 // the glue. "इस film का villain actually किसी और का था" — not "इस चलचित्र के खलनायक की भूमिका…".
 // Captions show the line as written; the voice still gets Devanagari via toSpoken().
 //
-//   hook     ≤ 3 s. The single most surprising fact as a specific claim or question (name, number, year).
-//            Opens a loop the payoff closes. No greeting, no channel name, no "आज हम बात करेंगे".
-//   promise  ≤ 5 s, optional. Why to stay: "और third fact तो fans को भी नहीं पता।"
-//   fact ×3–5  One fact per beat, 5–9 s each, each with a source. Optional `reveal` line right after
-//            for the punch ("और वो role? …"). Escalate: save the strongest fact for last.
-//   payoff   Closes the hook's loop with the detail the hook withheld.
+// Story shape: Hook → Setup → Tension → Payoff (→ loop). One question, answered last.
+//   hook     ≤ 3 s. ONE question or claim (famous name, number, year). Opens the loop the payoff closes.
+//            No greeting, no channel name, no "आज हम बात करेंगे".
+//   setup    One fact: just enough context to make the hook matter. Never contains the answer.
+//   tension  1–2 facts that push toward the answer through a turn: पर / लेकिन / फिर भी / मना किया.
+//            Every line moves toward the hook's answer; a side fact (box office, a trivia tangent) is cut.
+//   fact     Legacy role (counts as a fact beat). `reveal` may follow any fact beat for the punch.
+//   promise  Deprecated: in channel data it leaked the answer at ~3 s (Wasseypur, Mughal-e-Azam).
+//   payoff   The answer to the exact hook question, in the last 3–5 s.
 //   loop     Last line echoes the hook's words so the restart feels like a continuation.
 //   cta      Optional, very short, and only after the loop; prefer the pinned comment/description.
 //
-// Target 30–45 s. Visual change every 2–4 s, a new beat every 5–9 s.
-import {estimateDuration, type LineRole, type ScriptLine} from '../timeline';
+// Target 28–36 s. Visual change every 2–4 s, a new beat every 5–9 s.
+import {estimateDuration, LEAD_IN, LINE_GAP, type LineRole, type ScriptLine} from '../timeline';
 import {toSpoken} from '../../speech';
 import {SOUNDS} from '../../delivery';
 import type {FunFactsPlan, StillRef} from './FunFactsShort';
@@ -51,6 +54,18 @@ const SINGULAR: Record<string, string> = {
   देता: 'देते', लेता: 'लेते', रहता: 'रहते', लौटा: 'लौटे', पहुँचा: 'पहुँचे', जीता: 'जीते', हारा: 'हारे', निकला: 'निकले',
 };
 
+/** Roles that make a fact beat (one picture, one claim, one source). */
+export const FACT_ROLES: LineRole[] = ['setup', 'tension', 'fact'];
+
+// Turn words that keep the question open: an obstacle, a refusal, a contradiction.
+const TURN = /(^|[\s,.?!])(पर|लेकिन|मगर|फिर भी|बावजूद|फिर|तभी|अचानक|मना|नहीं|but|until|then)(?=[\s,.?!]|$)/iu;
+
+// Names and numbers a payoff reveals. Seen before the tension line, they give the answer away.
+const answerTokens = (text: string) => [
+  ...(text.match(/\d[\d,.]*/g) ?? []).filter((n) => n.replace(/\D/g, '').length >= 2 && !/^(19|20)\d\d$/.test(n)),
+  ...(text.match(/\b[A-Z][a-zA-Z-]{2,}\b/g) ?? []),
+];
+
 export type LintOptions = {
   /** The Short is about a real person who should be spoken of respectfully (plural verbs). */
   honorific?: boolean;
@@ -62,7 +77,7 @@ export type LintOptions = {
 export function lintGrammar(line: ScriptLine, options: LintOptions = {}): Issue[] {
   const issues: Issue[] = [];
   const warn = (message: string) => issues.push({level: 'warn', line: line.id, message});
-  if (line.role === 'fact' || line.role === 'reveal' || line.role === 'promise') {
+  if (FACT_ROLES.includes(line.role!) || line.role === 'reveal' || line.role === 'promise') {
     // Line-level: one elliptical clause ("साढ़े तीन करोड़ का budget") is fine after a full sentence.
     const ws = words(line.text).map(stem);
     if (ws.filter((w) => DEVANAGARI.test(w)).length >= 3 && !ws.some((w) => VERBS.has(w)))
@@ -100,20 +115,38 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     if (!/[?…]|\.\.\.|\d/.test(hook.text)) warn('Hook has no question, number or trailing tease; make it specific and open a loop', hook.id);
   }
   if (of('hook').length > 2) warn('More than two hook lines; the hook is one breath');
-  for (const p of of('promise')) {
-    const secs = estimateDuration(p.text);
-    if (secs > 3) warn(`Promise runs ~${secs.toFixed(1)} s; viewers swipe in seconds 3–8. Keep it under 3 s or drop it`, p.id);
-  }
-  const facts = of('fact');
-  if (facts.length < 3 || facts.length > 5) err(`Use 3–5 fact lines (found ${facts.length})`);
-  const order = (role: LineRole) => roles.lastIndexOf(role);
+  for (const p of of('promise')) warn('Drop the promise line: in channel data it gave the answer away by ~3 s. Open with a setup fact instead', p.id);
+  const facts = lines.filter((l) => FACT_ROLES.includes(l.role!));
+  // Story-shaped scripts (setup → tension) need only two beats; padding them to three adds a side fact.
+  const story = lines.some((l) => l.role === 'setup' || l.role === 'tension');
+  const [minFacts, maxFacts] = story ? [2, 4] : [3, 5];
+  if (facts.length < minFacts || facts.length > maxFacts) err(`Use ${minFacts}–${maxFacts} fact beats${story ? ' (setup + tension)' : ''} (found ${facts.length})`);
+  const lastFact = Math.max(...FACT_ROLES.map((r) => roles.lastIndexOf(r)));
   if (!of('payoff').length) err('Add a payoff line that closes the hook');
   if (!of('loop').length) err('Add a loop line that echoes the hook');
-  if (order('payoff') >= 0 && order('payoff') < order('fact')) err('Payoff must come after the last fact');
+  if (roles.lastIndexOf('payoff') >= 0 && roles.lastIndexOf('payoff') < lastFact) err('Payoff must come after the last fact');
   const loopAt = roles.indexOf('loop');
   if (loopAt >= 0 && lines.slice(loopAt + 1).some((l) => l.role !== 'cta')) err('Only a cta may follow the loop');
   if (roles.slice(0, -1).includes('cta') && roles.lastIndexOf('cta') < lines.length - 1) err('cta belongs at the very end');
-  for (const [i, l] of lines.entries()) if (l.role === 'reveal' && !['fact', 'reveal'].includes(roles[i - 1] ?? '')) warn('reveal should follow its fact', l.id);
+  for (const [i, l] of lines.entries()) if (l.role === 'reveal' && ![...FACT_ROLES, 'reveal'].includes(roles[i - 1] ?? 'cta')) warn('reveal should follow its fact', l.id);
+
+  // Hook → Setup → Tension → Payoff. The best-retained Shorts (Sholay 57% stayed) ask one question and
+  // put an obstacle in the middle; the weakest leaked the answer early or drifted off the question.
+  if (of('setup').length || of('tension').length) {
+    if (roles[1] !== 'setup') warn('The line after the hook should be the setup (one line of context)', lines[1]?.id);
+    if (of('setup').length > 1) warn('One setup line; move the rest into tension or cut it');
+    if (!of('tension').length) err('Add a tension line: the obstacle or turn that keeps the question open');
+    for (const t of of('tension')) if (!TURN.test(t.text)) warn('Tension line has no turn (पर / लेकिन / फिर भी / मना / नहीं); make the obstacle explicit', t.id);
+  } else if (!facts.slice(1).some((l) => TURN.test(l.text)))
+    warn('No turn in the middle (पर / लेकिन / फिर भी / मना). Use roles setup → tension and put an obstacle before the payoff');
+  const payoff = of('payoff')[0];
+  if (payoff && hook) {
+    const inHook = new Set(answerTokens(hook.text).map(stem));
+    const firstTension = roles.findIndex((r) => r === 'tension');
+    const early = lines.slice(1, firstTension > 0 ? firstTension : 2).filter((l) => l.role !== 'reveal');
+    const leaked = answerTokens(payoff.text).filter((t) => !inHook.has(stem(t)) && early.some((l) => l.text.includes(t)));
+    if (leaked.length) warn(`The answer leaks before the tension: ${[...new Set(leaked)].join(', ')} appears in the setup. Hold it for the payoff`, payoff.id);
+  }
 
   const loop = of('loop')[0];
   if (hook && loop) {
@@ -122,7 +155,7 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
     if (!shared.length) warn('Loop line shares no key word with the hook; echo the hook so the restart lands', loop.id);
   }
 
-  for (const l of lines.filter((x) => x.role === 'fact' || x.role === 'payoff')) {
+  for (const l of lines.filter((x) => FACT_ROLES.includes(x.role!) || x.role === 'payoff')) {
     const refs = l.source === undefined ? [] : Array.isArray(l.source) ? l.source : [l.source];
     if (!refs.length) err('Fact needs a source index', l.id);
     for (const r of refs) if (!sources[r]) err(`Source ${r} does not exist`, l.id);
@@ -146,9 +179,9 @@ export function lintFunFacts(lines: ScriptLine[], sources: {url: string}[], lexi
       if (!SOUNDS.includes(s.sound)) err(`Unknown sound ${s.sound}; use one of ${SOUNDS.join(', ')}`, l.id);
     }
   }
-  const total = lines.reduce((n, l) => n + estimateDuration(l.text) + 0.28, 0.4);
-  // Channel data (Oct 2026): Shorts of 28–43 s led; 44–47 s ones stalled at ~33% viewed.
-  if (total > 40) warn(`Estimated ${total.toFixed(0)} s; this channel's best Shorts run 28–40 s. Cut the promise or a fact`);
+  const total = lines.reduce((n, l) => n + estimateDuration(l.text) + LINE_GAP, LEAD_IN);
+  // Channel data (Oct 2026): 28–32 s Shorts held 45–59% viewed; 42–47 s ones held 34–53%.
+  if (total > 36) warn(`Estimated ${total.toFixed(0)} s; this channel's best Shorts run 28–32 s. Cut a side fact or tighten lines`);
   if (total < 20) warn(`Estimated ${total.toFixed(0)} s; too thin for 3+ facts`);
   return issues;
 }

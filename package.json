@@ -21,6 +21,7 @@
     "node": ">=22"
   },
   "dependencies": {
+    "@googleapis/youtube": "39.0.1",
     "@modelcontextprotocol/sdk": "1.32.0",
     "@remotion/bundler": "4.0.532",
     "@remotion/cli": "4.0.532",
@@ -28,6 +29,7 @@
     "@remotion/renderer": "4.0.532",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "google-auth-library": "11.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "remotion": "4.0.532",

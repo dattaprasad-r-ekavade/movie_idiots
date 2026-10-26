@@ -1,0 +1,37 @@
+{
+  "city-lights": {
+    "file": "music/city-lights.mp3",
+    "source": "music-mania city-lights (original, 2026)",
+    "excerptStart": 90
+  },
+  "mass-entry": {
+    "file": "music/mass-entry.mp3",
+    "source": "music-mania mass-entry (original, 2026)",
+    "excerptStart": 108
+  },
+  "neon-bhairav": {
+    "file": "music/neon-bhairav.mp3",
+    "source": "music-mania neon-bhairav (original, 2026)",
+    "excerptStart": 19
+  },
+  "golden-hour": {
+    "file": "music/golden-hour.mp3",
+    "source": "music-mania golden-hour (original, 2026)",
+    "excerptStart": 124
+  },
+  "spring-dream": {
+    "file": "music/spring-dream.mp3",
+    "source": "music-mania spring-dream (original, 2026)",
+    "excerptStart": 120
+  },
+  "sandhya": {
+    "file": "music/sandhya.mp3",
+    "source": "music-mania sandhya (original, 2026)",
+    "excerptStart": 74
+  },
+  "pahadi-winter": {
+    "file": "music/pahadi-winter.mp3",
+    "source": "music-mania pahadi-winter (original, 2026)",
+    "excerptStart": 15
+  }
+}

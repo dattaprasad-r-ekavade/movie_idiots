@@ -8,7 +8,8 @@ let raw = '';
 for await (const chunk of process.stdin) raw += chunk;
 const input = JSON.parse(raw || '{}');
 const file = String(input.tool_input?.file_path ?? input.tool_response?.filePath ?? '').replace(/\\/g, '/');
-const match = file.match(/src\/collage\/shorts\/([^/]+)\/script\.ts$/);
+// Finished Shorts live under shorts/archive/<slug>/; their slugs are unchanged.
+const match = file.match(/src\/collage\/shorts\/(?:archive\/)?([^/]+)\/script\.ts$/);
 if (!match || match[1] === 'fun-facts-template') process.exit(0);
 
 const slug = match[1];

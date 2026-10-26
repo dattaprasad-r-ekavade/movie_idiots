@@ -16,6 +16,7 @@ Prototype: **`phalke`**, a researched story about *Raja Harishchandra* (1913). I
 | Theme | `src/collage/theme.ts` | Palette and self-hosted fonts (`public/fonts`, SIL OFL): Rozha One display, Mukta body/captions/stamps, Kalam handwriting, Special Elite typewriter. |
 | A short | `src/collage/shorts/<slug>/` | `script.ts` (lines, title, sources) and the edit component. Register it in `src/collage/shorts/index.ts`. |
 | Sound | `scripts/sfx_kit.py` | Original synthesized kit: whoosh, pop, stamp, shutter, coin, riser, paper, projector flicker, tanpura + Bhupali bed. Generated into `public/sfx` (git-ignored) on first render. |
+| Music | `scripts/import_music.py`, `public/music/` | Original beds from the owner's music-mania repo (`D:\cash-grabs\music-maker`, renders in its R2 bucket: `node tools/assets.mjs pull out/<name>.mp3`). The script cuts the most energetic 70 s, fades it and matches the old bed's loudness (-16.5 LUFS). A Short picks one with `export const music = 'mass-entry'`; `youtube.txt` then gets the sample-library credit (Salamander piano is CC BY 3.0). Tracks: city-lights (lo-fi), mass-entry (South action), neon-bhairav (Indian fusion), golden-hour, spring-dream (uplifting), sandhya (Hindi ballad), pahadi-winter (raga Pahadi). |
 | CLI | `scripts/short.ts` | `npm run short -- list | timing | voice | stills | render | package`. |
 
 Every frame value comes from `useCurrentFrame()`, `spring`, `interpolate` or Remotion's seeded `random()`, so renders are deterministic.
@@ -75,14 +76,18 @@ Every line has a `role`. `npm run short -- lint SLUG` checks the rules below. `r
 | Role | Length | Job |
 |---|---|---|
 | `hook` | ≤ 10 words, ~3 s | Most surprising fact as a specific claim or question (name, number, year). Withhold one detail. No greeting, no channel name. On screen from the first frame. |
-| `promise` (optional) | ≤ 5 s | Reason to stay: "और third fact तो fans को भी नहीं पता।" |
-| `fact` ×3–5 | 5–9 s each | One fact per beat, each with `source` (index into `sources`). Escalate; strongest fact last. |
-| `reveal` (optional) | short | Punch line right after its fact; the headline swaps. |
-| `payoff` | short | Closes the hook's loop with the withheld detail. Its still racks into focus. |
+| `setup` ×1 | 5–8 s | One fact of context that makes the hook matter. Never contains the answer (lint flags payoff names/numbers seen this early). |
+| `tension` ×1–3 | 5–8 s each | The obstacle that keeps the question open, with a turn word: पर / लेकिन / फिर भी / मना / नहीं. Every line moves toward the answer; side facts (box office, a tangent) are cut. |
+| `fact` | 5–9 s | Legacy role; counts as a fact beat. Setup + tension + fact = 3–5 beats, each with `source`. |
+| `promise` | — | Deprecated (lint warns). It gave the answer away at ~3 s in Wasseypur and Mughal-e-Azam. |
+| `reveal` (optional) | short | Punch line right after its fact beat; the headline swaps. |
+| `payoff` | short | Answers the exact hook question, in the last 3–5 s. Its still racks into focus. |
 | `loop` | short | Repeats the hook's key word. The hook frame returns, so the restart reads as one shot. |
 | `cta` (optional) | very short | Only after the loop. Prefer pinned comment/description. |
 
-Target 30–45 s total. Picture changes every 2–4 s; new beat every 5–9 s. On-screen headlines add a label, name or number; they never repeat the caption.
+**Hook → Setup → Tension → Payoff.** One question, answered last. Matched against Studio "stayed to watch" (Oct 2026): Sholay (57%), Interval (55%) and Nana Patekar (53%) follow it; Wasseypur (38%) leaked the answer in the promise, and Mughal-e-Azam (38%) and Coolie (32%) drifted off the question in the middle. Sources: [Subscribr](https://subscribr.ai/p/scripting-youtube-shorts-engagement), [OutlierKit](https://outlierkit.com/resources/youtube-script-template/), [SocialK](https://socialk.it/en/blog/tiktok-storytelling-guide) (practitioner guides, not controlled data).
+
+Target 28–36 s total (lint warns over 36). The voice starts 0.1 s in (`LEAD_IN` in `src/collage/timeline.ts`). Picture changes every 2–4 s; new beat every 5–9 s. On-screen headlines add a label, name or number; they never repeat the caption.
 
 Basis (marketing-blog heuristics, checked October 2026, not platform data): most Shorts drop-off happens in the first 3 s; open loops and callback endings help replays; YouTube counts loops as views. [OpusClip](https://www.opus.pro/blog/ideal-youtube-shorts-length-format-retention), [virvid looping](https://virvid.ai/blog/looping-structure-shorts-retention-2026). Check them against the channel's own retention graphs after a few uploads.
 
@@ -104,7 +109,7 @@ Each line can carry `delivery` on top of its role default (`src/delivery.ts`):
 | `emotion` | ElevenLabs v3/v4 audio tag for the whole line (`'surprised'`, `'conspiratorial'`, `'playful'` …). Overrides the mood's tag. |
 | `cues` | `[{word, tag}]`: an audio tag placed just before a spoken word, e.g. `{word: 'बिना', tag: 'surprised'}`. Tags never reach captions. |
 
-Role defaults: hook excited; promise curious; reveal punch with a 0.25 s pause; payoff serious with a 0.45 s pause and music drop; loop curious with music swell; cta warm. `npm run short -- say SLUG` prints each line's direction next to its spoken text. Render re-measures timing every time, so direction changes re-time the edit.
+Role defaults: hook excited; promise curious; reveal punch with a 0.25 s pause; payoff serious with a 0.45 s pause (no music drop by default; `music: 'drop'` now dips the bed to 35% instead of cutting it); loop curious with music swell; cta warm. `npm run short -- say SLUG` prints each line's direction next to its spoken text. Render re-measures timing every time, so direction changes re-time the edit. With word cues, a recorded line ends 0.15 s after its last word (TTS files carry ~0.9 s of trailing silence), and the picture holds 0.5 s after the final word (`TAIL`), so the loop runs straight into the restart.
 
 ### Voice: Devanagari for the speech engine
 
@@ -188,6 +193,7 @@ npm run short -- speed SLUG --percent 15 --from video-filmcraft  # upload copy: 
 - `scripts/effectcraft/sting.jsx`: After Effects-style script for a transparent 1.5 s number sting (glowing text, double shockwave). Edit `STING` at the top (text, colour, y). Drop the Remotion `pop` on that word so the two don't double up.
 - `scripts/filmcraft/finish-short.mjs`: drives FilmCraft's MCP server headless. V1 the render with its audio; V2 the sting on its word; V3 a full-length grade (Lumetri contrast and saturation, vignette, fine grain); V4 a 0.4 s light-leak flash on every beat cut; V5 an RGB-split hit on the hook and camera shake on the `--shake` words. Exports `video-filmcraft.mp4` (H.264, -14 LUFS) and saves `SLUG.fcproj` for hand edits in FilmCraft.
 - Keep effects subtle: the first pass at light-leak intensity 70 washed the whole frame out; 30 reads as a warm flash.
+- Channel intro (1920×1080, 7 s): `scripts/effectcraft/channel-intro.jsx` builds two shots (projector beam with dust and the mascot; the MOVIE IDIOTS wordmark slam with sparks, shockwaves, a light sweep and the tagline). Render `shotA`/`shotB` to ProRes into `projects/intro/`, then `node scripts/filmcraft/channel-intro.mjs` cuts them with a TV-power transition, grades, shakes the slams, mixes the sfx kit and exports `projects/intro/movie-idiots-intro.mp4`. `scripts/filmcraft/client.mjs` is the shared FilmCraft MCP client.
 - The MCP servers are registered per machine (`claude mcp add --scope local filmcraft -- "C:\Program Files\FilmCraft\filmcraft-cli.exe" mcp`), not in `.mcp.json`.
 
 ## Known gaps / next steps

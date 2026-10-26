@@ -4,7 +4,7 @@
 // Windows speech rate. Pauses and music moves are applied by the edit, not the voice.
 
 export type Mood = 'neutral' | 'excited' | 'curious' | 'serious' | 'punch' | 'hushed' | 'deadpan' | 'warm';
-export type Role = 'hook' | 'promise' | 'fact' | 'reveal' | 'payoff' | 'loop' | 'cta';
+export type Role = 'hook' | 'setup' | 'tension' | 'promise' | 'fact' | 'reveal' | 'payoff' | 'loop' | 'cta';
 
 export type Delivery = {
   mood?: Mood;
@@ -43,10 +43,13 @@ export const MOODS: Record<Mood, Preset> = {
 /** Defaults by script role (fun-facts structure). Lines without a role stay neutral. */
 export const ROLE_DELIVERY: Record<Role, Delivery> = {
   hook: {mood: 'excited'},
+  setup: {mood: 'neutral'},
+  tension: {mood: 'curious'},
   promise: {mood: 'curious'},
   fact: {mood: 'neutral'},
   reveal: {mood: 'punch', pause: 0.25},
-  payoff: {mood: 'serious', pause: 0.45, music: 'drop'},
+  // No music drop by default: in tight 30 s Shorts it read as the track cutting out (owner, Oct 2026).
+  payoff: {mood: 'serious', pause: 0.45},
   loop: {mood: 'curious', music: 'swell'},
   cta: {mood: 'warm'},
 };

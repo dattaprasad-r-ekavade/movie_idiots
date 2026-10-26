@@ -4,14 +4,14 @@ description: Scaffold a new v2 fun-facts YouTube Short from an idea in docs/shor
 argument-hint: <slug> [notes]
 ---
 
-Build the Short `$ARGUMENTS` end to end as a **draft**. Read first: CLAUDE.md, `docs/collage-shorts.md` ("Fun-facts format", "Design v2", "Script and design review"), the idea's section in `docs/shorts-ideas.md` (facts, sources, **Lock before use**), and the reference Short `src/collage/shorts/mr-india/script.ts` (v2 plan, honorific, emotion directions).
+Build the Short `$ARGUMENTS` end to end as a **draft**. Read first: CLAUDE.md, `docs/collage-shorts.md` ("Fun-facts format", "Design v2", "Script and design review"), the idea's section in `docs/shorts-ideas.md` (facts, sources, **Lock before use**), and the reference Short `src/collage/shorts/archive/mr-india/script.ts` (v2 plan, honorific, emotion directions).
 
 ## 1. Facts
 - Re-open every source URL in the idea (WebFetch, or the `agent-reach` skill). Anything under "Lock before use" needs a second source or must be softened ("कहा जाता है", "reportedly") or dropped.
 - Record each URL with a one-line note in `sources`. No invented numbers, quotes or credits.
 
 ## 2. Script (`src/collage/shorts/<slug>/script.ts`)
-- Hook ≤ 10 words opening on a famous film/star/character; **3 facts max, no promise line**, payoff, loop that echoes the hook. Target 28–40 s.
+- **Hook → Setup → Tension → Payoff → loop.** Hook ≤ 10 words, ONE question, opening on a famous film/star/character. Then one `setup` line (context, never the answer), 1–2 `tension` lines with a turn word (पर / लेकिन / फिर भी / मना) that push toward the answer, a `payoff` that answers the exact hook question, and a `loop` that echoes the hook. No promise line, no side facts. Target 28–34 s (lint warns over 36). See `src/collage/shorts/fun-facts-template/script.ts`.
 - Natural Hinglish, full sentences with Hindi verbs; `en` line for every line; `honorific = true` for real people, `tribute = true` for tributes.
 - Hook headline must be a sentence with a verb ("Mr. India पहले Amitabh को मिली थी?").
 - `delivery.emotion` per line and `delivery.cues` for in-line turns (ElevenLabs v4 tags).

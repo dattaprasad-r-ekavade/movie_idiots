@@ -9,3 +9,6 @@ models/
 public/sfx/
 public/shorts/*/voice/
 public/shorts/*/timing.json
+
+# OAuth client and tokens (YouTube upload)
+secrets/

@@ -19,7 +19,7 @@ export type Transition = 'cut' | 'whip' | 'static' | 'slide';
 /** Mascot cameo: pops into a free corner when `word` is said, reacts, leaves (~1.5 s). */
 export type React_ = {line?: string; word: string; expression: Expression; pose?: PoseName};
 /** Big counting figure for the `number` layout. */
-export type NumberSpec = {line?: string; word: string; value: number; prefix?: string; suffix?: string; label?: string};
+export type NumberSpec = {line?: string; word: string; value: number; prefix?: string; suffix?: string; label?: string; /** A year: no thousands separator ("2009", not "2,009"). Inferred for 1800–2100 without a prefix. */ year?: boolean};
 /** Two prints stacked for the `versus` layout: top shows from the beat start, bottom lands on `bottom.word`; `middle` sits between ("VS", "183 vs 120"). */
 export type VersusSpec = {top: StillRef & {word?: string; line?: string}; bottom: StillRef & {word?: string; line?: string}; middle: string};
 /** Cinema-ticket card for the `ticket` layout. */
@@ -145,14 +145,17 @@ function BigNumber({spec, at, pal}: {spec: NumberSpec; at: number; pal: Palette}
   const frame = useCurrentFrame();
   const t = interpolate(frame, [at, at + 22], [0, 1], {...clamp, easing: Easing.out(Easing.cubic)});
   if (frame < at - 2) return null;
-  const n = spec.value * t;
+  const year = spec.year ?? (!spec.prefix && Number.isInteger(spec.value) && spec.value >= 1800 && spec.value <= 2100);
+  // A year counts up from 100 years earlier, not from 0, and is never grouped.
+  const n = year ? spec.value - 100 * (1 - t) : spec.value * t;
+  const show = (v: number) => (year ? String(Math.round(v)) : group(v));
   const scale = interpolate(frame, [at, at + 6, at + 12], [0.8, 1.06, 1], clamp);
-  const full = `${spec.prefix ?? ''}${group(spec.value)}${spec.suffix ?? ''}`;
+  const full = `${spec.prefix ?? ''}${show(spec.value)}${spec.suffix ?? ''}`;
   const size = Math.min(250, Math.floor(940 / (full.length * 0.56)));
   return (
     <div style={{textAlign: 'center', transform: `scale(${scale})`}}>
       <div style={{fontFamily: FONT.body, fontWeight: 800, fontSize: size, lineHeight: 1, color: pal.accent, textShadow: '0 10px 40px rgba(0,0,0,.45)', whiteSpace: 'nowrap'}}>
-        {spec.prefix ?? ''}{group(n)}{spec.suffix ?? ''}
+        {spec.prefix ?? ''}{show(n)}{spec.suffix ?? ''}
       </div>
       {spec.label && <div style={{marginTop: 18, fontFamily: FONT.body, fontWeight: 800, fontSize: 58, color: pal.text, opacity: t}}>{spec.label}</div>}
     </div>

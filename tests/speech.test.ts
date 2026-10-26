@@ -24,7 +24,7 @@ test('years and dates are spoken in English, in pairs; amounts stay Hindi', () =
 
 test('audio directions: role defaults, overrides and provider mapping', () => {
   const payoff = resolveDelivery({role: 'payoff'});
-  assert.equal(payoff.music, 'drop');
+  assert.equal(payoff.music, undefined);
   assert.ok((payoff.pause ?? 0) > 0);
   const hook = resolveDelivery({role: 'hook', delivery: {rate: -5}});
   assert.deepEqual(edgeProsody(hook, '+6%'), {rate: '+11%', pitch: '+8Hz', volume: '+5%'});
@@ -79,7 +79,7 @@ test('fun-facts lint enforces hook, fact count, sources, payoff and loop', () =>
   const bad = [{id: 'x', role: 'fact' as const, text: 'नमस्ते दोस्तों'}, ...good.slice(1, 2)];
   const errors = lintFunFacts(bad, sources).filter((i) => i.level === 'error').map((i) => i.message).join('\n');
   assert.match(errors, /First line must be the hook/);
-  assert.match(errors, /3–5 fact lines/);
+  assert.match(errors, /3–5 fact beats/);
   assert.match(errors, /source index/);
   assert.match(errors, /payoff/);
   assert.match(errors, /loop/);

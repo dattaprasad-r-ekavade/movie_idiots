@@ -5,7 +5,7 @@ import {activeStroke, arrowPaths, cameraAt, circlePath, fitBox, progress, schedu
 import {DOODLES} from '../src/whiteboard/doodles';
 import {inspect} from '../src/whiteboard/Whiteboard';
 import {buildTiming, clock} from '../src/collage/timeline';
-import * as demo from '../src/collage/shorts/whiteboard-demo/script';
+import * as demo from '../src/collage/shorts/archive/whiteboard-demo/script';
 
 test('strokes share the drawing time by length, with pen lifts between them', () => {
   const spans = scheduleStrokes([100, 300], 10, 42, 2);

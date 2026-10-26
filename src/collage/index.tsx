@@ -19,7 +19,7 @@ function Root() {
           height={1920}
           fps={FPS}
           durationInFrames={FPS * 60}
-          defaultProps={{timing: buildTiming(s.lines, {}, s.tail), captions: true, music: true}}
+          defaultProps={{timing: buildTiming(s.lines, {}, s.tail), captions: true, music: true, track: s.music}}
           calculateMetadata={({props}) => ({durationInFrames: Math.round(props.timing.total * FPS)})}
         />
       ))}

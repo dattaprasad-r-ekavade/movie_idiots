@@ -25,41 +25,38 @@ export const lines: ScriptLine[] = [
     en: "The villain of this film was originally someone else's role?",
     text: "इस film का villain... actually किसी और का था?",
   },
-  {
-    id: 'promise',
-    role: 'promise',
-    en: "And the third fact, even the fans don't know.",
-    text: "और third fact तो fans को भी नहीं पता.",
-  },
+  // Setup: one line of context that makes the hook matter. Never the answer.
   {
     id: 'f1',
-    role: 'fact',
+    role: 'setup',
     source: 0,
-    en: "Fact one: shooting started in 1973 and ran for two full years.",
-    text: "Fact one: shooting 1973 में शुरू हुई, और पूरे दो साल चली.",
+    en: "The writers wrote the villain with one actor in mind.",
+    text: "Writers ने villain का role एक ख़ास actor को सोचकर लिखा था.",
   },
+  // Tension: the obstacle, with a turn word (पर / लेकिन / फिर भी / मना). Every line moves toward the answer.
   {
     id: 'f2',
-    role: 'fact',
+    role: 'tension',
     source: 0,
-    en: "Fact two: for one scene, a whole village was built on the set.",
-    text: "Fact two: एक scene के लिए पूरा गाँव set पर बना.",
+    en: "But that actor turned it down, and the dates were already fixed.",
+    text: "पर उस actor ने मना कर दिया, और shooting की dates तय हो चुकी थीं.",
   },
   {
     id: 'f2r',
     role: 'reveal',
-    en: "And that set? Today it is a tourist spot.",
-    text: "और वो set? आज tourist spot है.",
-    delivery: {sfx: [{word: "tourist", sound: 'pop.wav', volume: 0.5}]},
+    en: "And the replacement? Nobody had heard of him.",
+    text: "और replacement? उसे कोई जानता तक नहीं था.",
+    delivery: {sfx: [{word: "replacement?", sound: 'pop.wav', volume: 0.5}]},
   },
   {
     id: 'f3',
-    role: 'fact',
+    role: 'tension',
     source: 0,
-    en: "Fact three: the climax was shot twice, and the first version was never released.",
-    text: "Fact three: climax दो बार shoot हुआ, और पहला version कभी release नहीं हुआ.",
-    delivery: {sfx: [{word: "कभी", sound: 'stamp.wav', volume: 0.45}]},
+    en: "Even then, the producers doubted his voice until the last day.",
+    text: "फिर भी producers को आख़िरी दिन तक उसकी आवाज़ पर शक था.",
+    delivery: {sfx: [{word: "शक", sound: 'stamp.wav', volume: 0.45}]},
   },
+  // Payoff: answers the exact hook question, in the last 3–5 s.
   {
     id: 'payoff',
     role: 'payoff',
@@ -70,22 +67,22 @@ export const lines: ScriptLine[] = [
   {
     id: 'loop',
     role: 'loop',
-    en: "Imagine if the villain had changed. Would this film be different?",
-    text: "सोचिए, अगर villain बदल जाता. तो ये film कैसी होती?",
+    en: "The villain, someone else's?",
+    text: "Villain... किसी और का?",
   },
 ];
 
 export const sources = [{url: 'https://example.com/replace-me', note: 'Replace with the real source for each fact.'}];
 
 // Per-short pronunciations for names and titles the shared lexicon does not know.
-export const lexicon: Record<string, string> = {};
+export const lexicon: Record<string, string> = {writers: 'राइटर्स', dates: 'डेट्स', replacement: 'रिप्लेसमेंट', producers: 'प्रोड्यूसर्स'};
 
 export const plan: FunFactsPlan = {
-  hook: {lines: ['hook', 'promise'], headline: 'असली villain\nकौन था?', accent: ['villain'], still: {film: 'फिल्म', year: 1975}},
+  hook: {lines: ['hook'], headline: 'असली villain\nकौन था?', accent: ['villain'], still: {film: 'फिल्म', year: 1975}},
   facts: [
-    {lines: ['f1'], headline: 'Shooting:\nपूरे दो साल', accent: ['दो', 'साल'], still: {film: 'फिल्म', year: 1975}, pop: {word: '1973', text: '1973'}},
-    {lines: ['f2', 'f2r'], headline: 'पूरा गाँव\nset पर बना', accent: ['गाँव'], still: {film: 'फिल्म', year: 1975}, reveal: {line: 'f2r', headline: 'आज: tourist spot', accent: ['tourist']}},
-    {lines: ['f3'], headline: 'Climax\nदो बार shoot', accent: ['दो', 'बार'], still: {film: 'फिल्म', year: 1975}, pop: {word: 'कभी', text: 'UNRELEASED'}},
+    {lines: ['f1'], headline: 'Role किसके लिए\nलिखा गया?', accent: ['किसके'], still: {film: 'फिल्म', year: 1975}, pop: {word: 'ख़ास', text: 'WRITTEN FOR…'}},
+    {lines: ['f2', 'f2r'], headline: 'पर actor ने\nमना किया', accent: ['मना'], still: {film: 'फिल्म', year: 1975}, reveal: {line: 'f2r', headline: 'Replacement: अनजान', accent: ['अनजान']}},
+    {lines: ['f3'], headline: 'आवाज़ पर\nशक था', accent: ['शक'], still: {film: 'फिल्म', year: 1975}, pop: {word: 'शक', text: 'DOUBT'}},
   ],
   payoff: {lines: ['payoff'], headline: 'Role पहले\nकिसी और को', accent: ['और']},
   loop: {lines: ['loop']},

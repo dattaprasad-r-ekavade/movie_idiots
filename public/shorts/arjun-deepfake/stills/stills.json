@@ -1,0 +1,24 @@
+[
+  {
+    "file": "shorts/arjun-deepfake/stills/hook.jpg",
+    "label": "Arjun Kapoor (2021): portrait",
+    "credit": "Happyfruitsalad / Wikimedia Commons",
+    "sourceUrl": "https://commons.wikimedia.org/wiki/File:Arjun_in_2021.jpg",
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Arjun_in_2021.jpg/960px-Arjun_in_2021.jpg",
+    "width": 960,
+    "height": 1440,
+    "rights": "CC BY-SA 4.0 (https://creativecommons.org/licenses/by-sa/4.0)",
+    "retrievedAt": "2026-10-26T17:27:44.945Z"
+  },
+  {
+    "file": "shorts/arjun-deepfake/stills/poster.jpg",
+    "label": "Ek Villain Returns (2022): film poster",
+    "credit": "T-Series and Balaji Motion Pictures",
+    "sourceUrl": "https://www.themoviedb.org/movie/682401",
+    "imageUrl": "https://image.tmdb.org/t/p/original/4BqMeSSPaC7spmj4Zl7htiigCkV.jpg",
+    "width": 900,
+    "height": 1350,
+    "rights": "Copyrighted publicity still, used as transformative commentary (fair dealing for criticism/review); credited in the video description (not on screen).",
+    "retrievedAt": "2026-10-26T17:28:08.668Z"
+  }
+]

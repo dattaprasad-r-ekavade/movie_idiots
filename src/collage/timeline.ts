@@ -59,9 +59,17 @@ export const estimateDuration = (text: string) => splitWords(text).length / WORD
 
 export type MeasuredLine = {duration: number; audio?: string; words?: Word[]; source: LineTiming['source']};
 
+// Silence before the first word. Half of viewers decide to swipe in the first second (Studio,
+// Oct 2026), so the voice starts almost at once; it was 0.4 s until then.
+export const LEAD_IN = 0.1;
+
 /** Lay lines end to end. Measured lines keep their real duration and word cues. */
-export function buildTiming(lines: ScriptLine[], measured: Record<string, MeasuredLine> = {}, tail = 2.2): Timing {
-  let cursor = 0.4;
+// Hold after the last word. It was 2.2 s; with the voice file's own trailing silence that left ~3.4 s of
+// dead air at the end (Oct 2026 review). The loop line should run almost into the restart.
+export const TAIL = 0.5;
+
+export function buildTiming(lines: ScriptLine[], measured: Record<string, MeasuredLine> = {}, tail = TAIL): Timing {
+  let cursor = LEAD_IN;
   const out = lines.map((raw) => {
     const line = {...raw, text: displayText(raw.text)};
     const m = measured[line.id];
@@ -74,7 +82,8 @@ export function buildTiming(lines: ScriptLine[], measured: Record<string, Measur
     cursor += duration + LINE_GAP + (d.hold ?? 0);
     return {id: line.id, text: line.text, start, duration, words, audio: m?.audio, source: m?.source ?? 'estimate', pause: d.pause, music: d.music, sfx: d.sfx};
   });
-  return {lines: out, total: cursor + tail, tail};
+  // No inter-line gap after the last line: the tail alone is the hold.
+  return {lines: out, total: cursor - (out.length ? LINE_GAP : 0) + tail, tail};
 }
 
 export type Clock = ReturnType<typeof clock>;

@@ -1,6 +1,6 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {lintGrammar, lintPlan} from '../src/collage/formats/fun-facts';
+import {lintFunFacts, lintGrammar, lintPlan} from '../src/collage/formats/fun-facts';
 import type {FunFactsPlan} from '../src/collage/formats/FunFactsShort';
 import type {ScriptLine} from '../src/collage/timeline';
 
@@ -99,4 +99,24 @@ test('headline lint: the hook headline and question headlines need a verb', () =
   plan.hook.headline = 'Mr. India पहले\nAmitabh को मिली थी?';
   plan.facts[0].headline = 'पहली पसंद\nRajesh Khanna';
   assert.deepEqual(lintPlan(plan, lines, []).filter((i) => /headline/i.test(i.message)), []);
+});
+
+test('story lint: setup → tension → payoff, no promise, no early answer', () => {
+  const sources = [{url: 'https://example.com'}];
+  const base: ScriptLine[] = [
+    {id: 'hook', role: 'hook', text: 'Sholay का Gabbar पहले किसी और का था?'},
+    {id: 's', role: 'setup', source: 0, text: 'Salim-Javed ने ये role लिखा था.'},
+    {id: 't1', role: 'tension', source: 0, text: 'पर Amjad की आवाज़ पर सबको शक था.'},
+    {id: 't2', role: 'tension', source: 0, text: 'फिर भी shooting शुरू हो गई.'},
+    {id: 'payoff', role: 'payoff', source: 0, text: 'Role पहले Danny को offer हुआ था.'},
+    {id: 'loop', role: 'loop', text: 'Gabbar, किसी और का?'},
+  ];
+  const story = (lines: ScriptLine[]) => messages(lintFunFacts(lines, sources).filter((i) => /setup|tension|turn|leaks|promise/.test(i.message)));
+  assert.equal(story(base), '');
+  const flat = base.map((l) => ({...l, text: l.id === 't1' ? 'Amjad की आवाज़ भारी थी.' : l.text}));
+  assert.match(story(flat), /Tension line has no turn/);
+  const leaky = [base[0], {...base[1], text: 'Danny को ये role पहले मिला था.'}, ...base.slice(2)];
+  assert.match(story(leaky), /answer leaks.*Danny/);
+  const promised = [base[0], {id: 'p', role: 'promise' as const, text: 'और answer आपको चौंका देगा.'}, ...base.slice(1)];
+  assert.match(story(promised), /Drop the promise line/);
 });
